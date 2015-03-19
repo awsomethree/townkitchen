@@ -35,12 +35,12 @@ _Required user stories_ :
 - [ ] __(Menu View)__ User can see the `current day` menu options in grid 
     - The menu options include the image of the menu, small description, 
         price and order quantity.
-- [ ] User can see the menu options of a `particular day` in the future
+- [ ] User can see the menu options of a `particular day`.
     - By clicking on calendar icon to choose specific dates 
 - [ ] __(Detail Menu View)__ User can see in detail specific menu options of the day
     - User can see the image of the menu, description of the menu, price, 
         additional serving information (e.g served with)
-- [ ] User can add particular menu options into the shopping cart
+- [ ] User can choose and add particular menu options into the shopping cart
     - The shopping cart icon will also shows number of orders. 
 - [ ] __(Shopping Cart View)__ User can see the details of their shopping cart contents by clicking on the
         shopping cart icon
