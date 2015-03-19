@@ -67,4 +67,4 @@ _Optional user stories_ :
 - [ ] on __Checkout View__ user can pick their delivery location using maps, by default the GPS will give the
         default location
 
-First Draft Mockup can be found ![Mockup](docs/TownKitchenApp.pdf)
+First Draft Mockup can be found [Mockup](docs/TownKitchenApp.pdf)
