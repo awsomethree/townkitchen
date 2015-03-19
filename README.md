@@ -52,6 +52,8 @@ _Required user stories_ :
     - User can enter promo code if they have one
     - User must be able to enter their credit cart info like CC, expiration date. This should also perform basic validation like date not expired. And the normal credit card number validation
     - When user click 'Order', the app should display a progress of the submition and display order confirmation page on success
+- [ ] __(Confirmation View)__ user should see the created order number with sumary of the order. User should have an option to 'Share/Review' and this will link to TownKitchen facebook or Twitter account
+- [ ] From home page, user should be able to click on the 'My Order' and see the current order status or the current location of the Driver on the map
 
 
 _Optional user stories_ : 
