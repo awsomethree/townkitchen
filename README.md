@@ -46,7 +46,12 @@ _Required user stories_ :
         shopping cart icon
     - User can edit (either adding or removing their order), total order, 
         total price
-- [ ]
+- [ ] __(Checkout View)__ User can see the shipping and billing info by clicking on the checkout icon from the shopping cart
+    - By default billing address should be the same as shipping. User can have an option to change the billing address if it different from the shipping address
+    - User should able to select the shipping method
+    - User can enter promo code if they have one
+    - User must be able to enter their credit cart info like CC, expiration date. This should also perform basic validation like date not expired. And the normal credit card number validation
+    - When user click 'Order', the app should display a progress of the submition and display order confirmation page on success
 
 
 _Optional user stories_ : 
