@@ -48,12 +48,12 @@ _Required user stories_ :
         total price
 - [ ] __(Checkout View)__ User can see the shipping and billing info by clicking on the checkout icon from the shopping cart
     - By default billing address should be the same as shipping. User can have an option to change the billing address if it different from the shipping address
-    - User should able to select the shipping method
-    - User can enter promo code if they have one
+    - User should able to select the delivery location
     - User must be able to enter their credit cart info like CC, expiration date. This should also perform basic validation like date not expired. And the normal credit card number validation
-    - When user click 'Order', the app should display a progress of the submition and display order confirmation page on success
-- [ ] __(Confirmation View)__ user should see the created order number with sumary of the order. User should have an option to 'Share/Review' and this will link to TownKitchen facebook or Twitter account
-- [ ] From home page, user should be able to click on the 'My Order' and see the current order status or the current location of the Driver on the map
+    - When user click 'Order', the app should display a progress of the submission and display order confirmation page on success
+- [ ] __(Confirmation View)__ user should see the created order number with summary of the order. User should have an option to 'Share/Review' and this will link to TownKitchen facebook or Twitter account
+- [ ] __(My Order View)__ From home page, user should be able to click on the 'My Order' and see the current order status 
+    - User can also see the current location of the Driver on the map
 
 
 _Optional user stories_ : 
@@ -63,3 +63,8 @@ _Optional user stories_ :
         or previous day
 - [ ] On __Detail Menu View__ user can also swipe left and right to navigate to
         the other menu option for the same day
+- [ ] on __Checkout View__ user can also enter the promo code
+- [ ] on __Checkout View__ user can pick their delivery location using maps, by default the GPS will give the
+        default location
+
+First Draft Mockup can be found ![Mockup](docs/TownKitchenApp.pdf)
