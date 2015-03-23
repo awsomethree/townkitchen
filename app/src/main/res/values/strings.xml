@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">The Town Kitchen</string>
+
+    <string name="hello_world">Town Kitchen scaffolding</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="action_shoppingcart">Shopping Cart</string>
+    <string name="action_calendar">select day</string>
+
+    <string name="title_activity_abstract_main">AbstractMainActivity</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="title_activity_daily_menu">DailyMenuActivity</string>
+
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+</resources>
