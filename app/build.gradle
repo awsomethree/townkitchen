@@ -22,5 +22,8 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:21.0.3'
+    // parse
+    compile 'com.parse.bolts:bolts-android:1.+'
+    // active android
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
 }

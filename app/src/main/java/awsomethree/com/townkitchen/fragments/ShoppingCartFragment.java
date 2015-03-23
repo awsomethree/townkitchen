@@ -2,7 +2,6 @@ package awsomethree.com.townkitchen.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,18 +11,16 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.List;
-
 import awsomethree.com.townkitchen.R;
+import awsomethree.com.townkitchen.abstracts.TKFragment;
 import awsomethree.com.townkitchen.activities.MainActivity;
 import awsomethree.com.townkitchen.dialogs.PaymentDialog;
 import awsomethree.com.townkitchen.interfaces.dialogInterfaceListener;
-import awsomethree.com.townkitchen.interfaces.fragmentNavigationInterface;
 
 /**
  * Created by smulyono on 3/22/15.
  */
-public class ShoppingCartFragment extends Fragment implements dialogInterfaceListener{
+public class ShoppingCartFragment extends TKFragment implements dialogInterfaceListener{
     protected ListView lvMenu;
 
     private ArrayAdapter<String> menuAdapters;
@@ -71,23 +68,12 @@ public class ShoppingCartFragment extends Fragment implements dialogInterfaceLis
         });
     }
 
-    public Fragment getCurrentFragment(){
-        List<Fragment> fragmentList
-                = getFragmentManager().getFragments();
-        if (fragmentList.size() > 0){
-            // always get the most top
-            return fragmentList.get(0);
-        }
-        return null;
-    }
-
 
     @Override
     public void onSuccessDialog() {
         Toast.makeText(getActivity(), "You make payment and redirected to Order History", Toast.LENGTH_SHORT).show();
         // redirect to order history
-        fragmentNavigationInterface listener = (fragmentNavigationInterface) getActivity();
-        listener.changeFragmentTo(MainActivity.ORDERHISTORY_DRAWER_POSITION);
+        redirectFragmentTo(MainActivity.ORDERHISTORY_DRAWER_POSITION);
     }
 
     @Override

@@ -2,17 +2,17 @@ package awsomethree.com.townkitchen.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import awsomethree.com.townkitchen.R;
+import awsomethree.com.townkitchen.abstracts.TKFragment;
 
 /**
  * Created by smulyono on 3/22/15.
  */
-public class TrackOrderFragment extends Fragment {
+public class TrackOrderFragment extends TKFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
