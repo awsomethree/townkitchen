@@ -1,0 +1,31 @@
+{ "results": [
+	{
+	    "objectId" : "menu1",
+        "name": "Salad1",
+        "description": "This is good salad",
+        "price": 11.05,
+        "imageUrl": "http://www.google.com"
+    },
+    {
+	    "objectId" : "menu2",
+        "name": "Salad2",
+        "description": "This is okay salad",
+        "price": 10.05,
+        "imageUrl": "http://www.google.com"
+    },
+    {
+	    "objectId" : "menu3",
+        "name": "Salad3",
+        "description": "This is best salad",
+        "price": 11.05,
+        "imageUrl": "http://www.google.com"
+    },
+    {
+	    "objectId" : "menu4",
+        "name": "Salad4",
+        "description": "This is bad salad",
+        "price": 11.05,
+        "imageUrl": "http://www.google.com"
+    }
+
+] }

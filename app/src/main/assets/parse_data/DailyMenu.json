@@ -1,0 +1,78 @@
+{
+    "results" :
+    [
+        {
+            "menuDate": {
+                "__type": "Date",
+                "iso": "2015-04-01T07:14:00.000Z"
+            },
+            "FoodMenu" : {
+                "__type" : "Pointer",
+                "className" : "FoodMenu",
+                "objectId" : "menu1"
+            },
+            "qtyStock" : 10
+        },
+        {
+            "menuDate": {
+                "__type": "Date",
+                "iso": "2015-04-01T07:14:00.000Z"
+            },
+            "FoodMenu" : {
+                "__type" : "Pointer",
+                "className" : "FoodMenu",
+                "objectId" : "menu2"
+            },
+            "qtyStock" : 10
+        },
+        {
+            "menuDate": {
+                "__type": "Date",
+                "iso": "2015-04-01T07:14:00.000Z"
+            },
+            "FoodMenu" : {
+                "__type" : "Pointer",
+                "className" : "FoodMenu",
+                "objectId" : "menu3"
+            },
+            "qtyStock" : 10
+        },
+        {
+            "menuDate": {
+                "__type": "Date",
+                "iso": "2015-04-02T07:14:00.000Z"
+            },
+            "FoodMenu" : {
+                "__type" : "Pointer",
+                "className" : "FoodMenu",
+                "objectId" : "menu4"
+            },
+            "qtyStock" : 10
+        },
+        {
+            "menuDate": {
+                "__type": "Date",
+                "iso": "2015-04-02T07:14:00.000Z"
+            },
+            "FoodMenu" : {
+                "__type" : "Pointer",
+                "className" : "FoodMenu",
+                "objectId" : "menu1"
+            },
+            "qtyStock" : 10
+        },
+        {
+            "menuDate": {
+                "__type": "Date",
+                "iso": "2015-04-02T07:14:00.000Z"
+            },
+            "FoodMenu" : {
+                "__type" : "Pointer",
+                "className" : "FoodMenu",
+                "objectId" : "menu2"
+            },
+            "qtyStock" : 10
+        }
+    ]
+
+}
