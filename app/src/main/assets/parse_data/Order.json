@@ -1,7 +1,10 @@
 {
     "results" : [
     {
-
+        "deliveryAddressStr" : "333 West San Carlos, San Jose",
+        "deliveryStatus" : "in-delivery",
+        "totalOrder" : 2,
+        "priceAfterTax" : 10
     }
     ]
 }

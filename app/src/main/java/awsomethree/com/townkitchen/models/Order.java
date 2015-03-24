@@ -1,10 +1,16 @@
 package awsomethree.com.townkitchen.models;
 
+import com.parse.FindCallback;
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import java.util.Date;
+import java.util.List;
+
+import awsomethree.com.townkitchen.interfaces.ParseQueryCallback;
 
 /**
  * Created by smulyono on 3/24/15.
@@ -13,16 +19,20 @@ import java.util.Date;
 public class Order extends ParseObject{
     public static final int ORDER_CODE = 2;
 
+    public static final String DELIVERED_STATUS = "delivered";
+    public static final String IN_DELIVERY_STATUS  = "in-delivery";
+    public static final String PENDING_STATUS   = "pending";
+
     private Date transactionDate;
     private double priceBeforeTax;
     private double tax;
     private double priceAfterTax;
     private int totalOrder;
+    private String deliveryStatus;
     private String deliveryAddressStr;// delivery address in string format
     private ParseGeoPoint deliveryAddressGeo; // delivery address in Geo format
 
     // delivery phase
-    private boolean isDelivered;
     private ParseGeoPoint deliveryCurrentLocation; // driver location
 
     public Date getTransactionDate() {
@@ -81,12 +91,12 @@ public class Order extends ParseObject{
         put("deliveryAddressGeo", deliveryAddressGeo);
     }
 
-    public boolean isDelivered() {
-        return getBoolean("isDelivered");
+    public String getDeliveryStatus() {
+        return getString("deliveryStatus");
     }
 
-    public void setDelivered(boolean isDelivered) {
-        put("isDelivered", isDelivered);
+    public void setDeliveryStatus(String deliveryStatus) {
+        put("deliveryStatus", deliveryStatus);
     }
 
     public ParseGeoPoint getDeliveryCurrentLocation() {
@@ -95,5 +105,18 @@ public class Order extends ParseObject{
 
     public void setDeliveryCurrentLocation(ParseGeoPoint deliveryCurrentLocation) {
         put("deliveryCurrentLocation", deliveryCurrentLocation);
+    }
+
+
+    public static void getOrderInDelivery(final ParseQueryCallback callback, final int queryCode){
+        ParseQuery<Order> query = ParseQuery.getQuery(Order.class);
+        query.whereEqualTo("deliveryStatus", IN_DELIVERY_STATUS);
+        query.orderByAscending("createdAt");
+        query.findInBackground(new FindCallback<Order>() {
+            @Override
+            public void done(List<Order> orders, ParseException e) {
+                callback.parseQueryDone(orders, e, queryCode);
+            }
+        });
     }
 }
