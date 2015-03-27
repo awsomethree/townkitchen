@@ -1,17 +1,28 @@
 package awsomethree.com.townkitchen.models;
 
+import com.parse.FindCallback;
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.TimeZone;
+
+import awsomethree.com.townkitchen.interfaces.ParseQueryCallback;
 
 /**
  * Created by smulyono on 3/24/15.
  */
 @ParseClassName("Feedback")
 public class Feedback extends ParseObject{
+    public static final int FEED_CODE = 4;
     public Feedback() { super();}
 
     private FoodMenu foodMenu;
-    private int rating;
+    private double rating;
     private String comment;
 
     public FoodMenu getFoodMenu() {
@@ -22,8 +33,8 @@ public class Feedback extends ParseObject{
         put("foodMenu", foodMenu);
     }
 
-    public int getRating() {
-        return getInt("rating");
+    public double getRating() {
+        return getDouble("rating");
     }
 
     public void setRating(int rating) {
@@ -36,5 +47,35 @@ public class Feedback extends ParseObject{
 
     public void setComment(String comment) {
         put("comment", comment);
+    }
+
+    // Retrieve all menu by specific date
+    public static void listAllFeedsByDates(Date menuDate,
+                                          final ParseQueryCallback callback, final int queryCode){
+
+        Calendar lowDate = Calendar.getInstance();
+        lowDate.setTime(menuDate);
+        lowDate.set(Calendar.HOUR_OF_DAY, 0);
+        lowDate.setTimeZone(TimeZone.getTimeZone("GMT"));
+        Date qLowDate = lowDate.getTime();
+
+        Calendar maxDate = Calendar.getInstance();
+        maxDate.setTime(menuDate);
+        maxDate.set(Calendar.HOUR_OF_DAY, 24);
+        maxDate.setTimeZone(TimeZone.getTimeZone("GMT"));
+        Date qMaxDate = maxDate.getTime();
+
+        ParseQuery<Feedback> query = ParseQuery.getQuery(Feedback.class);
+        //query.setLimit(10);
+        //query.whereGreaterThanOrEqualTo("menuDate", qLowDate);
+        //query.whereLessThan("menuDate", qMaxDate);
+        query.orderByAscending("createdAt");
+        query.include("FoodMenu");
+        query.findInBackground(new FindCallback<Feedback>() {
+            @Override
+            public void done(List<Feedback> feedbacks, ParseException e) {
+                callback.parseQueryDone(feedbacks, e, queryCode);
+            }
+        });
     }
 }
