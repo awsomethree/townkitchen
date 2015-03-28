@@ -108,12 +108,12 @@ public class MenuFragment extends TKFragment implements ParseQueryCallback {
         if (queryCode == DailyMenu.DAILYMENU_CODE){
             // this is food menu
             List<DailyMenu> recs = (List<DailyMenu>) parseObjects;
-            Log.d(MainActivity.APP, recs.size() + " total menu");
+            int size = (recs != null) ? recs.size() : 0;
+            Log.d(MainActivity.APP, size + " total menu");
 
             aMenuAdapters.clear();//clear existing list
             aMenuAdapters.addAll(recs);
-            int size = (recs != null) ? recs.size() : 0;
-            Log.d(MainActivity.APP, size + " total menu");
+
         }
     }
 }
