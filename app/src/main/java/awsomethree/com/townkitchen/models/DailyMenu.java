@@ -33,7 +33,7 @@ public class DailyMenu extends ParseObject{
     }
 
     public void setFoodMenu(FoodMenu foodMenu) {
-        put("foodMenu", foodMenu);
+        put("FoodMenu", foodMenu);
     }
 
     public void setQtyStock(int qtyStock) {
@@ -70,6 +70,7 @@ public class DailyMenu extends ParseObject{
         query.whereGreaterThanOrEqualTo("menuDate", qLowDate);
         query.whereLessThan("menuDate", qMaxDate);
         query.orderByAscending("createdAt");
+        query.include("FoodMenu");
         query.findInBackground(new FindCallback<DailyMenu>() {
             @Override
             public void done(List<DailyMenu> foodMenus, ParseException e) {
