@@ -32,7 +32,7 @@ public class OrderLineItem extends ParseObject{
     }
 
     public void setOrder(Order order) {
-        put("order", order);
+        put("Order", order);
     }
 
     public FoodMenu getMenu() {
@@ -40,7 +40,7 @@ public class OrderLineItem extends ParseObject{
     }
 
     public void setMenu(FoodMenu menu) {
-        put("foodMenu", menu);
+        put("FoodMenu", menu);
     }
 
     public int getQty() {

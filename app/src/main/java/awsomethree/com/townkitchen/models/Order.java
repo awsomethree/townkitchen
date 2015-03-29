@@ -34,6 +34,7 @@ public class Order extends ParseObject{
 
     // delivery phase
     private ParseGeoPoint deliveryCurrentLocation; // driver location
+    private Date shipDate;
 
     public Date getTransactionDate() {
         return getDate("transactionDate");
@@ -118,5 +119,13 @@ public class Order extends ParseObject{
                 callback.parseQueryDone(orders, e, queryCode);
             }
         });
+    }
+
+    public Date getShipDate() {
+        return getDate("shipDate");
+    }
+
+    public void setShipDate(Date shipDate){
+        put("shipDate", shipDate);
     }
 }
