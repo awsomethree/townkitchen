@@ -11,16 +11,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.joda.time.DateTime;
-
-import java.util.LinkedList;
 import java.util.List;
 
 import awsomethree.com.townkitchen.R;
 import awsomethree.com.townkitchen.abstracts.TKFragment;
 import awsomethree.com.townkitchen.adapters.OrderLineArrayAdapter;
-import awsomethree.com.townkitchen.models.FoodMenu;
-import awsomethree.com.townkitchen.models.Order;
 import awsomethree.com.townkitchen.models.OrderLineItem;
 import awsomethree.com.townkitchen.models.OrderUtils;
 
@@ -32,12 +27,17 @@ public class OrderHistoryFragment extends TKFragment {
 //    private ArrayAdapter<String> menuAdapters;
     private OrderLineArrayAdapter orderLineArrayAdapter;
     private List<OrderLineItem> orderLines;
-    private TextView lvOrderHistoryFooter;
+    private TextView orderHistoryFooter;
+    private View orderHistoryFooterView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_order_history, container, false);
+
+        //todo viewholder for footer
+        orderHistoryFooterView = getLayoutInflater(savedInstanceState).inflate(R.layout.order_history_footer_layout, null);
+        orderHistoryFooter = (TextView) orderHistoryFooterView.findViewById(R.id.tvOrderHistoryFooter);
 
         setupView(v);
         setupAdaptersAndListeners();
@@ -46,7 +46,7 @@ public class OrderHistoryFragment extends TKFragment {
 
     private void setupView(View v){
         lvMenu = (ListView) v.findViewById(R.id.lvOrderHistory);
-        lvOrderHistoryFooter = (TextView)v.findViewById(R.id.tvOrderHistoryFooter);
+        lvMenu.addFooterView(orderHistoryFooterView);
     }
 
     private void setupAdaptersAndListeners() {
@@ -72,7 +72,7 @@ public class OrderHistoryFragment extends TKFragment {
 //                    startActivity(intent);
             }
         });
-        lvOrderHistoryFooter.setText(Html.fromHtml("Want To Change Order ? Call <br> <b>1-800-town-app</b>"));
+        orderHistoryFooter.setText(Html.fromHtml("Want To Change Order ? Call <br> <b>1-800-town-app</b>"));
     }
 
     /**

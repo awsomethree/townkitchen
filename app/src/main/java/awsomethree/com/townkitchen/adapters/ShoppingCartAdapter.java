@@ -24,21 +24,13 @@ import awsomethree.com.townkitchen.models.ShoppingCart;
  */
 public class ShoppingCartAdapter extends ArrayAdapter<OrderLineItem> {
 
-
-    private View shoppingCartFooterView;
-
     private class ViewHolder {
         public ImageView imageUrl;
         public TextView shippingDay;
         public TextView optionName;
         public TextView optionDesc;
-        public TextView subTotalAmount;
-        public TextView taxAmount;
-        public TextView shippingAmount;
-        public TextView totalAmount;
     }
 
-    public TextView shippingAddress;
     private final ShoppingCart shoppingCart;
 
     public ShoppingCartAdapter(Context context, ShoppingCart shoppingCart) {
@@ -65,20 +57,6 @@ public class ShoppingCartAdapter extends ArrayAdapter<OrderLineItem> {
             viewHolder.shippingDay = (TextView) convertView.findViewById(R.id.tvShippingDay);
             viewHolder.optionName = (TextView) convertView.findViewById(R.id.tvOptionName);
             viewHolder.optionDesc = (TextView) convertView.findViewById(R.id.tvOptionDesc);
-
-
-//            shoppingCartFooterView = LayoutInflater.from(getContext()).inflate(R.layout.shopping_cart_footer_layout, parent, false);
-//            shippingAddress = (TextView) shoppingCartFooterView.findViewById(R.id.tvShippingAddress);
-//            viewHolder.subTotalAmount = (TextView) shoppingCartFooterView.findViewById(R.id.tvSubTotalAmount);
-//            viewHolder.taxAmount = (TextView) shoppingCartFooterView.findViewById(R.id.tvTaxAmount);
-//            viewHolder.shippingAmount = (TextView) shoppingCartFooterView.findViewById(R.id.tvShippingAmount);
-//            viewHolder.totalAmount = (TextView) shoppingCartFooterView.findViewById(R.id.tvTotalAmount);
-
-//            viewHolder.subTotalAmount = (TextView) convertView.findViewById(R.id.tvSubTotalAmount);
-//            viewHolder.taxAmount = (TextView) convertView.findViewById(R.id.tvTaxAmount);
-//            viewHolder.shippingAmount = (TextView) convertView.findViewById(R.id.tvShippingAmount);
-//            viewHolder.totalAmount = (TextView) convertView.findViewById(R.id.tvTotalAmount);
-
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -93,13 +71,6 @@ public class ShoppingCartAdapter extends ArrayAdapter<OrderLineItem> {
         viewHolder.shippingDay.setText(relativeTimeSpanString);
         viewHolder.optionName.setText(orderLineItem.getMenu().getName());
         viewHolder.optionDesc.setText(Html.fromHtml(orderLineItem.getMenu().getDescription()));
-
-        // payment
-//        shippingAddress.setText(Html.fromHtml(shoppingCart.getShippingAddress()));
-//        viewHolder.subTotalAmount.setText(shoppingCart.getSubTotalString());
-//        viewHolder.taxAmount.setText(shoppingCart.getTaxString());
-//        viewHolder.shippingAmount.setText(shoppingCart.getShippingString());
-//        viewHolder.totalAmount.setText(shoppingCart.getTotalString());
 
         return convertView;
     }
