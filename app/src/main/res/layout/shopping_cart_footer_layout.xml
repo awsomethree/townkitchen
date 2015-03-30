@@ -1,0 +1,112 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    tools:context="awsomethree.com.townkitchen.activities.DailyMenuActivity">
+
+    <!-- Shipping Info section -->
+    <TextView
+        android:id="@+id/tvShippingAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxWidth="300dp"
+        android:minHeight="100dp"
+        android:minWidth="200dp"
+        android:paddingRight="5dp"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/tvSubTotalLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/subtotalDesc"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/tvShippingAddress"
+        android:layout_toEndOf="@+id/tvShippingCostLabel" />
+
+    <TextView
+        android:id="@+id/tvSubTotalAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/tvSubTotalLabel" />
+
+    <TextView
+        android:id="@+id/tvTaxLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/taxDesc"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_below="@+id/tvSubTotalLabel"
+        android:layout_toRightOf="@+id/tvShippingAddress"
+        android:layout_toEndOf="@+id/tvShippingAddress" />
+
+    <TextView
+        android:id="@+id/tvTaxAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_toRightOf="@+id/tvTaxLabel"
+        android:layout_below="@+id/tvSubTotalAmount"
+        android:layout_alignStart="@+id/tvSubTotalAmount"
+        android:layout_alignLeft="@+id/tvSubTotalAmount"
+     />
+
+    <TextView
+        android:id="@+id/tvShippingCostLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/shippingCostDesc"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_below="@+id/tvTaxLabel"
+        android:layout_toRightOf="@+id/tvShippingAddress"
+        android:layout_toEndOf="@+id/tvShippingAddress" />
+
+    <TextView
+        android:id="@+id/tvShippingAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/tvTaxAmount"
+        android:layout_alignLeft="@+id/tvTaxAmount"
+        android:layout_alignStart="@+id/tvTaxAmount" />
+
+    <TextView
+        android:id="@+id/tvTotalLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/totalDesc"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_below="@+id/tvShippingCostLabel"
+        android:layout_toRightOf="@+id/tvShippingAddress"
+        android:layout_toEndOf="@+id/tvShippingAddress" />
+
+    <TextView
+        android:id="@+id/tvTotalAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:text=""
+        android:layout_below="@+id/tvShippingAmount"
+        android:layout_alignLeft="@+id/tvShippingAmount"
+        android:layout_alignStart="@+id/tvShippingAmount" />
+
+    <Button
+        android:id="@+id/btnCheckout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTotalAmount"
+        android:text="Checkout / Pay"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+
+</RelativeLayout>

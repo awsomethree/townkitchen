@@ -23,95 +23,104 @@
             android:layout_alignParentTop="true" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/paymentLayout"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/shoppingCartItemsLayout">
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/paymentLayout"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="fill_parent"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_below="@+id/shoppingCartItemsLayout">-->
 
-        <TextView
-            android:id="@+id/tvShippingLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxWidth="300dp"
-            android:minHeight="100dp"
-            android:minWidth="100dp"
-            android:paddingRight="5dp"
-            android:text="ShipTo: 12345 Address"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+        <!--&lt;!&ndash; Shipping Info section &ndash;&gt;-->
+        <!--<TextView-->
+            <!--android:id="@+id/txShippingAddress"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:maxWidth="300dp"-->
+            <!--android:minHeight="100dp"-->
+            <!--android:minWidth="100dp"-->
+            <!--android:paddingRight="5dp"-->
+            <!--android:textAppearance="?android:attr/textAppearanceMedium" />-->
 
-        <TextView
-            android:id="@+id/tvSubTotalLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/tvShippingLabel"
-            android:minHeight="50dp"
-            android:minWidth="50dp"
-            android:text="Subtotal"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+        <!--<TextView-->
+            <!--android:id="@+id/tvSubTotalLabel"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_toRightOf="@+id/txShippingAddress"-->
+            <!--android:text="@+id/subtotalDesc"-->
+            <!--android:textAppearance="?android:attr/textAppearanceMedium" />-->
 
-        <TextView
-            android:id="@+id/tvSubTotalAmount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/tvSubTotalLabel"
-            android:text="$23.0"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+        <!--<TextView-->
+            <!--android:id="@+id/tvSubTotalAmount"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_alignTop="@+id/tvSubTotalLabel"-->
+            <!--android:textAppearance="?android:attr/textAppearanceMedium" />-->
 
-        <TextView
-            android:id="@+id/tvTaxLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvSubTotalLabel"
-            android:layout_toRightOf="@+id/tvShippingLabel"
-            android:minHeight="50dp"
-            android:minWidth="50dp"
-            android:text="Tax"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+        <!--<TextView-->
+            <!--android:id="@+id/tvTaxLabel"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@+id/tvSubTotalLabel"-->
+            <!--android:layout_toRightOf="@+id/txShippingAddress"-->
+            <!--android:text="@+id/taxDesc"-->
+            <!--android:textAppearance="?android:attr/textAppearanceMedium" />-->
 
-        <TextView
-            android:id="@+id/tvTaxAmount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/tvTaxLabel"
-            android:text="$10.0"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+        <!--<TextView-->
+            <!--android:id="@+id/tvTaxAmount"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_alignTop="@+id/tvTaxLabel"-->
+            <!--android:textAppearance="?android:attr/textAppearanceMedium" />-->
 
-        <TextView
-            android:id="@+id/tvTotalLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvTaxLabel"
-            android:layout_toRightOf="@+id/tvShippingLabel"
-            android:minHeight="50dp"
-            android:minWidth="50dp"
-            android:text="Total"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+        <!--<TextView-->
+            <!--android:id="@+id/tvShippingCostLabel"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@id/tvTaxLabel"-->
+            <!--android:layout_toRightOf="@+id/txShippingAddress"-->
+            <!--android:text="@id/shippingCostDesc"-->
+            <!--android:textAppearance="?android:attr/textAppearanceMedium" />-->
 
-        <TextView
-            android:id="@+id/tvTotalAmount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@id/tvTotalLabel"
-            android:text="$33.0"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+        <!--<TextView-->
+            <!--android:id="@+id/tvShippingAmount"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_alignTop="@id/tvShippingCostLabel"-->
+            <!--android:textAppearance="?android:attr/textAppearanceMedium" />-->
 
-        <Button
-            android:id="@+id/btnCheckout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:text="Checkout / Pay" />
+        <!--<TextView-->
+            <!--android:id="@+id/tvTotalLabel"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@id/tvShippingCostLabel"-->
+            <!--android:layout_toRightOf="@+id/txShippingAddress"-->
+            <!--android:text="@+id/totalDesc"-->
+            <!--android:textAppearance="?android:attr/textAppearanceMedium" />-->
 
-    </RelativeLayout>
+        <!--<TextView-->
+            <!--android:id="@+id/tvTotalAmount"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@id/tvShippingAmount"-->
+            <!--android:layout_toRightOf="@+id/txShippingAddress"-->
+            <!--android:layout_alignTop="@id/tvTotalLabel"-->
+            <!--android:textAppearance="?android:attr/textAppearanceMedium" />-->
+
+        <!--<Button-->
+            <!--android:id="@+id/btnCheckout"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:text="Checkout / Pay" />-->
+
+    <!--</RelativeLayout>-->
 
 
 </RelativeLayout>

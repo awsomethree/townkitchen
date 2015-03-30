@@ -16,4 +16,11 @@
     <string name="foodImageDesc">Food Image</string>
     <string name="shippedDay">Shipping Day</string>
     <string name="optionNameDesc">option name desc</string>
+    <string name="subtotalDesc">SUBTOTAL</string>
+    <string name="taxDesc">TAX</string>
+    <string name="shippingCostDesc">SHIPPING</string>
+    <string name="totalDesc">TOTAL</string>
+
+    <item name="shippingCostDesc" type="id">SHIPPING</item>
+
 </resources>

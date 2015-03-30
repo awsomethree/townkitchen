@@ -1,4 +1,4 @@
-package awsomethree.com.townkitchen.fragments;
+package awsomethree.com.townkitchen.adapters;
 
 import android.content.Context;
 import android.content.Intent;
