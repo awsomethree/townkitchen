@@ -21,8 +21,9 @@ public class DailyMenu extends ParseObject{
     public static final int DAILYMENU_CODE = 4;
 
     private int qtyStock; // number of quantity before it sold out
-    private Date menuDate;
+//    private Date menuDate;
     private FoodMenu foodMenu;
+    private Daily menuDate;
 
     public int getQtyStock() {
         return getInt("qtyStock");
@@ -41,11 +42,11 @@ public class DailyMenu extends ParseObject{
         put("qtyStock", qtyStock);
     }
 
-    public Date getMenuDate() {
-        return getDate("menuDate");
+    public Daily getMenuDate() {
+        return (Daily) getParseObject("menuDate");
     }
 
-    public void setMenuDate(Date menuDate) {
+    public void setMenuDate(Daily menuDate) {
         put("menuDate", menuDate);
     }
 
@@ -65,12 +66,16 @@ public class DailyMenu extends ParseObject{
         maxDate.setTimeZone(TimeZone.getTimeZone("GMT"));
         Date qMaxDate = maxDate.getTime();
 
+        ParseQuery<Daily> innerQuery = ParseQuery.getQuery(Daily.class);
+        innerQuery.whereGreaterThanOrEqualTo("menuDate", qLowDate);
+        innerQuery.whereLessThan("menuDate", qMaxDate);
+        innerQuery.whereEqualTo("active", true);
+
         ParseQuery<DailyMenu> query = ParseQuery.getQuery(DailyMenu.class);
         query.setLimit(10);
-        query.whereGreaterThanOrEqualTo("menuDate", qLowDate);
-        query.whereLessThan("menuDate", qMaxDate);
-        query.orderByAscending("createdAt");
         query.include("FoodMenu");
+        query.include("Daily");
+        query.whereMatchesQuery("menuDate", innerQuery);
         query.findInBackground(new FindCallback<DailyMenu>() {
             @Override
             public void done(List<DailyMenu> foodMenus, ParseException e) {

@@ -3,8 +3,9 @@
     [
         {
             "menuDate": {
-                "__type": "Date",
-                "iso": "2015-04-01T07:14:00.000Z"
+                "__type" : "Pointer",
+                "className" : "Daily",
+                "objectId" : "1"
             },
             "FoodMenu" : {
                 "__type" : "Pointer",
@@ -15,8 +16,9 @@
         },
         {
             "menuDate": {
-                "__type": "Date",
-                "iso": "2015-04-01T07:14:00.000Z"
+                "__type" : "Pointer",
+                "className" : "Daily",
+                "objectId" : "1"
             },
             "FoodMenu" : {
                 "__type" : "Pointer",
@@ -27,8 +29,9 @@
         },
         {
             "menuDate": {
-                "__type": "Date",
-                "iso": "2015-04-01T07:14:00.000Z"
+                "__type" : "Pointer",
+                "className" : "Daily",
+                "objectId" : "1"
             },
             "FoodMenu" : {
                 "__type" : "Pointer",
@@ -39,8 +42,9 @@
         },
         {
             "menuDate": {
-                "__type": "Date",
-                "iso": "2015-04-02T07:14:00.000Z"
+                "__type" : "Pointer",
+                "className" : "Daily",
+                "objectId" : "2"
             },
             "FoodMenu" : {
                 "__type" : "Pointer",
@@ -51,8 +55,9 @@
         },
         {
             "menuDate": {
-                "__type": "Date",
-                "iso": "2015-04-02T07:14:00.000Z"
+                "__type" : "Pointer",
+                "className" : "Daily",
+                "objectId" : "2"
             },
             "FoodMenu" : {
                 "__type" : "Pointer",
@@ -63,8 +68,9 @@
         },
         {
             "menuDate": {
-                "__type": "Date",
-                "iso": "2015-04-02T07:14:00.000Z"
+                "__type" : "Pointer",
+                "className" : "Daily",
+                "objectId" : "2"
             },
             "FoodMenu" : {
                 "__type" : "Pointer",
