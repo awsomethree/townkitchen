@@ -1,9 +1,15 @@
 package awsomethree.com.townkitchen.models;
 
+import com.parse.FindCallback;
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import java.util.Date;
+import java.util.List;
+
+import awsomethree.com.townkitchen.interfaces.ParseQueryCallback;
 
 /**
  * Created by smulyono on 3/30/15.
@@ -47,5 +53,19 @@ public class Daily extends ParseObject {
 
     public void setDescription(String description) {
         put("description", description);
+    }
+
+    public static void listAllAvailableDays(
+            final ParseQueryCallback callback, final int queryCode){
+
+        ParseQuery<Daily> query = ParseQuery.getQuery(Daily.class);
+        query.whereEqualTo("active", true);
+        query.include("Daily");
+        query.findInBackground(new FindCallback<Daily>() {
+            @Override
+            public void done(List<Daily> dailies, ParseException e) {
+                callback.parseQueryDone(dailies, e, queryCode);
+            }
+        });
     }
 }

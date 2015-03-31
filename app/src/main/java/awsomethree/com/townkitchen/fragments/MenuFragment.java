@@ -1,5 +1,8 @@
 package awsomethree.com.townkitchen.fragments;
 
+import com.parse.ParseException;
+import com.parse.ParseObject;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -11,11 +14,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.parse.ParseException;
-import com.parse.ParseObject;
-
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
+import java.util.Date;
 import java.util.List;
 
 import awsomethree.com.townkitchen.R;
@@ -48,35 +48,12 @@ public class MenuFragment extends TKFragment implements ParseQueryCallback {
     }
 
 
-    public void populateMenuOptions(int startPos) {
-        //have fragment override
-
-        //but do for now mock it - shold get json from some kind of API - purse..
-        /*JSONArray jsonArray = new JSONArray();
-        try {
-            JSONObject object=new JSONObject();
-            object.put("name", "Option 1");
-            object.put("description", "Some food description.");
-            object.put("imageUrl", "http://static1.squarespace.com/static/54b5bb0de4b0a14bf3e854e0/54b6d4f5e4b0b6737de70fb4/551091c6e4b04012df29c309/1427149265871/Egg+Salad+Salmon+Cutting+Board.jpg?format=1500w");
-            object.put("price", new Double(11.00));
-            jsonArray.put(object);
-            jsonArray.put(object);
-            jsonArray.put(object);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        ArrayList<FoodMenu> options = FoodMenu.fromJSONArray(jsonArray);//return us a list of tweets
-       // aMenuAdapters.clear();//clear existing list
-        aMenuAdapters.addAll(options);*/
-    }
-
     private void setupView(View v){
         lvMenu = (ListView) v.findViewById(R.id.lvMenu);
     }
 
     private void setupAdaptersAndListeners() {
         // arbitrary menu
-        //String[] menus = {"Menu1", "Menu2", "Menu3", "Menu4"};
         options = new ArrayList<>();
 
         // setup the adapters (Using basic)
@@ -99,7 +76,14 @@ public class MenuFragment extends TKFragment implements ParseQueryCallback {
 
         // Example for retrieving Parse Object
         // get the menu for 2015-04-01, month starts from 0
-        DailyMenu.listAllMenuByDates(new GregorianCalendar(2015,3,1).getTime(), this, DailyMenu.DAILYMENU_CODE);
+
+        // get the Dates from arguments or default to today
+        Long dateArgs = getArguments().getLong("menuDate");
+        if (dateArgs == null){
+            // get today or current time
+            dateArgs = new Date().getTime();
+        }
+        DailyMenu.listAllMenuByDates(new Date(dateArgs), this, DailyMenu.DAILYMENU_CODE);
     }
 
     @Override
@@ -113,6 +97,11 @@ public class MenuFragment extends TKFragment implements ParseQueryCallback {
 
             aMenuAdapters.clear();//clear existing list
             aMenuAdapters.addAll(recs);
+
+            // TODO... make nice dialog or preventing them before hand
+            if (size == 0){
+                Toast.makeText(getActivity().getApplicationContext(), "No menu for today!", Toast.LENGTH_SHORT).show();
+            }
 
         }
     }

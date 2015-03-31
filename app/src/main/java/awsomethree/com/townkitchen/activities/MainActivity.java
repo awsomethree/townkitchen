@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import awsomethree.com.townkitchen.R;
+import awsomethree.com.townkitchen.fragments.HomeFragment;
 import awsomethree.com.townkitchen.fragments.MenuFragment;
 import awsomethree.com.townkitchen.fragments.OrderFeedbackFragment;
 import awsomethree.com.townkitchen.fragments.OrderHistoryFragment;
@@ -33,10 +34,14 @@ public class MainActivity extends
     protected Toolbar toolbar;
 
     // ORDER OF THE MENU ITEM
-    public static final int MENU_DRAWER_POSITION = 0;
+    public static final int HOME_DRAWER_POSITION = 0;
     public static final int SHOPPINGCART_DRAWER_POSITION = 1;
     public static final int ORDERHISTORY_DRAWER_POSITION = 2;
     public static final int TRACKMYODER_DRAWER_POSITION = 3;
+    public static final int FEEDBACK_DRAWER_POSITION = 4;
+
+    // SOME FRAGMENT WHICH IS NOT VISIBLE IN DRAWER
+    public static final int MENU_DRAWER = 5;
 
     // add to cart, calendar in toolbar
     private Menu menuToolbar;
@@ -63,7 +68,7 @@ public class MainActivity extends
         // setup drawer view
         tkDrawer.setupDrawerConfiguration((ListView) findViewById(R.id.lvDrawer), toolbar, R.id.flContent, this);
         // adding navigation drawer items
-        tkDrawer.addNavItem("Menu", R.mipmap.ic_launcher, "Menu", MenuFragment.class);
+        tkDrawer.addNavItem("Home", R.mipmap.ic_launcher, "Home", HomeFragment.class);
         tkDrawer.addNavItem("Shopping Cart", R.mipmap.ic_launcher, "Shopping Cart",
                 ShoppingCartFragment.class);
         tkDrawer.addNavItem("Order History", R.mipmap.ic_launcher, "My Order", OrderHistoryFragment.class);
@@ -72,6 +77,10 @@ public class MainActivity extends
                 TrackOrderFragment.class, false);
         tkDrawer.addNavItem("Give Feedbacks", R.mipmap.ic_launcher, "Feedback",
                 OrderFeedbackFragment.class, false);
+        // draw the invisible fragment (from drawer perspective)
+        tkDrawer.addNavItem("Menu", R.mipmap.ic_launcher, "Menu",
+                MenuFragment.class, true, false);
+
     }
 
     protected void setMainFragment(){
@@ -105,7 +114,7 @@ public class MainActivity extends
                 tkDrawer.selectDrawerItem(SHOPPINGCART_DRAWER_POSITION);
                 break;
             case R.id.action_calendar :
-                tkDrawer.selectDrawerItem(MENU_DRAWER_POSITION);
+                tkDrawer.selectDrawerItem(HOME_DRAWER_POSITION);
                 break;
         }
 
@@ -180,5 +189,10 @@ public class MainActivity extends
     @Override
     public void changeFragmentTo(int fragmentMenuOption) {
         tkDrawer.selectDrawerItem(fragmentMenuOption);
+    }
+
+    @Override
+    public void changeFragmentTo(int fragmentMenuOption, Bundle args) {
+        tkDrawer.selectDrawerItem(fragmentMenuOption, args);
     }
 }

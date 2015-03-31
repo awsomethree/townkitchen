@@ -96,9 +96,18 @@ public class TKNavigationDrawer extends DrawerLayout {
     }
 
     // addNavItem("First", R.mipmap.ic_one, "First Fragment", FirstFragment.class)
-    public void addNavItem(String navTitle, int icon, String windowTitle, Class<? extends Fragment> fragmentClass, boolean showToolbar) {
-        // adding nav drawer items to array
-        navDrawerItems.add(new NavDrawerItem(navTitle, icon));
+    public void addNavItem(String navTitle, int icon, String windowTitle, Class<? extends Fragment> fragmentClass
+            , boolean showToolbar) {
+        addNavItem(navTitle, icon, windowTitle, fragmentClass, showToolbar, true);
+    }
+
+    // addNavItem("First", R.mipmap.ic_one, "First Fragment", FirstFragment.class)
+    public void addNavItem(String navTitle, int icon, String windowTitle, Class<? extends Fragment> fragmentClass
+            , boolean showToolbar, boolean visible) {
+        if (visible){
+            // adding nav drawer items to array
+            navDrawerItems.add(new NavDrawerItem(navTitle, icon));
+        }
 
         // setup the title and fragment to call, this just holds the metadata
         drawerNavItems.add(new FragmentNavItem(windowTitle, fragmentClass, null, showToolbar));
@@ -107,22 +116,34 @@ public class TKNavigationDrawer extends DrawerLayout {
     /**
      * Swaps fragments in the main content view
      */
-    public void selectDrawerItem(int position) {
+    public void selectDrawerItem(int position){
+        selectDrawerItem(position, null);
+    }
+    public void selectDrawerItem(int position, Bundle args) {
         // Create a new fragment and specify the planet to show based on
         // position
         mainActivity.showAllOption();
+
         FragmentNavItem navItem = drawerNavItems.get(position);
-        renderFragment(navItem.getFragmentClass(), navItem.getFragmentArgs());
+
+        Bundle fragmentArgs = navItem.getFragmentArgs();
+        if (args != null) {
+            fragmentArgs = args;
+        }
+        renderFragment(navItem.getFragmentClass(), fragmentArgs);
 
         // Highlight the selected item, update the title, and close the drawer
-        lvDrawer.setItemChecked(position, true);
-        setTitle(navItem.getTitle());
+        // ONLY if if it is visible in drawer
+        if (navItem.isVisibleInDrawer()){
+            lvDrawer.setItemChecked(position, true);
+            setTitle(navItem.getTitle());
+            closeDrawer(lvDrawer);
+        }
 
         if (!navItem.isShowToolbar()){
             mainActivity.hideAllOption();
         }
 
-        closeDrawer(lvDrawer);
     }
 
     public void renderFragment(Class<? extends Fragment> newFragment, Bundle args){
@@ -170,6 +191,7 @@ public class TKNavigationDrawer extends DrawerLayout {
     private class FragmentNavItem {
         private Class<? extends Fragment> fragmentClass;
         private boolean showToolbar;
+        private boolean visibleInDrawer;
         private String title;
         private Bundle fragmentArgs;
 
@@ -182,10 +204,14 @@ public class TKNavigationDrawer extends DrawerLayout {
         }
 
         public FragmentNavItem(String title, Class<? extends Fragment> fragmentClass, Bundle args, boolean showToolbar) {
+            this(title, fragmentClass, args, showToolbar, true);
+        }
+        public FragmentNavItem(String title, Class<? extends Fragment> fragmentClass, Bundle args, boolean showToolbar, boolean visibleInDrawer) {
             this.fragmentClass = fragmentClass;
             this.fragmentArgs = args;
             this.title = title;
             this.showToolbar = showToolbar;
+            this.visibleInDrawer = visibleInDrawer;
         }
 
         public Class<? extends Fragment> getFragmentClass() {
@@ -201,5 +227,6 @@ public class TKNavigationDrawer extends DrawerLayout {
         }
 
         public boolean isShowToolbar() { return showToolbar; }
+        public boolean isVisibleInDrawer() { return visibleInDrawer;}
     }
 }

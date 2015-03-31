@@ -1,5 +1,6 @@
 package awsomethree.com.townkitchen.abstracts;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import java.util.List;
@@ -22,8 +23,11 @@ public abstract class TKFragment extends Fragment {
     }
 
     public void redirectFragmentTo(int posId){
+        redirectFragmentTo(posId, null);
+    }
+    public void redirectFragmentTo(int posId, Bundle args){
         // redirect to order history
         fragmentNavigationInterface listener = (fragmentNavigationInterface) getActivity();
-        listener.changeFragmentTo(posId);
+        listener.changeFragmentTo(posId, args);
     }
 }
