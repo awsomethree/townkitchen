@@ -1,13 +1,10 @@
-package awsomethree.com.townkitchen.models;
-
-import android.text.Html;
-
-import org.joda.time.DateTime;
+package awsomethree.com.townkitchen.helpers;
 
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import awsomethree.com.townkitchen.models.DailyMenu;
 import awsomethree.com.townkitchen.models.FoodMenu;
 import awsomethree.com.townkitchen.models.Order;
 import awsomethree.com.townkitchen.models.OrderLineItem;
@@ -59,13 +56,14 @@ public class OrderUtils {
         return items;
     }
 
-    public static FoodMenu newFoodMenu(String imgrUrl, String optionName, String optionDesc, double price) {
+    public static DailyMenu newFoodMenu(String imgrUrl, String optionName, String optionDesc, double price) {
+        DailyMenu dailyMenu = new DailyMenu();
         FoodMenu foodMenu = new FoodMenu();
         foodMenu.setImageUrl(imgrUrl);
         foodMenu.setName(optionName);
         foodMenu.setDescription(optionDesc);
         foodMenu.setPrice(price);
-
-        return foodMenu;
+        dailyMenu.setFoodMenu(foodMenu);
+        return dailyMenu;
     }
 }

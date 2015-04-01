@@ -25,6 +25,9 @@ public class DailyMenu extends ParseObject{
     private FoodMenu foodMenu;
     private Daily menuDate;
 
+    // Helper fields
+    private int qtySelected;
+
     public int getQtyStock() {
         return getInt("qtyStock");
     }
@@ -48,6 +51,14 @@ public class DailyMenu extends ParseObject{
 
     public void setMenuDate(Daily menuDate) {
         put("menuDate", menuDate);
+    }
+
+    public int getQtySelected() {
+        return qtySelected;
+    }
+
+    public void setQtySelected(int qtySelected) {
+        this.qtySelected = qtySelected;
     }
 
     // Retrieve all menu by specific date

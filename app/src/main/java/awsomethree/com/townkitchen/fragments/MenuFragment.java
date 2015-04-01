@@ -24,11 +24,15 @@ import awsomethree.com.townkitchen.activities.MainActivity;
 import awsomethree.com.townkitchen.adapters.TKMenuListAdapter;
 import awsomethree.com.townkitchen.interfaces.ParseQueryCallback;
 import awsomethree.com.townkitchen.models.DailyMenu;
+import awsomethree.com.townkitchen.models.Order;
+import awsomethree.com.townkitchen.models.OrderLineItem;
 
 /**
  * Created by smulyono on 3/22/15.
  */
 public class MenuFragment extends TKFragment implements ParseQueryCallback {
+    protected final int TOTAL_ASYNC_QUERY = 2;
+
     protected ListView lvMenu;
     protected ImageView ibDown;
     protected ImageView ibUp;
@@ -36,6 +40,11 @@ public class MenuFragment extends TKFragment implements ParseQueryCallback {
     protected ArrayList<DailyMenu> options;//array of FoodMenu models
     //private ArrayAdapter<String> menuAdapters;
     protected TKMenuListAdapter aMenuAdapters;
+
+
+    protected List<DailyMenu> lrecs;
+    protected List<OrderLineItem> cartItems;
+    protected int asyncQueryCount;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -83,7 +92,14 @@ public class MenuFragment extends TKFragment implements ParseQueryCallback {
             // get today or current time
             dateArgs = new Date().getTime();
         }
+
+        lrecs = new ArrayList<>();
+        cartItems = new ArrayList<>();
+        asyncQueryCount = 0;
+        // Async Query to get the menu
         DailyMenu.listAllMenuByDates(new Date(dateArgs), this, DailyMenu.DAILYMENU_CODE);
+        // Async query to pick up the shopping cart relevant data
+        Order.getShoppingCart(this, Order.ORDER_CODE, getActivity().getApplicationContext());
     }
 
     @Override
@@ -91,18 +107,44 @@ public class MenuFragment extends TKFragment implements ParseQueryCallback {
             int queryCode) {
         if (queryCode == DailyMenu.DAILYMENU_CODE){
             // this is food menu
-            List<DailyMenu> recs = (List<DailyMenu>) parseObjects;
-            int size = (recs != null) ? recs.size() : 0;
+            lrecs = (List<DailyMenu>) parseObjects;
+            int size = (lrecs != null) ? lrecs.size() : 0;
             Log.d(MainActivity.APP, size + " total menu");
-
-            aMenuAdapters.clear();//clear existing list
-            aMenuAdapters.addAll(recs);
 
             // TODO... make nice dialog or preventing them before hand
             if (size == 0){
                 Toast.makeText(getActivity().getApplicationContext(), "No menu for today!", Toast.LENGTH_SHORT).show();
+            } else {
+                asyncQueryCount++;
+                // draw the updated if shopping cart information are ready
+                if (asyncQueryCount == TOTAL_ASYNC_QUERY){
+                    updateMenuBasedOnShoppingCart();
+                }
             }
-
+       } else if (queryCode == Order.ORDER_CODE){
+            // get the shopping cart details
+            asyncQueryCount++;
+            cartItems = (List<OrderLineItem>) parseObjects;
+            if (asyncQueryCount == TOTAL_ASYNC_QUERY){
+                updateMenuBasedOnShoppingCart();
+            }
         }
+    }
+
+    public void updateMenuBasedOnShoppingCart(){
+        // update count based on shopping cart item
+        if (cartItems.size() > 0){
+            for (DailyMenu rec : lrecs){
+                for (OrderLineItem cartItem : cartItems){
+                    if (cartItem.getMenu().getObjectId().equals(rec.getObjectId())){
+                        // update the item
+                        rec.setQtySelected(cartItem.getQty());
+                    }
+                }
+            }
+        }
+
+        aMenuAdapters.clear();//clear existing list
+        aMenuAdapters.addAll(lrecs);
     }
 }

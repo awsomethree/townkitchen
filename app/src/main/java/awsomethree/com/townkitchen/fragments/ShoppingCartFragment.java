@@ -21,7 +21,7 @@ import awsomethree.com.townkitchen.activities.MainActivity;
 import awsomethree.com.townkitchen.adapters.ShoppingCartAdapter;
 import awsomethree.com.townkitchen.dialogs.PaymentDialog;
 import awsomethree.com.townkitchen.interfaces.dialogInterfaceListener;
-import awsomethree.com.townkitchen.models.OrderUtils;
+import awsomethree.com.townkitchen.helpers.OrderUtils;
 import awsomethree.com.townkitchen.models.OrderLineItem;
 import awsomethree.com.townkitchen.models.Payment;
 import awsomethree.com.townkitchen.models.Shipping;

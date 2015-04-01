@@ -17,7 +17,7 @@ import awsomethree.com.townkitchen.R;
 import awsomethree.com.townkitchen.abstracts.TKFragment;
 import awsomethree.com.townkitchen.adapters.OrderLineArrayAdapter;
 import awsomethree.com.townkitchen.models.OrderLineItem;
-import awsomethree.com.townkitchen.models.OrderUtils;
+import awsomethree.com.townkitchen.helpers.OrderUtils;
 
 /**
  * Created by smulyono on 3/22/15.

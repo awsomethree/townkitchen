@@ -8,7 +8,9 @@ import java.util.List;
  * Created by ktruong on 3/29/15.
  */
 public class ShoppingCart {
+
     private List<OrderLineItem> items;
+
     private Shipping shipping;
     private Payment payment;
     private BigDecimal subtotal;

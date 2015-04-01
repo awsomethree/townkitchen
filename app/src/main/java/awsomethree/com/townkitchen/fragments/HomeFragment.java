@@ -65,7 +65,7 @@ public class HomeFragment extends TKFragment implements ParseQueryCallback {
                     // passing this to menu fragment as the date to pass
                     Bundle args = new Bundle();
                     args.putLong("menuDate", itemRec.getMenuDate().getTime());
-                    redirectFragmentTo(MainActivity.MENU_DRAWER, args);
+                    redirectFragmentTo(MainActivity.MENU_DRAWER_POSITION, args);
                 }
             }
         });

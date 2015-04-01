@@ -1,5 +1,7 @@
 package awsomethree.com.townkitchen.adapters;
 
+import com.squareup.picasso.Picasso;
+
 import android.content.Context;
 import android.text.Html;
 import android.text.format.DateUtils;
@@ -9,8 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
 
 import java.util.Date;
 
@@ -63,14 +63,14 @@ public class ShoppingCartAdapter extends ArrayAdapter<OrderLineItem> {
         }
 
         viewHolder.imageUrl.setImageResource(0);
-        Picasso.with(getContext()).load(orderLineItem.getMenu().getImageUrl()).fit().into(viewHolder.imageUrl);
+        Picasso.with(getContext()).load(orderLineItem.getMenu().getFoodMenu().getImageUrl()).fit().into(viewHolder.imageUrl);
 
         Order order = orderLineItem.getOrder();
         Date shipDate = order.getShipDate();
         CharSequence relativeTimeSpanString = DateUtils.getRelativeTimeSpanString(shipDate.getTime(), System.currentTimeMillis(), DateUtils.FORMAT_ABBREV_WEEKDAY);
         viewHolder.shippingDay.setText(relativeTimeSpanString);
-        viewHolder.optionName.setText(orderLineItem.getMenu().getName());
-        viewHolder.optionDesc.setText(Html.fromHtml(orderLineItem.getMenu().getDescription()));
+        viewHolder.optionName.setText(orderLineItem.getMenu().getFoodMenu().getName());
+        viewHolder.optionDesc.setText(Html.fromHtml(orderLineItem.getMenu().getFoodMenu().getDescription()));
 
         return convertView;
     }

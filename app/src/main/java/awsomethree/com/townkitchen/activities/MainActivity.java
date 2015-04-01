@@ -18,6 +18,7 @@ import awsomethree.com.townkitchen.fragments.ShoppingCartFragment;
 import awsomethree.com.townkitchen.fragments.TrackOrderFragment;
 import awsomethree.com.townkitchen.interfaces.fragmentNavigationInterface;
 import awsomethree.com.townkitchen.layouts.TKNavigationDrawer;
+import awsomethree.com.townkitchen.models.Order;
 
 
 /**
@@ -41,7 +42,7 @@ public class MainActivity extends
     public static final int FEEDBACK_DRAWER_POSITION = 4;
 
     // SOME FRAGMENT WHICH IS NOT VISIBLE IN DRAWER
-    public static final int MENU_DRAWER = 5;
+    public static final int MENU_DRAWER_POSITION = 5;
 
     // add to cart, calendar in toolbar
     private Menu menuToolbar;
@@ -61,6 +62,9 @@ public class MainActivity extends
         if (savedInstanceState == null){
             setMainFragment();
         }
+
+        // Prepare default shopping cart
+        Order.prepareShoppingCart(getApplicationContext());
     }
 
     private void settingUpDrawerView() {

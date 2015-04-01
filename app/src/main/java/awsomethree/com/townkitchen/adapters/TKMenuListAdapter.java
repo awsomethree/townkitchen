@@ -1,5 +1,7 @@
 package awsomethree.com.townkitchen.adapters;
 
+import com.squareup.picasso.Picasso;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,14 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import awsomethree.com.townkitchen.R;
 import awsomethree.com.townkitchen.models.DailyMenu;
+import awsomethree.com.townkitchen.models.Order;
 
 /**
  * Created by long on 3/8/15.
@@ -33,7 +33,7 @@ public class TKMenuListAdapter extends ArrayAdapter<DailyMenu> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // 1. Get the item from the list
-        DailyMenu option = getItem(position);
+        final DailyMenu option = getItem(position);
 
         // 2. Find or inflate the template
         if(convertView == null){//need to inflate? Not in recycle views pool
@@ -47,7 +47,8 @@ public class TKMenuListAdapter extends ArrayAdapter<DailyMenu> {
         TextView tvPrice = (TextView) convertView.findViewById(R.id.tvPrice);
         final TextView tvItems = (TextView) convertView.findViewById(R.id.tvItems);
 
-        tvItems.setText("3");//default value here
+        tvItems.setText(Integer.toString(option.getQtySelected()));//default value here
+
         ImageView ibDown = (ImageView) convertView.findViewById(R.id.ibDown);
         ImageView ibUp = (ImageView) convertView.findViewById(R.id.ibUp);
 
@@ -55,22 +56,20 @@ public class TKMenuListAdapter extends ArrayAdapter<DailyMenu> {
         ibUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(),
-                        "Up",
-                        Toast.LENGTH_LONG).show();
-
                 tvItems.setText( ""+(Integer.parseInt(tvItems.getText().toString())+1) );
-
+                Order.addToShoppingCart(option, Integer.parseInt(tvItems.getText().toString()), v.getContext());
             }
         });
         ibDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(),
-                        "down",
-                        Toast.LENGTH_LONG).show();
+                int newItemQty = Integer.parseInt(tvItems.getText().toString())-1;
+                if (newItemQty < 0){
+                    newItemQty = 0;
+                }
+                tvItems.setText(Integer.toString(newItemQty));//default value here
 
-                tvItems.setText(""+(Integer.parseInt(tvItems.getText().toString())-1) );//default value here
+                Order.addToShoppingCart(option, Integer.parseInt(tvItems.getText().toString()), v.getContext());
             }
         });
 

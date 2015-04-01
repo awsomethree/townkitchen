@@ -11,21 +11,10 @@ public class OrderLineItem extends ParseObject{
     public static final int ORDERLINEITEM_CODE = 3;
 
     private Order order;
-    private FoodMenu menu;
+    private DailyMenu menu;
     private int qty;
     private double price; // also need to keep this so that in later price changes, this history still intact
     private double priceTotal;
-
-    // rating / feedback for the specific order
-    private Feedback feedback;
-
-    public Feedback getFeedback() {
-        return (Feedback) getParseObject("feedback");
-    }
-
-    public void setFeedback(Feedback feedback) {
-        put("feedback", feedback);
-    }
 
     public Order getOrder() {
         return (Order) getParseObject("Order");
@@ -35,12 +24,12 @@ public class OrderLineItem extends ParseObject{
         put("Order", order);
     }
 
-    public FoodMenu getMenu() {
-        return (FoodMenu) getParseObject("FoodMenu");
+    public DailyMenu getMenu() {
+        return (DailyMenu) getParseObject("DailyMenu");
     }
 
-    public void setMenu(FoodMenu menu) {
-        put("FoodMenu", menu);
+    public void setMenu(DailyMenu menu) {
+        put("DailyMenu", menu);
     }
 
     public int getQty() {
