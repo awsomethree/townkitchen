@@ -162,7 +162,7 @@ public class ShoppingCart {
                     shoppingCart = new Order();
                     shoppingCart.setObjectId(CART_SPECIAL_ID);
                     shoppingCart.setDeliveryStatus(ShoppingCart.CART_STATUS);
-                    shoppingCart.pinInBackground(new SaveCallback() {
+                    shoppingCart.pinInBackground(CART_STATUS, new SaveCallback() {
 //                    shoppingCart.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
@@ -184,8 +184,8 @@ public class ShoppingCart {
         edit.remove("shoppingCartId");
         edit.commit();
         // remove shopping cart model (unpin)
-        Order.unpinAllInBackground();
         OrderLineItem.unpinAllInBackground();
+//        Order.unpinAllInBackground(CART_STATUS);
         ShoppingCart.prepareShoppingCart(localContext);
     }
 
