@@ -18,7 +18,7 @@ import awsomethree.com.townkitchen.fragments.ShoppingCartFragment;
 import awsomethree.com.townkitchen.fragments.TrackOrderFragment;
 import awsomethree.com.townkitchen.interfaces.fragmentNavigationInterface;
 import awsomethree.com.townkitchen.layouts.TKNavigationDrawer;
-import awsomethree.com.townkitchen.models.Order;
+import awsomethree.com.townkitchen.models.ShoppingCart;
 
 
 /**
@@ -64,7 +64,7 @@ public class MainActivity extends
         }
 
         // Prepare default shopping cart
-        Order.prepareShoppingCart(getApplicationContext());
+        ShoppingCart.prepareShoppingCart(getApplicationContext());
     }
 
     private void settingUpDrawerView() {

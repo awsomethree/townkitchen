@@ -14,7 +14,7 @@ import java.util.List;
 
 import awsomethree.com.townkitchen.R;
 import awsomethree.com.townkitchen.models.DailyMenu;
-import awsomethree.com.townkitchen.models.Order;
+import awsomethree.com.townkitchen.models.ShoppingCart;
 
 /**
  * Created by long on 3/8/15.
@@ -57,7 +57,7 @@ public class TKMenuListAdapter extends ArrayAdapter<DailyMenu> {
             @Override
             public void onClick(View v) {
                 tvItems.setText( ""+(Integer.parseInt(tvItems.getText().toString())+1) );
-                Order.addToShoppingCart(option, Integer.parseInt(tvItems.getText().toString()), v.getContext());
+                ShoppingCart.addToShoppingCart(option, Integer.parseInt(tvItems.getText().toString()), v.getContext());
             }
         });
         ibDown.setOnClickListener(new View.OnClickListener() {
@@ -69,7 +69,9 @@ public class TKMenuListAdapter extends ArrayAdapter<DailyMenu> {
                 }
                 tvItems.setText(Integer.toString(newItemQty));//default value here
 
-                Order.addToShoppingCart(option, Integer.parseInt(tvItems.getText().toString()), v.getContext());
+                ShoppingCart
+                        .addToShoppingCart(option, Integer.parseInt(tvItems.getText().toString()),
+                                v.getContext());
             }
         });
 

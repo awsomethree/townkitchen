@@ -24,8 +24,8 @@ import awsomethree.com.townkitchen.activities.MainActivity;
 import awsomethree.com.townkitchen.adapters.TKMenuListAdapter;
 import awsomethree.com.townkitchen.interfaces.ParseQueryCallback;
 import awsomethree.com.townkitchen.models.DailyMenu;
-import awsomethree.com.townkitchen.models.Order;
 import awsomethree.com.townkitchen.models.OrderLineItem;
+import awsomethree.com.townkitchen.models.ShoppingCart;
 
 /**
  * Created by smulyono on 3/22/15.
@@ -99,7 +99,7 @@ public class MenuFragment extends TKFragment implements ParseQueryCallback {
         // Async Query to get the menu
         DailyMenu.listAllMenuByDates(new Date(dateArgs), this, DailyMenu.DAILYMENU_CODE);
         // Async query to pick up the shopping cart relevant data
-        Order.getShoppingCart(this, Order.ORDER_CODE, getActivity().getApplicationContext());
+        ShoppingCart.getShoppingCart(this, ShoppingCart.SHOPPING_CART_CODE, getActivity().getApplicationContext());
     }
 
     @Override
@@ -121,10 +121,10 @@ public class MenuFragment extends TKFragment implements ParseQueryCallback {
                     updateMenuBasedOnShoppingCart();
                 }
             }
-       } else if (queryCode == Order.ORDER_CODE){
+       } else if (queryCode == ShoppingCart.SHOPPING_CART_CODE){
             // get the shopping cart details
-            asyncQueryCount++;
             cartItems = (List<OrderLineItem>) parseObjects;
+            asyncQueryCount++;
             if (asyncQueryCount == TOTAL_ASYNC_QUERY){
                 updateMenuBasedOnShoppingCart();
             }
@@ -133,7 +133,7 @@ public class MenuFragment extends TKFragment implements ParseQueryCallback {
 
     public void updateMenuBasedOnShoppingCart(){
         // update count based on shopping cart item
-        if (cartItems.size() > 0){
+        if (cartItems != null && cartItems.size() > 0){
             for (DailyMenu rec : lrecs){
                 for (OrderLineItem cartItem : cartItems){
                     if (cartItem.getMenu().getObjectId().equals(rec.getObjectId())){

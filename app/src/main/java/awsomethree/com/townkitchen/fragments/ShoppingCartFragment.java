@@ -1,5 +1,8 @@
 package awsomethree.com.townkitchen.fragments;
 
+import com.parse.ParseException;
+import com.parse.ParseObject;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Html;
@@ -13,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import awsomethree.com.townkitchen.R;
@@ -20,8 +24,8 @@ import awsomethree.com.townkitchen.abstracts.TKFragment;
 import awsomethree.com.townkitchen.activities.MainActivity;
 import awsomethree.com.townkitchen.adapters.ShoppingCartAdapter;
 import awsomethree.com.townkitchen.dialogs.PaymentDialog;
+import awsomethree.com.townkitchen.interfaces.ParseQueryCallback;
 import awsomethree.com.townkitchen.interfaces.dialogInterfaceListener;
-import awsomethree.com.townkitchen.helpers.OrderUtils;
 import awsomethree.com.townkitchen.models.OrderLineItem;
 import awsomethree.com.townkitchen.models.Payment;
 import awsomethree.com.townkitchen.models.Shipping;
@@ -30,10 +34,9 @@ import awsomethree.com.townkitchen.models.ShoppingCart;
 /**
  * Created by smulyono on 3/22/15.
  */
-public class ShoppingCartFragment extends TKFragment implements dialogInterfaceListener {
+public class ShoppingCartFragment extends TKFragment implements dialogInterfaceListener,ParseQueryCallback {
     protected ListView lvMenu;
 
-    //    private ArrayAdapter<String> menuAdapters;
     private Button btnCheckout;
     private ShoppingCartAdapter shoppingCartAdapter;
     private View shoppingCartFooterView;
@@ -75,8 +78,7 @@ public class ShoppingCartFragment extends TKFragment implements dialogInterfaceL
         // setup the adapters (Using basic)
 //        menuAdapters = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, menus);
 
-        ShoppingCart shoppingCart = getShoppingCart();
-        shoppingCartAdapter = new ShoppingCartAdapter(getActivity(), shoppingCart);
+        shoppingCartAdapter = new ShoppingCartAdapter(getActivity(), getEmptyShoppingCart());
         lvMenu.setAdapter(shoppingCartAdapter);
         lvMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -99,7 +101,7 @@ public class ShoppingCartFragment extends TKFragment implements dialogInterfaceL
             }
         });
 
-        updateShoppingCartFooter(shoppingCart);
+        getShoppingCart();
     }
 
     private void updateShoppingCartFooter(ShoppingCart shoppingCart) {
@@ -115,6 +117,10 @@ public class ShoppingCartFragment extends TKFragment implements dialogInterfaceL
     @Override
     public void onSuccessDialog() {
         Toast.makeText(getActivity(), "You make payment and redirected to Order History", Toast.LENGTH_SHORT).show();
+
+        // Clearout the shopping cart
+        ShoppingCart.clearShoppingCart(getActivity().getApplicationContext());
+
         // redirect to order history
         redirectFragmentTo(MainActivity.ORDERHISTORY_DRAWER_POSITION);
     }
@@ -125,31 +131,51 @@ public class ShoppingCartFragment extends TKFragment implements dialogInterfaceL
     }
 
     /**
+     * Because of the async nature of Parse query, we will update the adapters after the
+     * parse query is done. This method will provide empty placeholder
+     * @return
+     */
+    public ShoppingCart getEmptyShoppingCart(){
+        return new ShoppingCart(new ArrayList<OrderLineItem>());
+    }
+
+    /**
      * TODO read from Parse to get item added
      *
      * @return
      */
-    public ShoppingCart getShoppingCart() {
+    public void getShoppingCart() {
         // stuff for now
+        ShoppingCart.getShoppingCart(this, ShoppingCart.SHOPPING_CART_CODE, getActivity().getApplicationContext());
+    }
 
-        List<OrderLineItem> orderLineItems = OrderUtils.getStuffOrder();
-        ShoppingCart shoppingCart = new ShoppingCart(orderLineItems);
+    @Override
+    public void parseQueryDone(List<? extends ParseObject> parseObjects, ParseException e,
+            int queryCode) {
+        if (queryCode == ShoppingCart.SHOPPING_CART_CODE){
+            List<OrderLineItem> orderLineItems = (List<OrderLineItem>) parseObjects;
 
-        Shipping shipInfo = new Shipping();
-        shipInfo.setAddressLine1("1235 Bay St");
-        shipInfo.setApt("");
-        shipInfo.setZip(94404);
-        shipInfo.setState("CA");
+            ShoppingCart shoppingCart = new ShoppingCart(orderLineItems);
 
-        shoppingCart.setShipping(shipInfo);
+            Shipping shipInfo = new Shipping();
+            shipInfo.setAddressLine1("1235 Bay St");
+            shipInfo.setApt("");
+            shipInfo.setZip(94404);
+            shipInfo.setState("CA");
 
-        Payment payment = new Payment();
-        shoppingCart.setPayment(payment);
+            shoppingCart.setShipping(shipInfo);
 
-        shoppingCart.calculateTotal();
+            Payment payment = new Payment();
+            shoppingCart.setPayment(payment);
 
-        Log.i(this.getClass().getName(), "stuff shopping cart " + shoppingCart);
+            shoppingCart.calculateTotal();
 
-        return shoppingCart;
+            Log.i(this.getClass().getName(), "stuff shopping cart " + shoppingCart);
+
+            // update footer
+            updateShoppingCartFooter(shoppingCart);
+            shoppingCartAdapter.clear();
+            shoppingCartAdapter.addAll(orderLineItems);
+        }
     }
 }
