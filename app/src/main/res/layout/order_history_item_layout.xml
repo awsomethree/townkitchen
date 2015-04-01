@@ -43,49 +43,13 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
-    <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:textAppearance="?android:attr/textAppearanceSmall"-->
-        <!--android:text="@string/tweet_since"-->
-        <!--android:id="@+id/tweetSince"-->
-        <!--android:layout_alignBottom="@+id/screenName"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_alignParentEnd="true"-->
-        <!--android:layout_alignParentTop="true" />-->
-
-    <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:textAppearance="?android:attr/textAppearanceSmall"-->
-        <!--android:text="@string/tweet_desc"-->
-        <!--android:id="@+id/tweetDescription"-->
-        <!--android:autoLink="all"-->
-        <!--android:linksClickable="true"-->
-        <!--android:layout_below="@+id/userName"-->
-        <!--android:layout_alignLeft="@+id/userName"-->
-        <!--android:layout_alignStart="@+id/userName" />-->
-
-    <!--<ImageView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/favoriteIcon"-->
-        <!--android:contentDescription="@string/favourite_icon"-->
-        <!--android:src="@drawable/favourite_small_star"-->
-        <!--android:paddingRight="2dp"-->
-        <!--android:layout_below="@+id/tweetDescription"-->
-        <!--android:layout_alignLeft="@+id/tweetDescription"-->
-        <!--android:layout_alignStart="@+id/tweetDescription" />-->
-
-    <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:textAppearance="?android:attr/textAppearanceSmall"-->
-        <!--android:id="@+id/favoriteCount"-->
-        <!--android:layout_alignTop="@+id/favoriteIcon"-->
-        <!--android:layout_toRightOf="@+id/favoriteIcon"-->
-        <!--android:layout_alignBottom="@+id/favoriteIcon"-->
-        <!--/>-->
-
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="price"
+        android:id="@+id/tvPrice"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

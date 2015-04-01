@@ -1,7 +1,5 @@
 package awsomethree.com.townkitchen.adapters;
 
-import com.squareup.picasso.Picasso;
-
 import android.content.Context;
 import android.text.Html;
 import android.text.format.DateUtils;
@@ -11,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.Date;
 import java.util.List;
@@ -28,7 +28,7 @@ public class OrderLineArrayAdapter extends ArrayAdapter<OrderLineItem> {
         public TextView shippingDay;
         public TextView optionName;
         public TextView optionDesc;
-        public TextView orderHistoryFooter;
+        public TextView price;
     }
 
     public OrderLineArrayAdapter(Context context, List<OrderLineItem> tweets) {
@@ -55,6 +55,8 @@ public class OrderLineArrayAdapter extends ArrayAdapter<OrderLineItem> {
             viewHolder.shippingDay = (TextView)convertView.findViewById(R.id.tvShippingDay);
             viewHolder.optionName = (TextView)convertView.findViewById(R.id.tvOptionName);
             viewHolder.optionDesc = (TextView)convertView.findViewById(R.id.tvOptionDesc);
+            viewHolder.price = (TextView)convertView.findViewById(R.id.tvPrice);
+
 //            viewHolder.orderHistoryFooter = (TextView)convertView.findViewById(R.id.tvOrderHistoryFooter);
 
             convertView.setTag(viewHolder);
@@ -72,8 +74,12 @@ public class OrderLineArrayAdapter extends ArrayAdapter<OrderLineItem> {
 
         Order order = orderLineItem.getOrder();
         Date shipDate = order.getShipDate();
-        CharSequence relativeTimeSpanString = DateUtils.getRelativeTimeSpanString(shipDate.getTime(), System.currentTimeMillis(), DateUtils.FORMAT_ABBREV_WEEKDAY);
-        viewHolder.shippingDay.setText(relativeTimeSpanString);
+
+        if (shipDate != null){
+            CharSequence relativeTimeSpanString = DateUtils.getRelativeTimeSpanString(shipDate.getTime(), System.currentTimeMillis(), DateUtils.FORMAT_ABBREV_WEEKDAY);
+            viewHolder.shippingDay.setText(relativeTimeSpanString);
+        }
+        viewHolder.price.setText("$"+orderLineItem.getPrice());
         viewHolder.optionName.setText(orderLineItem.getMenu().getFoodMenu().getName());
         viewHolder.optionDesc.setText(Html.fromHtml(orderLineItem.getMenu().getFoodMenu().getDescription()));
 //        viewHolder.orderHistoryFooter.setText(Html.fromHtml("Want To Change Order ? Call <br> <b>1-800-town-app</b>"));
