@@ -3,6 +3,7 @@ package awsomethree.com.townkitchen.models;
 import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
@@ -374,7 +375,12 @@ public class ShoppingCart {
             OrderLineItem orderLI = shoppingCartModel.getItems().get(0);
 
             Order newOrder = new Order();
-            newOrder.setDeliveryAddressStr(shoppingCartModel.getShippingAddress());
+            Shipping shipping = shoppingCartModel.getShipping();
+            newOrder.setDeliveryAddressStr(shipping.getAddressLine1() + " " + shipping.getApt()
+                + " , " + shipping.getState() + " " + Integer.toString(shipping.getZip()));
+
+            newOrder.setDeliveryCurrentLocation(new ParseGeoPoint(37.804364, -122.271114));
+
             newOrder.setDeliveryStatus(Order.PENDING_STATUS);
             newOrder.setPriceAfterTax(shoppingCartModel.getTotal());
             newOrder.setTotalOrder(orderQty);

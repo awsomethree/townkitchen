@@ -6,17 +6,10 @@ import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.SaveCallback;
-
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.util.Log;
 
 import java.util.Date;
 import java.util.List;
 
-import awsomethree.com.townkitchen.activities.MainActivity;
 import awsomethree.com.townkitchen.interfaces.ParseQueryCallback;
 
 /**
@@ -27,8 +20,10 @@ public class Order extends ParseObject{
     public static final int ORDER_CODE = 2;
 
     public static final String DELIVERED_STATUS = "delivered";
-    public static final String IN_DELIVERY_STATUS  = "in-delivery";
+    public static final String OUT_FOR_DELIVERY_STATUS = "out-for-delivery";
     public static final String PENDING_STATUS   = "pending";
+
+    public static final String START_DELIVERY_ADDRESS = "Oakland, CA 94602";
 
     private Date transactionDate;
     private double priceBeforeTax;
@@ -37,6 +32,25 @@ public class Order extends ParseObject{
     private int totalOrder;
     private String deliveryStatus;
     private String deliveryAddressStr;// delivery address in string format
+    private String deliveryAddressState;
+    private String deliveryAddressZip;
+
+    public String getDeliveryAddressState() {
+        return getString("deliveryAddressState");
+    }
+
+    public void setDeliveryAddressState(String deliveryAddressState) {
+        put("deliveryAddressState", deliveryAddressState);
+    }
+
+    public String getDeliveryAddressZip() {
+        return getString("deliveryAddressZip");
+    }
+
+    public void setDeliveryAddressZip(String deliveryAddressZip) {
+        put("deliveryAddressZip", deliveryAddressZip);
+    }
+
     private ParseGeoPoint deliveryAddressGeo; // delivery address in Geo format
 
     // delivery phase
@@ -118,7 +132,7 @@ public class Order extends ParseObject{
 
     public static void getOrderInDelivery(final ParseQueryCallback callback, final int queryCode){
         ParseQuery<Order> query = ParseQuery.getQuery(Order.class);
-        query.whereEqualTo("deliveryStatus", IN_DELIVERY_STATUS);
+        query.whereEqualTo("deliveryStatus", OUT_FOR_DELIVERY_STATUS);
         query.orderByAscending("createdAt");
         query.findInBackground(new FindCallback<Order>() {
             @Override

@@ -1,5 +1,7 @@
 package awsomethree.com.townkitchen.adapters;
 
+import com.squareup.picasso.Picasso;
+
 import android.content.Context;
 import android.text.Html;
 import android.text.format.DateUtils;
@@ -9,8 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
 
 import java.util.Date;
 import java.util.List;
@@ -76,11 +76,13 @@ public class OrderLineArrayAdapter extends ArrayAdapter<OrderLineItem> {
         Picasso.with(getContext()).load(orderLineItem.getMenu().getFoodMenu().getImageUrl()).fit().into(viewHolder.imageUrl);
 
         Order order = orderLineItem.getOrder();
-        Date shipDate = order.getShipDate();
 
-        if (shipDate != null){
-            CharSequence relativeTimeSpanString = DateUtils.getRelativeTimeSpanString(shipDate.getTime(), System.currentTimeMillis(), DateUtils.FORMAT_ABBREV_WEEKDAY);
-            viewHolder.shippingDay.setText(relativeTimeSpanString);
+        if (order != null){
+            Date shipDate = order.getShipDate();
+            if (shipDate != null){
+                CharSequence relativeTimeSpanString = DateUtils.getRelativeTimeSpanString(shipDate.getTime(), System.currentTimeMillis(), DateUtils.FORMAT_ABBREV_WEEKDAY);
+                viewHolder.shippingDay.setText(relativeTimeSpanString);
+            }
         }
         viewHolder.price.setText("$"+orderLineItem.getPrice());
         viewHolder.optionName.setText(orderLineItem.getMenu().getFoodMenu().getName());
