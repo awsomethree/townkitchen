@@ -1,5 +1,6 @@
 package awsomethree.com.townkitchen.fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Html;
@@ -17,7 +18,9 @@ import com.parse.ParseObject;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import awsomethree.com.townkitchen.R;
 import awsomethree.com.townkitchen.abstracts.TKFragment;
@@ -35,7 +38,8 @@ public class OrderHistoryFragment extends TKFragment implements ParseQueryCallba
     private OrderLineArrayAdapter orderLineArrayAdapter;
     private List<OrderLineItem> orderLines;
     private TextView orderHistoryFooter;
-    private View orderHistoryFooterView;
+    public static Map orderLineItemMap = new HashMap<String, Integer>();
+    public static ArrayList colorArray = new ArrayList();
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -49,10 +53,16 @@ public class OrderHistoryFragment extends TKFragment implements ParseQueryCallba
 
     private void setupView(View v, Bundle savedInstanceState){
         //todo viewholder for footer
-        orderHistoryFooterView = getLayoutInflater(savedInstanceState).inflate(R.layout.order_history_footer_layout, null);
-        orderHistoryFooter = (TextView) orderHistoryFooterView.findViewById(R.id.tvOrderHistoryFooter);
+        orderHistoryFooter = (TextView) v.findViewById(R.id.tvOrderHistoryFooter);
         lvMenu = (ListView) v.findViewById(R.id.lvOrderHistory);
-        lvMenu.addFooterView(orderHistoryFooterView);
+
+        colorArray.add(Color.BLUE);
+        colorArray.add(Color.CYAN);
+        colorArray.add(Color.GREEN);
+        colorArray.add(Color.MAGENTA);
+        colorArray.add(Color.YELLOW);
+        colorArray.add(Color.WHITE);
+        colorArray.add(Color.RED);
     }
 
     private void setupAdaptersAndListeners() {
@@ -97,6 +107,7 @@ public class OrderHistoryFragment extends TKFragment implements ParseQueryCallba
 
             orderLineArrayAdapter.clear();//clear existing list
             orderLineArrayAdapter.addAll(recs);
+
         }
     }
 }

@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 import awsomethree.com.townkitchen.R;
+import awsomethree.com.townkitchen.fragments.OrderHistoryFragment;
 import awsomethree.com.townkitchen.models.Order;
 import awsomethree.com.townkitchen.models.OrderLineItem;
 
@@ -32,7 +33,7 @@ public class OrderLineArrayAdapter extends ArrayAdapter<OrderLineItem> {
     }
 
     public OrderLineArrayAdapter(Context context, List<OrderLineItem> tweets) {
-        super(context, android.R.layout.simple_list_item_1, tweets);
+        super(context, R.layout.fragment_order_history, tweets);
     }
 
     /**
@@ -65,6 +66,8 @@ public class OrderLineArrayAdapter extends ArrayAdapter<OrderLineItem> {
         }
 
         viewHolder.imageUrl.setImageResource(0);
+
+
 //        Transformation transformation = new RoundedTransformationBuilder()
 //                .borderColor(Color.TRANSPARENT).scaleType(ImageView.ScaleType.FIT_CENTER)
 //                .borderWidthDp(3)
@@ -82,8 +85,17 @@ public class OrderLineArrayAdapter extends ArrayAdapter<OrderLineItem> {
         viewHolder.price.setText("$"+orderLineItem.getPrice());
         viewHolder.optionName.setText(orderLineItem.getMenu().getFoodMenu().getName());
         viewHolder.optionDesc.setText(Html.fromHtml(orderLineItem.getMenu().getFoodMenu().getDescription()));
-//        viewHolder.orderHistoryFooter.setText(Html.fromHtml("Want To Change Order ? Call <br> <b>1-800-town-app</b>"));
 
+        //group the line items by their order's id
+        if(OrderHistoryFragment.orderLineItemMap.containsKey(orderLineItem.getOrder().getObjectId())) {
+            convertView.setBackgroundColor( Integer.parseInt(OrderHistoryFragment.orderLineItemMap.get(orderLineItem.getOrder().getObjectId()).toString()) );
+        }
+        else{
+            Integer index = OrderHistoryFragment.orderLineItemMap.size()%OrderHistoryFragment.colorArray.size();
+            OrderHistoryFragment.orderLineItemMap.put(orderLineItem.getOrder().getObjectId(), OrderHistoryFragment.colorArray.get(index));
+            convertView.setBackgroundColor( Integer.parseInt(OrderHistoryFragment.orderLineItemMap.get(orderLineItem.getOrder().getObjectId()).toString()) );
+
+        }
         return convertView;
     }
 }
