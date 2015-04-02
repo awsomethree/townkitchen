@@ -1,5 +1,7 @@
 package awsomethree.com.townkitchen.models;
 
+import android.content.Context;
+
 import com.parse.FindCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseException;
@@ -7,6 +9,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
@@ -20,7 +23,7 @@ import awsomethree.com.townkitchen.interfaces.ParseQueryCallback;
 public class Feedback extends ParseObject{
     public static final int FEED_CODE = 4;
     public Feedback() { super();}
-
+    private List<Feedback> items;
     private FoodMenu foodMenu;
     private double rating;
     private String comment;
@@ -77,5 +80,17 @@ public class Feedback extends ParseObject{
                 callback.parseQueryDone(feedbacks, e, queryCode);
             }
         });
+    }
+
+    public List<OrderLineItem> getItems() {
+        return (items != null) ? items : Collections.EMPTY_LIST;
+    }
+
+    //Save the feedback
+    public static void saveFeedback(final ParseQueryCallback callback,
+                                    final int queryCode,
+                                    final Feedback feedbackModel,
+                                    Context ctx){
+
     }
 }

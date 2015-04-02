@@ -101,12 +101,18 @@ public class GiveFeedbackDialog extends DialogFragment implements ParseQueryCall
                     }
 
                     if (mListener != null && allValid) {
-                        mListener.onSuccessDialog();
-                        getDialog().dismiss();
+                        //mListener.onSuccessDialog();
+                        //getDialog().dismiss();
+                        saveFeedback();
                     }
                 }
             });
         }
+    }
+
+
+    public void saveFeedback(){
+        Feedback.saveFeedback(this, Feedback.FEED_CODE, mfeedback, getDialog().getContext());
     }
 
 
