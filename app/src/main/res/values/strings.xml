@@ -24,6 +24,9 @@
 
     <string name="CreditCard">CC Number</string>
 
+    <string name="FeedbackText">Your Comment:</string>
+
+
     <item name="shippingCostDesc" type="id">SHIPPING</item>
 
 </resources>

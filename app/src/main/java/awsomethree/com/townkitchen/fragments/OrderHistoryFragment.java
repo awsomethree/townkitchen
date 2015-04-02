@@ -26,13 +26,16 @@ import awsomethree.com.townkitchen.R;
 import awsomethree.com.townkitchen.abstracts.TKFragment;
 import awsomethree.com.townkitchen.activities.MainActivity;
 import awsomethree.com.townkitchen.adapters.OrderLineArrayAdapter;
+import awsomethree.com.townkitchen.dialogs.GiveFeedbackDialog;
 import awsomethree.com.townkitchen.interfaces.ParseQueryCallback;
+import awsomethree.com.townkitchen.interfaces.dialogInterfaceListener;
+import awsomethree.com.townkitchen.models.Feedback;
 import awsomethree.com.townkitchen.models.OrderLineItem;
 
 /**
  * Created by smulyono on 3/22/15.
  */
-public class OrderHistoryFragment extends TKFragment implements ParseQueryCallback {
+public class OrderHistoryFragment extends TKFragment implements dialogInterfaceListener, ParseQueryCallback {
     protected ListView lvMenu;
 //    private ArrayAdapter<String> menuAdapters;
     private OrderLineArrayAdapter orderLineArrayAdapter;
@@ -40,6 +43,7 @@ public class OrderHistoryFragment extends TKFragment implements ParseQueryCallba
     private TextView orderHistoryFooter;
     public static Map orderLineItemMap = new HashMap<String, Integer>();
     public static ArrayList colorArray = new ArrayList();
+    protected Feedback feedbackModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -76,17 +80,38 @@ public class OrderHistoryFragment extends TKFragment implements ParseQueryCallba
 
 
         lvMenu.setAdapter(orderLineArrayAdapter);
+
+        //setup for feedback dialog onclick on Item
         lvMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // show dialogs for review
-                Toast.makeText(getActivity(), "clicked!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "clicked!", Toast.LENGTH_SHORT).show();
+                // open up new dialogs for paying
+                GiveFeedbackDialog feedbackDialog = GiveFeedbackDialog.newInstance(getCurrentFragment(), feedbackModel);
+                feedbackDialog.show(getFragmentManager(), "Pay");
             }
         });
 
         orderHistoryFooter.setText(Html.fromHtml("Want To Change Order ? Call <br> <b>1-800-town-app</b>"));
         // get the menu for 2015-04-01, month starts from 0
         OrderLineItem.listAllOrderLineItemsByDates(new GregorianCalendar(2015, 3, 1).getTime(), this, OrderLineItem.ORDERLINEITEM_CODE);
+
+
+
+    }
+
+    @Override
+    public void onSuccessDialog() {
+        Toast.makeText(getActivity(), "Ready for your feedback!", Toast.LENGTH_SHORT).show();
+
+        // redirect to order history
+        redirectFragmentTo(MainActivity.ORDERHISTORY_DRAWER_POSITION);
+    }
+
+    @Override
+    public void onFailDialog() {
+        Toast.makeText(getActivity(), "Seriously? No feedback?", Toast.LENGTH_SHORT).show();
     }
 
     /**

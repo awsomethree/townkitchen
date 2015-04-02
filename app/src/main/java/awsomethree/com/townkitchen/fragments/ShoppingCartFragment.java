@@ -1,8 +1,5 @@
 package awsomethree.com.townkitchen.fragments;
 
-import com.parse.ParseException;
-import com.parse.ParseObject;
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Html;
@@ -15,6 +12,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.parse.ParseException;
+import com.parse.ParseObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +34,7 @@ import awsomethree.com.townkitchen.models.ShoppingCart;
 /**
  * Created by smulyono on 3/22/15.
  */
-public class ShoppingCartFragment extends TKFragment implements dialogInterfaceListener,ParseQueryCallback {
+public class ShoppingCartFragment extends TKFragment implements dialogInterfaceListener, ParseQueryCallback {
     protected ListView lvMenu;
 
     private Button btnCheckout;

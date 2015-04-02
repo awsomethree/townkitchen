@@ -90,6 +90,7 @@ public class OrderLineItem extends ParseObject{
         query.include("Order");
         query.include("DailyMenu");
         query.include("DailyMenu.FoodMenu");
+        query.include("Feedback");
         query.findInBackground(new FindCallback<OrderLineItem>() {
             @Override
             public void done(List<OrderLineItem> orderLineItem, ParseException e) {

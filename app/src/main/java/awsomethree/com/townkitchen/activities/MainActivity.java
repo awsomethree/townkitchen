@@ -78,11 +78,11 @@ public class MainActivity extends
         tkDrawer.addNavItem("Home", R.mipmap.ic_launcher, "Home", HomeFragment.class);
         tkDrawer.addNavItem("Shopping Cart", R.mipmap.ic_launcher, "Shopping Cart",
                 ShoppingCartFragment.class);
-        tkDrawer.addNavItem("Order History", R.mipmap.ic_launcher, "My Order", OrderHistoryFragment.class);
+        tkDrawer.addNavItem("Order History", R.mipmap.ic_launcher, "Order History", OrderHistoryFragment.class);
         // Below pages, will not showing the other navigation (calendar and add shopping cart)
         tkDrawer.addNavItem("Track My Order", R.mipmap.ic_launcher, "Track My Order",
                 TrackOrderFragment.class, false);
-        tkDrawer.addNavItem("Give Feedbacks", R.mipmap.ic_launcher, "Feedback",
+        tkDrawer.addNavItem("Feedbacks History", R.mipmap.ic_launcher, "Feedbacks History",
                 OrderFeedbackFragment.class, false);
         // draw the invisible fragment (from drawer perspective)
         tkDrawer.addNavItem("Menu", R.mipmap.ic_launcher, "Menu",
