@@ -29,6 +29,8 @@ public class ShoppingCartAdapter extends ArrayAdapter<OrderLineItem> {
         public TextView shippingDay;
         public TextView optionName;
         public TextView optionDesc;
+        public TextView foodPrice;
+        public TextView qty;
     }
 
     private final ShoppingCart shoppingCart;
@@ -58,6 +60,8 @@ public class ShoppingCartAdapter extends ArrayAdapter<OrderLineItem> {
             viewHolder.shippingDay = (TextView) convertView.findViewById(R.id.tvShippingDay);
             viewHolder.optionName = (TextView) convertView.findViewById(R.id.tvOptionName);
             viewHolder.optionDesc = (TextView) convertView.findViewById(R.id.tvOptionDesc);
+            viewHolder.foodPrice = (TextView) convertView.findViewById(R.id.tvFoodPrice);
+            viewHolder.qty = (TextView) convertView.findViewById(R.id.tvQty);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -76,6 +80,8 @@ public class ShoppingCartAdapter extends ArrayAdapter<OrderLineItem> {
             }
             viewHolder.optionName.setText(orderLineItem.getMenu().getFoodMenu().getName());
             viewHolder.optionDesc.setText(Html.fromHtml(orderLineItem.getMenu().getFoodMenu().getDescription()));
+            viewHolder.foodPrice.setText("$ " + orderLineItem.getMenu().getFoodMenu().getPrice());
+            viewHolder.qty.setText("" + orderLineItem.getQty());
         }
 
 

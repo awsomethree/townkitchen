@@ -1,12 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+        android:padding="20dp"
+        >
 
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/hello_world"
-            android:id="@+id/textView2" android:layout_gravity="center_horizontal"/>
-</LinearLayout>
+            android:text="@string/CreditCard"
+            android:id="@+id/tvCC"
+            android:gravity="center_vertical"
+            android:layout_alignBottom="@+id/etCC"
+            android:layout_alignTop="@id/etCC"
+            />
+
+    <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/etCC"
+            android:layout_toRightOf="@+id/tvCC"
+            android:layout_marginLeft="10dp"
+            />
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Exp Date"
+            android:id="@+id/tvExpDate"
+            android:layout_below="@+id/tvCC"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/etCCdate"
+            android:layout_alignBottom="@+id/etCCdate"
+            android:gravity="center"
+            />
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:ems="10"
+            android:id="@+id/etCCdate"
+            android:layout_below="@+id/tvCC"
+            android:layout_alignStart="@id/etCC"
+            android:layout_alignLeft="@id/etCC"
+            />
+    <EditText android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:inputType="date" android:ems="10"
+              android:id="@+id/etCCV"
+              android:layout_below="@+id/etCCdate"
+              android:layout_alignStart="@id/etCCdate"
+              android:layout_alignLeft="@id/etCCdate"
+            />
+
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+              android:text="CCV"
+              android:id="@+id/textView"
+              android:gravity="center"
+              android:layout_alignTop="@+id/etCCV"
+              android:layout_alignBottom="@id/etCCV"
+              android:layout_alignParentLeft="true"
+              android:layout_alignParentStart="true"
+            />
+
+</RelativeLayout>

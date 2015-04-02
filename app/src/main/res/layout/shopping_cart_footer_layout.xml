@@ -9,11 +9,13 @@
         android:id="@+id/tvShippingAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxWidth="300dp"
+        android:maxWidth="150dp"
         android:minHeight="100dp"
-        android:minWidth="200dp"
-        android:paddingRight="5dp"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:minWidth="150dp"
+        android:layout_marginRight="15dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:ellipsize="end"
+            />
 
     <TextView
         android:id="@+id/tvSubTotalLabel"
@@ -33,7 +35,9 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/tvSubTotalLabel" />
+        android:layout_toRightOf="@+id/tvSubTotalLabel"
+        android:gravity="right"
+    />
 
     <TextView
         android:id="@+id/tvTaxLabel"
@@ -43,7 +47,10 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_below="@+id/tvSubTotalLabel"
         android:layout_toRightOf="@+id/tvShippingAddress"
-        android:layout_toEndOf="@+id/tvShippingAddress" />
+        android:layout_toEndOf="@+id/tvShippingAddress"
+        android:gravity="right"
+
+        />
 
     <TextView
         android:id="@+id/tvTaxAmount"
@@ -75,7 +82,9 @@
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/tvTaxAmount"
         android:layout_alignLeft="@+id/tvTaxAmount"
-        android:layout_alignStart="@+id/tvTaxAmount" />
+        android:layout_alignStart="@+id/tvTaxAmount"
+        android:gravity="right"
+            />
 
     <TextView
         android:id="@+id/tvTotalLabel"
@@ -97,16 +106,18 @@
         android:text=""
         android:layout_below="@+id/tvShippingAmount"
         android:layout_alignLeft="@+id/tvShippingAmount"
-        android:layout_alignStart="@+id/tvShippingAmount" />
+        android:layout_alignStart="@+id/tvShippingAmount"
+        android:gravity="right"
+            />
 
     <Button
         android:id="@+id/btnCheckout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvTotalAmount"
         android:text="Checkout / Pay"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+            />
 
 
 </RelativeLayout>

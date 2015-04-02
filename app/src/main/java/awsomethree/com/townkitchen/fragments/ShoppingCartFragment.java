@@ -47,20 +47,23 @@ public class ShoppingCartFragment extends TKFragment implements dialogInterfaceL
     public TextView totalAmount;
     public TextView shippingAddress;
 
+    protected List<OrderLineItem> shoppingCartLists;
+    protected ShoppingCart shoppingCartModel;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_shopping_cart, container, false);
 
         //todo viewholder for footer
-        shoppingCartFooterView = getLayoutInflater(savedInstanceState).inflate(R.layout.shopping_cart_footer_layout, null);
-        shippingAddress = (TextView) shoppingCartFooterView.findViewById(R.id.tvShippingAddress);
-        subTotalAmount = (TextView) shoppingCartFooterView.findViewById(R.id.tvSubTotalAmount);
-        taxAmount = (TextView) shoppingCartFooterView.findViewById(R.id.tvTaxAmount);
-        shippingAmount = (TextView) shoppingCartFooterView.findViewById(R.id.tvShippingAmount);
-        totalAmount = (TextView) shoppingCartFooterView.findViewById(R.id.tvTotalAmount);
+//        shoppingCartFooterView = getLayoutInflater(savedInstanceState).inflate(R.layout.shopping_cart_footer_layout, null);
+        shippingAddress = (TextView) v.findViewById(R.id.tvShippingAddress);
+        subTotalAmount = (TextView) v.findViewById(R.id.tvSubTotalAmount);
+        taxAmount = (TextView) v.findViewById(R.id.tvTaxAmount);
+        shippingAmount = (TextView) v.findViewById(R.id.tvShippingAmount);
+        totalAmount = (TextView) v.findViewById(R.id.tvTotalAmount);
 
-        btnCheckout = (Button) shoppingCartFooterView.findViewById(R.id.btnCheckout);
+        btnCheckout = (Button) v.findViewById(R.id.btnCheckout);
 
         setupView(v);
         setupAdaptersAndListeners();
@@ -73,10 +76,8 @@ public class ShoppingCartFragment extends TKFragment implements dialogInterfaceL
     }
 
     private void setupAdaptersAndListeners() {
-        // arbitrary menu
-//        String[] menus = {"Selection 1", "Selection 2", "Selection 3", "Selection 4", "Selection 5"};
-        // setup the adapters (Using basic)
-//        menuAdapters = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, menus);
+        // initial
+        shoppingCartLists = new ArrayList<>();
 
         shoppingCartAdapter = new ShoppingCartAdapter(getActivity(), getEmptyShoppingCart());
         lvMenu.setAdapter(shoppingCartAdapter);
@@ -88,7 +89,7 @@ public class ShoppingCartFragment extends TKFragment implements dialogInterfaceL
             }
         });
 
-        lvMenu.addFooterView(shoppingCartFooterView);
+//        lvMenu.addFooterView(shoppingCartFooterView);
 
 
         // on click listeners for btnCheckout
@@ -96,7 +97,7 @@ public class ShoppingCartFragment extends TKFragment implements dialogInterfaceL
             @Override
             public void onClick(View v) {
                 // open up new dialogs for paying
-                PaymentDialog payDialog = PaymentDialog.newInstance(getCurrentFragment());
+                PaymentDialog payDialog = PaymentDialog.newInstance(getCurrentFragment(), shoppingCartModel);
                 payDialog.show(getFragmentManager(), "Pay");
             }
         });
@@ -153,9 +154,9 @@ public class ShoppingCartFragment extends TKFragment implements dialogInterfaceL
     public void parseQueryDone(List<? extends ParseObject> parseObjects, ParseException e,
             int queryCode) {
         if (queryCode == ShoppingCart.SHOPPING_CART_CODE){
-            List<OrderLineItem> orderLineItems = (List<OrderLineItem>) parseObjects;
+            shoppingCartLists = (List<OrderLineItem>) parseObjects;
 
-            ShoppingCart shoppingCart = new ShoppingCart(orderLineItems);
+            shoppingCartModel = new ShoppingCart(shoppingCartLists);
 
             Shipping shipInfo = new Shipping();
             shipInfo.setAddressLine1("1235 Bay St");
@@ -163,19 +164,19 @@ public class ShoppingCartFragment extends TKFragment implements dialogInterfaceL
             shipInfo.setZip(94404);
             shipInfo.setState("CA");
 
-            shoppingCart.setShipping(shipInfo);
+            shoppingCartModel.setShipping(shipInfo);
 
             Payment payment = new Payment();
-            shoppingCart.setPayment(payment);
+            shoppingCartModel.setPayment(payment);
 
-            shoppingCart.calculateTotal();
+            shoppingCartModel.calculateTotal();
 
-            Log.i(this.getClass().getName(), "stuff shopping cart " + shoppingCart);
+            Log.i(this.getClass().getName(), "stuff shopping cart " + shoppingCartModel);
 
             // update footer
-            updateShoppingCartFooter(shoppingCart);
+            updateShoppingCartFooter(shoppingCartModel);
             shoppingCartAdapter.clear();
-            shoppingCartAdapter.addAll(orderLineItems);
+            shoppingCartAdapter.addAll(shoppingCartLists);
         }
     }
 }

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
     <ImageView
         android:id="@+id/ivFoodImageUrl"
-        android:layout_width="150dp"
-        android:layout_height="100dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:contentDescription="@string/foodImageDesc"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -36,13 +37,37 @@
 
     <TextView
         android:layout_width="wrap_content"
+        android:maxWidth="300dp"
+        android:ellipsize="end"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:id="@+id/tvOptionDesc"
+        android:text="@string/optionNameDesc"
         android:layout_below="@+id/tvOptionName"
         android:layout_toRightOf="@+id/ivFoodImageUrl"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+            />
+
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textAppearance="?android:attr/textAppearanceSmall"
+              android:text="@string/foodPrice"
+              android:id="@+id/tvFoodPrice"
+              android:layout_below="@+id/tvOptionDesc"
+              android:layout_toRightOf="@+id/ivFoodImageUrl"
+              android:layout_toEndOf="@+id/ivFoodImageUrl"
+              android:layout_alignParentRight="true"
+              android:gravity="right"
+            />
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:id="@+id/tvQty"
+            android:layout_alignBottom="@+id/tvOptionDesc"
+            android:background="@drawable/blue_badge_shape"
+            android:textColor="#fff"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>
 
 
 </RelativeLayout>

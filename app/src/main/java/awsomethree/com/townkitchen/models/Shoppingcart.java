@@ -1,22 +1,23 @@
 package awsomethree.com.townkitchen.models;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.util.Log;
-
+import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
-import java.math.BigDecimal;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.util.Log;
+
 import java.util.Collections;
 import java.util.List;
 
 import awsomethree.com.townkitchen.activities.MainActivity;
 import awsomethree.com.townkitchen.interfaces.ParseQueryCallback;
+import awsomethree.com.townkitchen.interfaces.fragmentNavigationInterface;
 
 /**
  * Created by ktruong on 3/29/15.
@@ -31,10 +32,28 @@ public class ShoppingCart {
 
     private Shipping shipping;
     private Payment payment;
-    private BigDecimal subtotal;
-    private BigDecimal shippingCost;
-    private BigDecimal taxTotal;
-    private BigDecimal total;
+    private Double subtotal;
+    private Double shippingCost;
+    private Double taxTotal;
+    private Double total;
+
+    public Double getTotal() {
+        return total;
+    }
+
+    public Double getTaxTotal() {
+        return taxTotal;
+    }
+
+    public Double getShippingCost() {
+        return shippingCost;
+    }
+
+    public Double getSubtotal() {
+        return subtotal;
+    }
+
+
 
     public ShoppingCart(List<OrderLineItem> orderLineItems) {
         this.items = orderLineItems;
@@ -60,11 +79,11 @@ public class ShoppingCart {
         return payment;
     }
 
-    public void setShippingCost(BigDecimal shippingCost) {
+    public void setShippingCost(Double shippingCost) {
         this.shippingCost = shippingCost;
     }
 
-    public void setTaxTotal(BigDecimal taxTotal) {
+    public void setTaxTotal(Double taxTotal) {
         this.taxTotal = taxTotal;
     }
 
@@ -72,18 +91,18 @@ public class ShoppingCart {
      * stuff calculation, this should be from server side
      */
     public void calculateTotal() {
-        subtotal = BigDecimal.ZERO;
-        shippingCost = BigDecimal.TEN;
-        taxTotal = BigDecimal.ZERO;
-        total = BigDecimal.ZERO;
+        subtotal = 0.0;
+        shippingCost = 10.0;
+        taxTotal = 0.0;
+        total = 0.0;
 
         for (OrderLineItem item : items) {
-            subtotal = subtotal.add(BigDecimal.valueOf(item.getQty() * item.getPrice()));
+            subtotal += Double.valueOf(item.getQty() * item.getMenu().getFoodMenu().getPrice());
         }
 
-        taxTotal = BigDecimal.valueOf(.09 * subtotal.doubleValue());
+        taxTotal = Double.valueOf(.09 * subtotal.doubleValue());
 
-        total = subtotal.add(shippingCost).add(taxTotal);
+        total = (subtotal + shippingCost + taxTotal);
     }
 
     public String getShippingAddress() {
@@ -99,19 +118,19 @@ public class ShoppingCart {
     }
 
     public String getSubTotalString() {
-        return "$" + subtotal;
+        return "$" + String.format("%.2f", subtotal);
     }
 
     public String getTaxString() {
-        return "$" + taxTotal;
+        return "$ " + String.format("%.2f", taxTotal);
     }
 
     public String getShippingString() {
-        return "$" + shippingCost;
+        return "$ " + String.format("%.2f", shippingCost);
     }
 
     public String getTotalString() {
-        return "$" + total;
+        return "$ " + String.format("%.2f", total);
     }
 
     @Override
@@ -137,56 +156,71 @@ public class ShoppingCart {
     public static void prepareShoppingCart(Context ctx){
         SharedPreferences pref = PreferenceManager
                 .getDefaultSharedPreferences(ctx);
-        if (pref.contains("shoppingCartId")){
-            return ;
-        }
-
-        ParseQuery<Order> order = ParseQuery.getQuery(Order.class);
-        order.whereEqualTo("deliveryStatus", CART_STATUS);
-        order.whereEqualTo("objectId", CART_SPECIAL_ID);
-        order.fromLocalDatastore();
-        order.setLimit(1);
 
         final Context localContext = ctx;
 
-        order.findInBackground(new FindCallback<Order>() {
+        if (pref.contains("shoppingCartId")){
+            // make sure the id is still in Parse
+            String objectId = pref.getString("shoppingCartId", "-");
+            ParseQuery<Order> order = ParseQuery.getQuery(Order.class);
+            order.whereEqualTo("deliveryStatus", CART_STATUS);
+            order.whereEqualTo("objectId", objectId);
+            order.findInBackground(new FindCallback<Order>() {
+                @Override
+                public void done(List<Order> orders, ParseException e) {
+                    // setup into Shared Preferences
+                    final Order shoppingCart;
+                    if (orders.size() > 0){
+                        // always get the first one
+                        shoppingCart = orders.get(0);
+                        ShoppingCart.setupShoppingCartOnPreferences(localContext, shoppingCart.getObjectId());
+                    } else {
+                        createNewShoppingCartObjectInParse(localContext);
+                    }
+                }
+            });
+        } else {
+            createNewShoppingCartObjectInParse(localContext);
+        }
+    }
+
+    private static void createNewShoppingCartObjectInParse(Context ctx){
+        final Context localContext = ctx;
+        // create new Order object
+        final Order shoppingCart = new Order();
+        shoppingCart.setDeliveryStatus(ShoppingCart.CART_STATUS);
+        shoppingCart.saveInBackground(new SaveCallback() {
             @Override
-            public void done(List<Order> orders, ParseException e) {
-                // setup into Shared Preferences
-                final Order shoppingCart;
-                if (orders.size() > 0){
-                    // always get the first one
-                    shoppingCart = orders.get(0);
-                    ShoppingCart.setupShoppingCartOnPreferences(localContext, shoppingCart.getObjectId());
-                } else {
-                    shoppingCart = new Order();
-                    shoppingCart.setObjectId(CART_SPECIAL_ID);
-                    shoppingCart.setDeliveryStatus(ShoppingCart.CART_STATUS);
-                    shoppingCart.pinInBackground(CART_STATUS, new SaveCallback() {
-//                    shoppingCart.saveInBackground(new SaveCallback() {
-                        @Override
-                        public void done(ParseException e) {
-                            if (e == null) {
-                                ShoppingCart.setupShoppingCartOnPreferences(localContext,
-                                        shoppingCart.getObjectId());
-                            }
-                        }
-                    });
+            public void done(ParseException e) {
+                if (e == null) {
+                    ShoppingCart.setupShoppingCartOnPreferences(localContext,
+                            shoppingCart.getObjectId());
                 }
             }
         });
+
     }
 
     public static void clearShoppingCart(Context localContext){
         SharedPreferences pref = PreferenceManager
                 .getDefaultSharedPreferences(localContext);
+        String objectId = pref.getString("shoppingCartId", "-");
         SharedPreferences.Editor edit = pref.edit();
+
         edit.remove("shoppingCartId");
+        edit.remove("shoppingCartTotal");
         edit.commit();
+        final Context ctx = localContext;
         // remove shopping cart model (unpin)
-        OrderLineItem.unpinAllInBackground();
-//        Order.unpinAllInBackground(CART_STATUS);
-        ShoppingCart.prepareShoppingCart(localContext);
+        ParseObject po = ParseObject.createWithoutData("Order", objectId);
+        po.deleteEventually(new DeleteCallback() {
+            @Override
+            public void done(ParseException e) {
+                OrderLineItem.unpinAllInBackground();
+                ShoppingCart.prepareShoppingCart(ctx);
+            }
+        });
+
     }
 
     public static void setupShoppingCartOnPreferences(Context localContext, String shoppingCartId){
@@ -199,20 +233,62 @@ public class ShoppingCart {
         edit.commit();
     }
 
-    public static void addToShoppingCart(final DailyMenu orderItem, final int qty, Context ctx){
-        // adding the order for specific DailyMenu item
-        final Context localContext = ctx;
-
+    public static void updateCartTotal(Context localContext,fragmentNavigationInterface mainActivityParent){
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(localContext);
         final String orderId = pref.getString("shoppingCartId", "-");
-        Log.d(MainActivity.APP, "Order ID : " + orderId);
+        final Context ctx = localContext;
+        final fragmentNavigationInterface fragmentParent = mainActivityParent;
+
         // query the order
         ParseQuery<Order> order = ParseQuery.getQuery(Order.class);
         order.whereEqualTo("deliveryStatus", CART_STATUS);
         order.whereEqualTo("objectId", orderId);
 
         // only look in this device
-        order.fromLocalDatastore();
+//        order.fromLocalDatastore();
+
+        // query all line items(which match)
+        ParseQuery<OrderLineItem> lineItems = ParseQuery.getQuery(OrderLineItem.class);
+        lineItems.whereMatchesQuery("Order", order);
+//        lineItems.fromLocalDatastore();
+        lineItems.include("Order");
+        lineItems.findInBackground(new FindCallback<OrderLineItem>() {
+            @Override
+            public void done(List<OrderLineItem> orderLineItems, ParseException e) {
+                int newQty = 0;
+                for (OrderLineItem orderLineItem : orderLineItems){
+                    newQty += orderLineItem.getQty();
+                }
+                SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(ctx);
+                SharedPreferences.Editor edit = pref.edit();
+                edit.putInt("shoppingCartTotal", newQty);
+                edit.commit();
+                String newQtyString = Integer.toString(newQty);
+                fragmentParent.updateCartBadge(newQtyString);
+            }
+        });
+
+    }
+
+    public static void addToShoppingCart(final DailyMenu orderItem, final int qty, Context ctx){
+        addToShoppingCart(orderItem, qty, ctx, null);
+    }
+    public static void addToShoppingCart(final DailyMenu orderItem, final int qty, Context ctx, fragmentNavigationInterface mainActivityParent){
+        // adding the order for specific DailyMenu item
+        final Context localContext = ctx;
+        final fragmentNavigationInterface parentFragment = mainActivityParent;
+
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(localContext);
+        final String orderId = pref.getString("shoppingCartId", "-");
+
+
+        // query the order
+        ParseQuery<Order> order = ParseQuery.getQuery(Order.class);
+        order.whereEqualTo("deliveryStatus", CART_STATUS);
+        order.whereEqualTo("objectId", orderId);
+
+        // only look in this device
+//        order.fromLocalDatastore();
 
         ParseQuery<FoodMenu> foodMenu = ParseQuery.getQuery(FoodMenu.class);
         foodMenu.whereEqualTo("objectId", orderItem.getFoodMenu().getObjectId());
@@ -224,7 +300,7 @@ public class ShoppingCart {
         ParseQuery<OrderLineItem> lineItems = ParseQuery.getQuery(OrderLineItem.class);
         lineItems.whereMatchesQuery("Order", order);
         lineItems.whereMatchesQuery("DailyMenu", dailyMenu);
-        lineItems.fromLocalDatastore();
+//        lineItems.fromLocalDatastore();
         lineItems.include("Order");
         lineItems.findInBackground(new FindCallback<OrderLineItem>() {
             @Override
@@ -240,13 +316,16 @@ public class ShoppingCart {
                     newLineItem.setQty(qty);
                     newLineItem.put("Order", (ParseObject.createWithoutData("Order", orderId)));
                 }
+
                 if (qty <= 0){
-                    newLineItem.unpinInBackground();
-//                    newLineItem.deleteInBackground();
+//                    newLineItem.unpinInBackground();
+                    newLineItem.deleteInBackground();
                 } else {
-                    newLineItem.pinInBackground();
-//                    newLineItem.saveInBackground();
+//                    newLineItem.pinInBackground();
+                    newLineItem.saveInBackground();
                 }
+                ShoppingCart.updateCartTotal(localContext, parentFragment);
+
             }
         });
     }
@@ -264,7 +343,7 @@ public class ShoppingCart {
         order.whereEqualTo("objectId", orderId);
 
         // only look in this device
-        order.fromLocalDatastore();
+//        order.fromLocalDatastore();
 
         // query the order line item (which match)
         ParseQuery<OrderLineItem> lineItems = ParseQuery.getQuery(OrderLineItem.class);
@@ -272,12 +351,48 @@ public class ShoppingCart {
         lineItems.include("Order");
         lineItems.include("DailyMenu");
         lineItems.include("DailyMenu.FoodMenu");
-        lineItems.fromLocalDatastore();
+//        lineItems.fromLocalDatastore();
         lineItems.findInBackground(new FindCallback<OrderLineItem>() {
             @Override
             public void done(List<OrderLineItem> orderLineItems, ParseException e) {
+                // recalculate the shopping cart subtotal and such
+
                 callback.parseQueryDone(orderLineItems, e, queryCode);
             }
         });
+    }
+
+    public static void flushShoppingCart(final ParseQueryCallback callback,
+            final int queryCode,
+            final ShoppingCart shoppingCartModel,
+            Context ctx){
+        // flush the order object
+        if (shoppingCartModel.getItems().size() > 0){
+            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(ctx);
+            int orderQty = pref.getInt("shoppingCartTotal", 0);
+
+            OrderLineItem orderLI = shoppingCartModel.getItems().get(0);
+
+            Order newOrder = new Order();
+            newOrder.setDeliveryAddressStr(shoppingCartModel.getShippingAddress());
+            newOrder.setDeliveryStatus(Order.PENDING_STATUS);
+            newOrder.setPriceAfterTax(shoppingCartModel.getTotal());
+            newOrder.setTotalOrder(orderQty);
+            newOrder.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+
+                    // now save the line items
+                    List<OrderLineItem> orderLineItems = shoppingCartModel.getItems();
+                    ParseObject.saveAllInBackground(orderLineItems, new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+
+                            callback.parseQueryDone(null, null, queryCode);
+                        }
+                    });
+                }
+            });
+        }
     }
 }

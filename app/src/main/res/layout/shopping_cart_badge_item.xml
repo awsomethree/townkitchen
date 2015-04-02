@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+        android:layout_gravity="right"
+        android:clickable="true"
+
+        >
+
+    <ImageView
+            android:layout_width="48dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/ivShoppingCartIcon"
+            android:src="@mipmap/ic_cart"
+            />
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="11sp"
+            android:background="@drawable/badge_shape"
+            android:id="@+id/tvCartBadge"
+            android:padding="8dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:textColor="#fff"
+            />
+</RelativeLayout>

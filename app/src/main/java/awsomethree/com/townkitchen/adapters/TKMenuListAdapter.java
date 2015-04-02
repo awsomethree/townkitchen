@@ -13,6 +13,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import awsomethree.com.townkitchen.R;
+import awsomethree.com.townkitchen.interfaces.fragmentNavigationInterface;
 import awsomethree.com.townkitchen.models.DailyMenu;
 import awsomethree.com.townkitchen.models.ShoppingCart;
 
@@ -23,8 +24,11 @@ import awsomethree.com.townkitchen.models.ShoppingCart;
 // Taking the menu item objects and turning them into views displayed in the list (like a collection in backbonejs)
 public class TKMenuListAdapter extends ArrayAdapter<DailyMenu> {
 
+    private fragmentNavigationInterface mainParentActivity;
+
     public TKMenuListAdapter(Context context, List<DailyMenu> options) {//list of menu options
         super(context, R.layout.fragment_main_menu, options);// default simple_list_item_1
+        mainParentActivity = (fragmentNavigationInterface) context;
     }
 
     // Override and setup custom template
@@ -34,6 +38,7 @@ public class TKMenuListAdapter extends ArrayAdapter<DailyMenu> {
     public View getView(int position, View convertView, ViewGroup parent) {
         // 1. Get the item from the list
         final DailyMenu option = getItem(position);
+        final fragmentNavigationInterface mainParentActivity = this.mainParentActivity;
 
         // 2. Find or inflate the template
         if(convertView == null){//need to inflate? Not in recycle views pool
@@ -57,7 +62,8 @@ public class TKMenuListAdapter extends ArrayAdapter<DailyMenu> {
             @Override
             public void onClick(View v) {
                 tvItems.setText( ""+(Integer.parseInt(tvItems.getText().toString())+1) );
-                ShoppingCart.addToShoppingCart(option, Integer.parseInt(tvItems.getText().toString()), v.getContext());
+                ShoppingCart.addToShoppingCart(option, Integer.parseInt(tvItems.getText().toString()), v.getContext(),
+                    mainParentActivity);
             }
         });
         ibDown.setOnClickListener(new View.OnClickListener() {
@@ -68,10 +74,9 @@ public class TKMenuListAdapter extends ArrayAdapter<DailyMenu> {
                     newItemQty = 0;
                 }
                 tvItems.setText(Integer.toString(newItemQty));//default value here
-
                 ShoppingCart
                         .addToShoppingCart(option, Integer.parseInt(tvItems.getText().toString()),
-                                v.getContext());
+                                v.getContext(), mainParentActivity);
             }
         });
 

@@ -7,7 +7,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import awsomethree.com.townkitchen.R;
 import awsomethree.com.townkitchen.fragments.HomeFragment;
@@ -100,7 +103,15 @@ public class MainActivity extends
         this.menuToolbar = menu;
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_abstract_main, menu);
-        return true;
+
+        RelativeLayout cartBadge = (RelativeLayout) this.menuToolbar.findItem(R.id.action_shoppingcart).getActionView();
+        cartBadge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tkDrawer.selectDrawerItem(SHOPPINGCART_DRAWER_POSITION);
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -198,5 +209,12 @@ public class MainActivity extends
     @Override
     public void changeFragmentTo(int fragmentMenuOption, Bundle args) {
         tkDrawer.selectDrawerItem(fragmentMenuOption, args);
+    }
+
+    @Override
+    public void updateCartBadge(String countText) {
+        RelativeLayout cartBadge = (RelativeLayout) this.menuToolbar.findItem(R.id.action_shoppingcart).getActionView();
+        TextView tv = (TextView) cartBadge.findViewById(R.id.tvCartBadge);
+        tv.setText(countText);
     }
 }

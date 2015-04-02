@@ -8,4 +8,6 @@ import android.os.Bundle;
 public interface fragmentNavigationInterface {
     public void changeFragmentTo(int fragmentMenuOption);
     public void changeFragmentTo(int fragmentMenuOption, Bundle args);
+    // other non-navigation preference
+    public void updateCartBadge(String countText);
 }
