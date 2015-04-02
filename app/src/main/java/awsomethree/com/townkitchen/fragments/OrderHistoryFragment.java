@@ -60,13 +60,13 @@ public class OrderHistoryFragment extends TKFragment implements dialogInterfaceL
         orderHistoryFooter = (TextView) v.findViewById(R.id.tvOrderHistoryFooter);
         lvMenu = (ListView) v.findViewById(R.id.lvOrderHistory);
 
-        colorArray.add(Color.BLUE);
-        colorArray.add(Color.CYAN);
-        colorArray.add(Color.GREEN);
-        colorArray.add(Color.MAGENTA);
-        colorArray.add(Color.YELLOW);
-        colorArray.add(Color.WHITE);
-        colorArray.add(Color.RED);
+        colorArray.add(Color.parseColor("#DCFFEA"));
+        colorArray.add(Color.parseColor("#eef7ff"));
+        colorArray.add(Color.parseColor("#dde6e8"));
+        colorArray.add(Color.parseColor("#ff7373"));
+        colorArray.add(Color.parseColor("#d3ffce"));
+        colorArray.add(Color.parseColor("#DCFFEA"));
+        colorArray.add(Color.parseColor("#46c6e2"));
     }
 
     private void setupAdaptersAndListeners() {
