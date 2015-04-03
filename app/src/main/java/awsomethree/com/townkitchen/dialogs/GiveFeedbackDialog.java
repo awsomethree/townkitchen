@@ -1,5 +1,8 @@
 package awsomethree.com.townkitchen.dialogs;
 
+import com.parse.ParseException;
+import com.parse.ParseObject;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -12,9 +15,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
-
-import com.parse.ParseException;
-import com.parse.ParseObject;
 
 import java.util.List;
 
@@ -100,7 +100,10 @@ public class GiveFeedbackDialog extends DialogFragment implements ParseQueryCall
                         allValid = false;
                     }
 
+
                     if (mListener != null && allValid) {
+                        mfeedback.setComment(etComment.getText().toString());
+                        mfeedback.setRating(ratingBar.getRating());
                         //mListener.onSuccessDialog();
                         //getDialog().dismiss();
                         saveFeedback();

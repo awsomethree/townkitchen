@@ -81,13 +81,6 @@ public class ShoppingCartFragment extends TKFragment implements dialogInterfaceL
 
         shoppingCartAdapter = new ShoppingCartAdapter(getActivity(), getEmptyShoppingCart());
         lvMenu.setAdapter(shoppingCartAdapter);
-        lvMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // move to cart or something
-                Toast.makeText(getActivity(), "clicked!", Toast.LENGTH_SHORT).show();
-            }
-        });
 
 //        lvMenu.addFooterView(shoppingCartFooterView);
 

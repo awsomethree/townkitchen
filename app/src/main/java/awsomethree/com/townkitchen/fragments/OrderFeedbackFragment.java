@@ -1,17 +1,15 @@
 package awsomethree.com.townkitchen.fragments;
 
+import com.parse.ParseException;
+import com.parse.ParseObject;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
-
-import com.parse.ParseException;
-import com.parse.ParseObject;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -59,13 +57,6 @@ public class OrderFeedbackFragment extends TKFragment  implements ParseQueryCall
 
 
         lvMenu.setAdapter(aFeedAdapters);
-        lvMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // show dialogs for review
-                Toast.makeText(getActivity(), "clicked!", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         // get the menu for 2015-04-01, month starts from 0
         Feedback.listAllFeedsByDates(new GregorianCalendar(2015, 3, 1).getTime(), this, Feedback.FEED_CODE);

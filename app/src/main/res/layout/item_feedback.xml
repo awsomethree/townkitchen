@@ -52,6 +52,9 @@
         android:id="@+id/ratingBar"
         android:layout_below="@+id/tvComment"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:focusable="false"
+        android:isIndicator="true"
+            />
 
 </RelativeLayout>

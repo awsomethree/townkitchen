@@ -1,5 +1,8 @@
 package awsomethree.com.townkitchen.fragments;
 
+import com.parse.ParseException;
+import com.parse.ParseObject;
+
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,9 +15,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.parse.ParseException;
-import com.parse.ParseObject;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -43,7 +43,6 @@ public class OrderHistoryFragment extends TKFragment implements dialogInterfaceL
     private TextView orderHistoryFooter;
     public static Map orderLineItemMap = new HashMap<String, Integer>();
     public static ArrayList colorArray = new ArrayList();
-    protected Feedback feedbackModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -85,6 +84,9 @@ public class OrderHistoryFragment extends TKFragment implements dialogInterfaceL
         lvMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                OrderLineItem orderData = orderLineArrayAdapter.getItem(position);
+                Feedback feedbackModel = new Feedback();
+                feedbackModel.setOrderLIid(orderData.getObjectId());
                 // show dialogs for review
                 //Toast.makeText(getActivity(), "clicked!", Toast.LENGTH_SHORT).show();
                 // open up new dialogs for paying

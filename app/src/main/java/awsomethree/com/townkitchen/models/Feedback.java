@@ -1,12 +1,13 @@
 package awsomethree.com.townkitchen.models;
 
-import android.content.Context;
-
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+
+import android.content.Context;
 
 import java.util.Calendar;
 import java.util.Collections;
@@ -28,6 +29,17 @@ public class Feedback extends ParseObject{
     private double rating;
     private String comment;
 
+    // helper item
+    private String orderLIid;
+
+    public String getOrderLIid() {
+        return orderLIid;
+    }
+
+    public void setOrderLIid(String orderLIid) {
+        this.orderLIid = orderLIid;
+    }
+
     public FoodMenu getFoodMenu() {
         return (FoodMenu) getParseObject("FoodMenu");
     }
@@ -40,7 +52,7 @@ public class Feedback extends ParseObject{
         return getDouble("rating");
     }
 
-    public void setRating(int rating) {
+    public void setRating(double rating) {
         put("rating", rating);
     }
 
@@ -72,7 +84,7 @@ public class Feedback extends ParseObject{
         //query.setLimit(10);
         //query.whereGreaterThanOrEqualTo("menuDate", qLowDate);
         //query.whereLessThan("menuDate", qMaxDate);
-        query.orderByAscending("createdAt");
+        query.orderByDescending("createdAt");
         query.include("FoodMenu");
         query.findInBackground(new FindCallback<Feedback>() {
             @Override
@@ -91,6 +103,25 @@ public class Feedback extends ParseObject{
                                     final int queryCode,
                                     final Feedback feedbackModel,
                                     Context ctx){
+        // query the orderlineItem id to get the actual food menu
+        ParseQuery<OrderLineItem> query = ParseQuery.getQuery(OrderLineItem.class);
+        query.whereEqualTo("objectId", feedbackModel.getOrderLIid());
+        query.include("DailyMenu");
+        query.include("DailyMenu.FoodMenu");
+        query.getFirstInBackground(new GetCallback<OrderLineItem>() {
+            @Override
+            public void done(OrderLineItem orderLineItem, ParseException e) {
+                // get the food menu now
+                String foodMenuId = orderLineItem.getMenu().getFoodMenu().getObjectId();
 
+                // create new feedback
+                Feedback savedFeedback = new Feedback();
+                savedFeedback.setComment(feedbackModel.getComment());
+                savedFeedback.setRating(feedbackModel.getRating());
+                savedFeedback.put("FoodMenu", ParseObject.createWithoutData("FoodMenu", foodMenuId));
+                savedFeedback.saveInBackground();
+                callback.parseQueryDone(null, null, queryCode);
+            }
+        });
     }
 }
