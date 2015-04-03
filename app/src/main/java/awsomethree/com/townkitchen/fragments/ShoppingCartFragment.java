@@ -1,5 +1,8 @@
 package awsomethree.com.townkitchen.fragments;
 
+import com.parse.ParseException;
+import com.parse.ParseObject;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Html;
@@ -7,14 +10,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.parse.ParseException;
-import com.parse.ParseObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,6 +88,9 @@ public class ShoppingCartFragment extends TKFragment implements dialogInterfaceL
         btnCheckout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // populate the shipping address
+
+
                 // open up new dialogs for paying
                 PaymentDialog payDialog = PaymentDialog.newInstance(getCurrentFragment(), shoppingCartModel);
                 payDialog.show(getFragmentManager(), "Pay");
@@ -152,9 +154,9 @@ public class ShoppingCartFragment extends TKFragment implements dialogInterfaceL
             shoppingCartModel = new ShoppingCart(shoppingCartLists);
 
             Shipping shipInfo = new Shipping();
-            shipInfo.setAddressLine1("1235 Bay St");
+            shipInfo.setAddressLine1("333 w san carlos");
             shipInfo.setApt("");
-            shipInfo.setZip(94404);
+            shipInfo.setZip(95110);
             shipInfo.setState("CA");
 
             shoppingCartModel.setShipping(shipInfo);
