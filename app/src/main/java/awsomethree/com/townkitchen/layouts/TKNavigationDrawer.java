@@ -157,7 +157,13 @@ public class TKNavigationDrawer extends DrawerLayout {
             if (fragment != null){
                 // Insert the fragment by replacing any existing fragment
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(drawerContainerRes, fragment).commit();
+                // default animations
+                fragmentManager.beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_right_, R.anim.slide_out_left,
+                                R.anim.slide_in_left, R.anim.slide_out_right)
+                        .replace(drawerContainerRes, fragment)
+                        .addToBackStack(null)
+                        .commit();
             }
         } catch (Exception e) {
         }

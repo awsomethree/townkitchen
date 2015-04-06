@@ -6,7 +6,9 @@
     <item android:id="@+id/action_calendar"
           android:title="@string/action_calendar"
           android:orderInCategory="100"
-          android:icon="@android:drawable/ic_menu_my_calendar"
+          android:icon="@mipmap/ic_home"
+          app:actionLayout="@layout/home_badge_item"
+          android:actionLayout="@layout/home_badge_item"
           app:showAsAction="ifRoom"/>
 
 
@@ -15,7 +17,7 @@
           android:orderInCategory="100"
           app:actionLayout="@layout/shopping_cart_badge_item"
           android:actionLayout="@layout/shopping_cart_badge_item"
-          android:icon="@mipmap/ic_cart"
+          android:icon="@mipmap/ic_shoppingcart"
           app:showAsAction="always"
             />
 </menu>

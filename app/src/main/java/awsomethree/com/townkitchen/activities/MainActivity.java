@@ -75,14 +75,14 @@ public class MainActivity extends
         // setup drawer view
         tkDrawer.setupDrawerConfiguration((ListView) findViewById(R.id.lvDrawer), toolbar, R.id.flContent, this);
         // adding navigation drawer items
-        tkDrawer.addNavItem("Home", R.mipmap.ic_launcher, "Home", HomeFragment.class);
-        tkDrawer.addNavItem("Shopping Cart", R.mipmap.ic_launcher, "Shopping Cart",
+        tkDrawer.addNavItem("Home", R.mipmap.ic_townkitchen, "Home", HomeFragment.class);
+        tkDrawer.addNavItem("Shopping Cart", R.mipmap.ic_shoppingcart, "Shopping Cart",
                 ShoppingCartFragment.class);
-        tkDrawer.addNavItem("Order History", R.mipmap.ic_launcher, "Order History", OrderHistoryFragment.class);
+        tkDrawer.addNavItem("Order History", R.mipmap.ic_folder, "Order History", OrderHistoryFragment.class);
         // Below pages, will not showing the other navigation (calendar and add shopping cart)
-        tkDrawer.addNavItem("Track My Order", R.mipmap.ic_launcher, "Track My Order",
+        tkDrawer.addNavItem("Track My Order", R.mipmap.ic_trackorder, "Track My Order",
                 TrackOrderFragment.class, false);
-        tkDrawer.addNavItem("Feedbacks History", R.mipmap.ic_launcher, "Feedbacks History",
+        tkDrawer.addNavItem("Feedbacks History", R.mipmap.ic_star, "Feedbacks History",
                 OrderFeedbackFragment.class, false);
         // draw the invisible fragment (from drawer perspective)
         tkDrawer.addNavItem("Menu", R.mipmap.ic_launcher, "Menu",
@@ -111,6 +111,15 @@ public class MainActivity extends
                 tkDrawer.selectDrawerItem(SHOPPINGCART_DRAWER_POSITION);
             }
         });
+
+        RelativeLayout homeBadge = (RelativeLayout) this.menuToolbar.findItem(R.id.action_calendar).getActionView();
+        homeBadge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tkDrawer.selectDrawerItem(HOME_DRAWER_POSITION);
+            }
+        });
+
         return super.onCreateOptionsMenu(menu);
     }
 

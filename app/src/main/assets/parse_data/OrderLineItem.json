@@ -1,7 +1,19 @@
 {
     "results" : [
-    {
-
-    }
+        {
+            "Order": {
+                "__type" : "Pointer",
+                "className" : "Order",
+                "objectId" : "n9DIhNl6xG"
+            },
+            "DailyMenu" : {
+                "__type" : "Pointer",
+                "className" : "DailyMenu",
+                "objectId" : "menu1"
+            },
+            "qty" : 1,
+            "price" : 11.5,
+            "priceTotal" : 11.5
+        }
     ]
 }

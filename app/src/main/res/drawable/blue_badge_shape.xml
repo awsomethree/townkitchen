@@ -3,9 +3,9 @@
         android:shape="oval"
         >
 
-    <solid android:color="#ff1db9ff" />
+    <solid android:color="@color/blue_color" />
     <stroke android:width="2dp"
-            android:color="#FFFFFF" />
+            android:color="@color/tk_white_color" />
     <padding android:top="8dp"
              android:bottom="8dp"
             android:left="8dp"

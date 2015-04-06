@@ -1,8 +1,14 @@
 <resources>
-
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <color name="tk_red_color">#ff9c091d</color>
+    <color name="tk_white_color">#fff2eef0</color>
+    <color name="gray_color">#ff4f4f54</color>
+    <color name="blue_color">#ff1db9ff</color>
+    <!-- Base application theme. Will be overriden for Townkitchen (look at themes.xml)
+     -->
+    <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
     </style>
+
+
 
 </resources>

@@ -8,10 +8,10 @@
         >
 
     <ImageView
-            android:layout_width="48dp"
+            android:layout_width="38dp"
             android:layout_height="fill_parent"
             android:id="@+id/ivShoppingCartIcon"
-            android:src="@mipmap/ic_cart"
+            android:src="@mipmap/ic_shoppingcart"
             />
 
     <TextView
@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="0"
             android:textSize="11sp"
-            android:background="@drawable/badge_shape"
+            android:background="@drawable/blue_badge_shape"
             android:id="@+id/tvCartBadge"
             android:padding="8dp"
             android:layout_alignParentTop="true"
