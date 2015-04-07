@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 /**
  * Created by smulyono on 3/23/15.
+ * coauthor long huynh
  */
 @ParseClassName("FoodMenu")
 public class FoodMenu extends ParseObject{

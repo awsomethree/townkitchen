@@ -2,9 +2,14 @@ package awsomethree.com.townkitchen.abstracts;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.View;
+
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import java.util.List;
 
+import awsomethree.com.townkitchen.R;
 import awsomethree.com.townkitchen.interfaces.fragmentNavigationInterface;
 
 /**
@@ -20,6 +25,32 @@ public abstract class TKFragment extends Fragment {
             return fragmentList.get(0);
         }
         return null;
+    }
+
+
+    protected void setupFloatButtons(View v) {
+        //set floating button settings
+        final View actionB = v.findViewById(R.id.action_b);
+
+        FloatingActionButton actionC = new FloatingActionButton(getActivity());
+        actionC.setTitle("Hide/Show Action above");
+        actionC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                actionB.setVisibility(actionB.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
+            }
+        });
+        ((FloatingActionsMenu) v.findViewById(R.id.multiple_actions)).addButton(actionC);
+
+        final FloatingActionButton actionA = (FloatingActionButton) v.findViewById(R.id.action_a);
+        actionA.setSize(FloatingActionButton.SIZE_NORMAL);
+        actionA.setIcon(R.mipmap.ic_shoppingcart);
+        actionA.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                actionA.setTitle("Go to shopping cart!");
+            }
+        });
     }
 
     public void redirectFragmentTo(int posId){

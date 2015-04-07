@@ -15,6 +15,7 @@ import awsomethree.com.townkitchen.interfaces.ParseQueryCallback;
 
 /**
  * Created by smulyono on 3/24/15.
+ * coauthor long huynh
  */
 @ParseClassName("OrderLineItem")
 public class OrderLineItem extends ParseObject{

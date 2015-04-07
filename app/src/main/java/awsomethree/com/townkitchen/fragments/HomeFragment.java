@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 
@@ -26,6 +24,7 @@ import awsomethree.com.townkitchen.models.Daily;
 
 /**
  * Created by smulyono on 3/22/15.
+ * coauthor long huynh
  */
 public class HomeFragment extends TKFragment implements ParseQueryCallback {
     protected ListView lvMenu;
@@ -40,33 +39,12 @@ public class HomeFragment extends TKFragment implements ParseQueryCallback {
 
         setupView(v);
         setupAdaptersAndListeners();
-
-
-        //set floating button settings
-        final View actionB = v.findViewById(R.id.action_b);
-
-        FloatingActionButton actionC = new FloatingActionButton(getActivity());
-        actionC.setTitle("Hide/Show Action above");
-        actionC.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                actionB.setVisibility(actionB.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
-            }
-        });
-        ((FloatingActionsMenu) v.findViewById(R.id.multiple_actions)).addButton(actionC);
-
-        final FloatingActionButton actionA = (FloatingActionButton) v.findViewById(R.id.action_a);
-        actionA.setSize(FloatingActionButton.SIZE_NORMAL);
-        actionA.setIcon(R.mipmap.ic_shoppingcart);
-        actionA.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                actionA.setTitle("Go to shopping cart!");
-            }
-        });
+        setupFloatButtons(v);
 
         return v;
     }
+
+
 
     private void setupView(View v){
         lvMenu = (ListView) v.findViewById(R.id.lvHomeMenu);

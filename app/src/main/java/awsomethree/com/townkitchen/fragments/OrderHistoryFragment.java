@@ -1,8 +1,5 @@
 package awsomethree.com.townkitchen.fragments;
 
-import com.parse.ParseException;
-import com.parse.ParseObject;
-
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,6 +12,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.parse.ParseException;
+import com.parse.ParseObject;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -34,6 +34,7 @@ import awsomethree.com.townkitchen.models.OrderLineItem;
 
 /**
  * Created by smulyono on 3/22/15.
+ * coauthor long huynh
  */
 public class OrderHistoryFragment extends TKFragment implements dialogInterfaceListener, ParseQueryCallback {
     protected ListView lvMenu;

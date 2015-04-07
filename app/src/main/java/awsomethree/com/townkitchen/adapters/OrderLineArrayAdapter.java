@@ -1,7 +1,5 @@
 package awsomethree.com.townkitchen.adapters;
 
-import com.squareup.picasso.Picasso;
-
 import android.content.Context;
 import android.text.Html;
 import android.text.format.DateUtils;
@@ -11,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.Date;
 import java.util.List;
@@ -22,6 +22,7 @@ import awsomethree.com.townkitchen.models.OrderLineItem;
 
 /**
  * Created by ktruong on 3/29/15.
+ * coauthor long huynh
  */
 public class OrderLineArrayAdapter extends ArrayAdapter<OrderLineItem> {
     private static class ViewHolder {
