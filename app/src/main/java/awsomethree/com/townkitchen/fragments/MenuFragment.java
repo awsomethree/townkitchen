@@ -1,8 +1,5 @@
 package awsomethree.com.townkitchen.fragments;
 
-import com.parse.ParseException;
-import com.parse.ParseObject;
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -13,6 +10,11 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
+import com.parse.ParseException;
+import com.parse.ParseObject;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -53,6 +55,39 @@ public class MenuFragment extends TKFragment implements ParseQueryCallback {
 
         setupView(v);
         setupAdaptersAndListeners();
+
+
+        //set floating button settings
+        final View actionB = v.findViewById(R.id.action_b);
+
+        FloatingActionButton actionC = new FloatingActionButton(getActivity());
+        actionC.setTitle("Hide/Show Action above");
+        actionC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                actionB.setVisibility(actionB.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
+            }
+        });
+        ((FloatingActionsMenu) v.findViewById(R.id.multiple_actions)).addButton(actionC);
+
+        final FloatingActionButton actionA = (FloatingActionButton) v.findViewById(R.id.action_a);
+        actionA.setSize(FloatingActionButton.SIZE_NORMAL);
+        actionA.setIcon(R.mipmap.ic_shoppingcart);
+        actionA.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                actionA.setTitle("Go to shopping cart!");
+            }
+        });
+
+        /*
+            FloatingActionButton button = (FloatingActionButton) findViewById(R.id.setter);
+    button.setSize(FloatingActionButton.SIZE_MINI);
+    button.setColorNormalResId(R.color.pink);
+    button.setColorPressedResId(R.color.pink_pressed);
+    button.setIcon(R.drawable.ic_fab_star);
+    button.setStrokeVisible(false);
+        * */
         return v;
     }
 

@@ -56,10 +56,12 @@ public class HomeFragment extends TKFragment implements ParseQueryCallback {
         ((FloatingActionsMenu) v.findViewById(R.id.multiple_actions)).addButton(actionC);
 
         final FloatingActionButton actionA = (FloatingActionButton) v.findViewById(R.id.action_a);
+        actionA.setSize(FloatingActionButton.SIZE_NORMAL);
+        actionA.setIcon(R.mipmap.ic_shoppingcart);
         actionA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                actionA.setTitle("Action A clicked");
+                actionA.setTitle("Go to shopping cart!");
             }
         });
 
