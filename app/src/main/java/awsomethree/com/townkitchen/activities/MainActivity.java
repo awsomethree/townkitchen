@@ -12,6 +12,9 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
+
 import awsomethree.com.townkitchen.R;
 import awsomethree.com.townkitchen.fragments.HomeFragment;
 import awsomethree.com.townkitchen.fragments.MenuFragment;
@@ -68,6 +71,10 @@ public class MainActivity extends
 
         // Prepare default shopping cart
         ShoppingCart.prepareShoppingCart(getApplicationContext());
+
+
+
+
     }
 
     private void settingUpDrawerView() {

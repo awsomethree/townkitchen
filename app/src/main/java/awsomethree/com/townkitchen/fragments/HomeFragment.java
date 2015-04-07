@@ -1,8 +1,5 @@
 package awsomethree.com.townkitchen.fragments;
 
-import com.parse.ParseException;
-import com.parse.ParseObject;
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -11,6 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
+import com.parse.ParseException;
+import com.parse.ParseObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +40,29 @@ public class HomeFragment extends TKFragment implements ParseQueryCallback {
 
         setupView(v);
         setupAdaptersAndListeners();
+
+
+        //set floating button settings
+        final View actionB = v.findViewById(R.id.action_b);
+
+        FloatingActionButton actionC = new FloatingActionButton(getActivity());
+        actionC.setTitle("Hide/Show Action above");
+        actionC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                actionB.setVisibility(actionB.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
+            }
+        });
+        ((FloatingActionsMenu) v.findViewById(R.id.multiple_actions)).addButton(actionC);
+
+        final FloatingActionButton actionA = (FloatingActionButton) v.findViewById(R.id.action_a);
+        actionA.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                actionA.setTitle("Action A clicked");
+            }
+        });
+
         return v;
     }
 

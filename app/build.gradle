@@ -35,6 +35,7 @@ dependencies {
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
     //for rounded courners
     compile 'com.makeramen:roundedimageview:2.0.0'
-
+    //https://github.com/futuresimple/android-floating-action-button
+    compile 'com.getbase:floatingactionbutton:1.9.0'
     compile 'net.danlew:android.joda:2.7.1'
 }
