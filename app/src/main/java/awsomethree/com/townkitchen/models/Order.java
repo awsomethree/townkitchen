@@ -6,6 +6,7 @@ import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.Date;
 import java.util.List;
@@ -34,6 +35,15 @@ public class Order extends ParseObject{
     private String deliveryAddressStr;// delivery address in string format
     private String deliveryAddressState;
     private String deliveryAddressZip;
+    private ParseUser user;
+
+    public ParseUser getUser() {
+        return getParseUser("user");
+    }
+
+    public void setUser(ParseUser user) {
+        put("user", user);
+    }
 
     public String getDeliveryAddressState() {
         return getString("deliveryAddressState");

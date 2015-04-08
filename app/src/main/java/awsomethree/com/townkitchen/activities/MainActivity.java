@@ -12,9 +12,6 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
-
 import awsomethree.com.townkitchen.R;
 import awsomethree.com.townkitchen.fragments.HomeFragment;
 import awsomethree.com.townkitchen.fragments.MenuFragment;
@@ -71,10 +68,6 @@ public class MainActivity extends
 
         // Prepare default shopping cart
         ShoppingCart.prepareShoppingCart(getApplicationContext());
-
-
-
-
     }
 
     private void settingUpDrawerView() {
@@ -90,6 +83,8 @@ public class MainActivity extends
         tkDrawer.addNavItem("Track My Order", R.mipmap.ic_trackorder, "Track My Order",
                 TrackOrderFragment.class, false);
         tkDrawer.addNavItem("Feedbacks History", R.mipmap.ic_star, "Feedbacks History",
+                OrderFeedbackFragment.class, false);
+        tkDrawer.addNavItem(getString(R.string.menu_logout), R.mipmap.ic_star, getString(R.string.menu_logout),
                 OrderFeedbackFragment.class, false);
         // draw the invisible fragment (from drawer perspective)
         tkDrawer.addNavItem("Menu", R.mipmap.ic_launcher, "Menu",

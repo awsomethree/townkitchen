@@ -5,11 +5,10 @@ import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 import awsomethree.com.townkitchen.interfaces.ParseQueryCallback;
 
@@ -70,24 +69,15 @@ public class OrderLineItem extends ParseObject{
     // Retrieve all menu by specific date
     public static void listAllOrderLineItemsByDates(Date menuDate,
                                            final ParseQueryCallback callback, final int queryCode){
+        ParseUser user = ParseUser.getCurrentUser();
 
-        Calendar lowDate = Calendar.getInstance();
-        lowDate.setTime(menuDate);
-        lowDate.set(Calendar.HOUR_OF_DAY, 0);
-        lowDate.setTimeZone(TimeZone.getTimeZone("GMT"));
-        Date qLowDate = lowDate.getTime();
-
-        Calendar maxDate = Calendar.getInstance();
-        maxDate.setTime(menuDate);
-        maxDate.set(Calendar.HOUR_OF_DAY, 24);
-        maxDate.setTimeZone(TimeZone.getTimeZone("GMT"));
-        Date qMaxDate = maxDate.getTime();
+        ParseQuery<Order> order = ParseQuery.getQuery(Order.class);
+        order.whereEqualTo("user", user);
+        order.whereNotEqualTo("deliveryStatus", ShoppingCart.CART_STATUS);
 
         ParseQuery<OrderLineItem> query = ParseQuery.getQuery(OrderLineItem.class);
-        //query.setLimit(10);
-        //query.whereGreaterThanOrEqualTo("menuDate", qLowDate);
-        //query.whereLessThan("menuDate", qMaxDate);
         query.orderByAscending("createdAt");
+        query.whereMatchesQuery("Order",order);
         query.include("Order");
         query.include("DailyMenu");
         query.include("DailyMenu.FoodMenu");

@@ -6,6 +6,7 @@ import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import android.content.Context;
@@ -37,6 +38,7 @@ public class ShoppingCart {
     private Double shippingCost;
     private Double taxTotal;
     private Double total;
+    private ParseUser user;
 
     public Double getTotal() {
         return total;
@@ -54,7 +56,13 @@ public class ShoppingCart {
         return subtotal;
     }
 
+    public ParseUser getUser() {
+        return user;
+    }
 
+    public void setUser(ParseUser user) {
+        this.user = user;
+    }
 
     public ShoppingCart(List<OrderLineItem> orderLineItems) {
         this.items = orderLineItems;
@@ -164,8 +172,12 @@ public class ShoppingCart {
             // make sure the id is still in Parse
             String objectId = pref.getString("shoppingCartId", "-");
             ParseQuery<Order> order = ParseQuery.getQuery(Order.class);
+            ParseUser user = ParseUser.getCurrentUser();
+
             order.whereEqualTo("deliveryStatus", CART_STATUS);
             order.whereEqualTo("objectId", objectId);
+            order.whereEqualTo("user", user);
+
             order.findInBackground(new FindCallback<Order>() {
                 @Override
                 public void done(List<Order> orders, ParseException e) {
@@ -187,9 +199,12 @@ public class ShoppingCart {
 
     private static void createNewShoppingCartObjectInParse(Context ctx){
         final Context localContext = ctx;
+
+        ParseUser user = ParseUser.getCurrentUser();
         // create new Order object
         final Order shoppingCart = new Order();
         shoppingCart.setDeliveryStatus(ShoppingCart.CART_STATUS);
+        shoppingCart.setUser(user);
         shoppingCart.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
@@ -211,6 +226,7 @@ public class ShoppingCart {
         edit.remove("shoppingCartId");
         edit.remove("shoppingCartTotal");
         edit.commit();
+
         final Context ctx = localContext;
         // remove shopping cart model (unpin)
         ParseObject po = ParseObject.createWithoutData("Order", objectId);
@@ -234,7 +250,7 @@ public class ShoppingCart {
         edit.commit();
     }
 
-    public static void updateCartTotal(Context localContext,fragmentNavigationInterface mainActivityParent){
+    public static void updateCartTotal(Context localContext, fragmentNavigationInterface mainActivityParent){
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(localContext);
         final String orderId = pref.getString("shoppingCartId", "-");
         final Context ctx = localContext;
@@ -281,7 +297,6 @@ public class ShoppingCart {
 
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(localContext);
         final String orderId = pref.getString("shoppingCartId", "-");
-
 
         // query the order
         ParseQuery<Order> order = ParseQuery.getQuery(Order.class);
@@ -342,6 +357,7 @@ public class ShoppingCart {
         ParseQuery<Order> order = ParseQuery.getQuery(Order.class);
         order.whereEqualTo("deliveryStatus", CART_STATUS);
         order.whereEqualTo("objectId", orderId);
+        order.whereEqualTo("user", ParseUser.getCurrentUser());
 
         // only look in this device
 //        order.fromLocalDatastore();
@@ -374,7 +390,7 @@ public class ShoppingCart {
 
             OrderLineItem orderLI = shoppingCartModel.getItems().get(0);
 
-            Order newOrder = new Order();
+            final Order newOrder = new Order();
             Shipping shipping = shoppingCartModel.getShipping();
             newOrder.setDeliveryAddressStr(shipping.getAddressLine1() + " " + shipping.getApt()
                 + " , " + shipping.getState() + " " + Integer.toString(shipping.getZip()));
@@ -384,12 +400,17 @@ public class ShoppingCart {
             newOrder.setDeliveryStatus(Order.PENDING_STATUS);
             newOrder.setPriceAfterTax(shoppingCartModel.getTotal());
             newOrder.setTotalOrder(orderQty);
+            newOrder.setUser(ParseUser.getCurrentUser());
             newOrder.saveInBackground(new SaveCallback() {
                 @Override
                 public void done(ParseException e) {
 
                     // now save the line items
                     List<OrderLineItem> orderLineItems = shoppingCartModel.getItems();
+                    for (OrderLineItem orderLineItem : orderLineItems){
+                        orderLineItem.setOrder(newOrder);
+                    }
+
                     ParseObject.saveAllInBackground(orderLineItems, new SaveCallback() {
                         @Override
                         public void done(ParseException e) {

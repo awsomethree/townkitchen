@@ -25,6 +25,7 @@ import awsomethree.com.townkitchen.adapters.ShoppingCartAdapter;
 import awsomethree.com.townkitchen.dialogs.PaymentDialog;
 import awsomethree.com.townkitchen.interfaces.ParseQueryCallback;
 import awsomethree.com.townkitchen.interfaces.dialogInterfaceListener;
+import awsomethree.com.townkitchen.interfaces.fragmentNavigationInterface;
 import awsomethree.com.townkitchen.models.OrderLineItem;
 import awsomethree.com.townkitchen.models.Payment;
 import awsomethree.com.townkitchen.models.Shipping;
@@ -92,7 +93,7 @@ public class ShoppingCartFragment extends TKFragment implements dialogInterfaceL
 
 
                 // open up new dialogs for paying
-                PaymentDialog payDialog = PaymentDialog.newInstance(getCurrentFragment(), shoppingCartModel);
+                PaymentDialog payDialog = PaymentDialog.newInstance(ShoppingCartFragment.this, shoppingCartModel);
                 payDialog.show(getFragmentManager(), "Pay");
             }
         });
@@ -116,6 +117,8 @@ public class ShoppingCartFragment extends TKFragment implements dialogInterfaceL
 
         // Clearout the shopping cart
         ShoppingCart.clearShoppingCart(getActivity().getApplicationContext());
+        ShoppingCart.updateCartTotal(getActivity().getApplicationContext(),
+                (fragmentNavigationInterface)getActivity());
 
         // redirect to order history
         redirectFragmentTo(MainActivity.ORDERHISTORY_DRAWER_POSITION);

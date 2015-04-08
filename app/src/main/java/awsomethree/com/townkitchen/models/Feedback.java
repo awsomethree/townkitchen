@@ -6,14 +6,13 @@ import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import android.content.Context;
 
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 import awsomethree.com.townkitchen.interfaces.ParseQueryCallback;
 
@@ -28,6 +27,15 @@ public class Feedback extends ParseObject{
     private FoodMenu foodMenu;
     private double rating;
     private String comment;
+    private ParseUser user;
+
+    public ParseUser getUser() {
+        return getParseUser("user");
+    }
+
+    public void setUser(ParseUser user) {
+        put("user", user);
+    }
 
     // helper item
     private String orderLIid;
@@ -68,24 +76,10 @@ public class Feedback extends ParseObject{
     public static void listAllFeedsByDates(Date menuDate,
                                           final ParseQueryCallback callback, final int queryCode){
 
-        Calendar lowDate = Calendar.getInstance();
-        lowDate.setTime(menuDate);
-        lowDate.set(Calendar.HOUR_OF_DAY, 0);
-        lowDate.setTimeZone(TimeZone.getTimeZone("GMT"));
-        Date qLowDate = lowDate.getTime();
-
-        Calendar maxDate = Calendar.getInstance();
-        maxDate.setTime(menuDate);
-        maxDate.set(Calendar.HOUR_OF_DAY, 24);
-        maxDate.setTimeZone(TimeZone.getTimeZone("GMT"));
-        Date qMaxDate = maxDate.getTime();
-
         ParseQuery<Feedback> query = ParseQuery.getQuery(Feedback.class);
-        //query.setLimit(10);
-        //query.whereGreaterThanOrEqualTo("menuDate", qLowDate);
-        //query.whereLessThan("menuDate", qMaxDate);
         query.orderByDescending("createdAt");
         query.include("FoodMenu");
+        query.whereEqualTo("user", ParseUser.getCurrentUser());
         query.findInBackground(new FindCallback<Feedback>() {
             @Override
             public void done(List<Feedback> feedbacks, ParseException e) {
@@ -114,11 +108,15 @@ public class Feedback extends ParseObject{
                 // get the food menu now
                 String foodMenuId = orderLineItem.getMenu().getFoodMenu().getObjectId();
 
+                // get user
+                ParseUser user = ParseUser.getCurrentUser();
+
                 // create new feedback
                 Feedback savedFeedback = new Feedback();
                 savedFeedback.setComment(feedbackModel.getComment());
                 savedFeedback.setRating(feedbackModel.getRating());
                 savedFeedback.put("FoodMenu", ParseObject.createWithoutData("FoodMenu", foodMenuId));
+                savedFeedback.put("user", user);
                 savedFeedback.saveInBackground();
                 callback.parseQueryDone(null, null, queryCode);
             }

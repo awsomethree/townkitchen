@@ -1,5 +1,7 @@
 package awsomethree.com.townkitchen.layouts;
 
+import com.parse.ParseUser;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,6 +16,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -126,11 +129,18 @@ public class TKNavigationDrawer extends DrawerLayout {
 
         FragmentNavItem navItem = drawerNavItems.get(position);
 
-        Bundle fragmentArgs = navItem.getFragmentArgs();
-        if (args != null) {
-            fragmentArgs = args;
+        // Special case for Logout
+        if (navItem.getTitle().equalsIgnoreCase(getActivity().getString(R.string.menu_logout))){
+            Toast.makeText(getActivity(), "LOGOUT", Toast.LENGTH_SHORT).show();
+            ParseUser.logOut();
+            // TODO... need to redirect back to login page
+        } else {
+            Bundle fragmentArgs = navItem.getFragmentArgs();
+            if (args != null) {
+                fragmentArgs = args;
+            }
+            renderFragment(navItem.getFragmentClass(), fragmentArgs);
         }
-        renderFragment(navItem.getFragmentClass(), fragmentArgs);
 
         // Highlight the selected item, update the title, and close the drawer
         // ONLY if if it is visible in drawer
