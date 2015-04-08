@@ -2,6 +2,7 @@ package awsomethree.com.townkitchen;
 
 import com.parse.Parse;
 import com.parse.ParseObject;
+import com.parse.ParseTwitterUtils;
 
 import android.app.Application;
 
@@ -16,13 +17,7 @@ import awsomethree.com.townkitchen.models.OrderLineItem;
  * Created by smulyono on 3/23/15.
  */
 public class TownKitchenApplication extends Application {
-//    TownKitchenSB
-//    public static final String PARSE_APPLICATION_ID = "DrECmIAzwm5sp9qGouQzZnNC0Ya0uWoemHnRhxbS";
-//    public static final String PARSE_CLIENT_KEY = "52OMxk1lUCqYBpVtSqjompMtxtYCKlbrQGvtE3AE";
 
-    public static final String PARSE_APPLICATION_ID = "rFoHa7dbffxXh8qbEgiAwcc5KpT1lGt0E3srKzzK";
-    public static final String PARSE_CLIENT_KEY = "6SUzIyD1sYP99qB2BK4LvklKR07Xfydoh1GdXm00";
-//
     @Override
     public void onCreate() {
         super.onCreate();
@@ -37,6 +32,10 @@ public class TownKitchenApplication extends Application {
 
         // uncomment this to enable parse communication
         Parse.enableLocalDatastore(this);
-        Parse.initialize(this, PARSE_APPLICATION_ID, PARSE_CLIENT_KEY);
+        Parse.initialize(this, getString(R.string.parse_app_id),
+                getString(R.string.parse_client_key));
+        ParseTwitterUtils.initialize(getString(R.string.twitter_consumer_key),
+                getString(R.string.twitter_consumer_secret));
+
     }
 }

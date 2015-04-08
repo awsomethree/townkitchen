@@ -38,4 +38,7 @@ dependencies {
     //https://github.com/futuresimple/android-floating-action-button
     compile 'com.getbase:floatingactionbutton:1.8.0'
     compile 'net.danlew:android.joda:2.7.1'
+    compile project(':ParseLoginUI')
+    compile files('libs/ParseFacebookUtils-1.8.4.jar')
+    compile 'com.facebook.android:facebook-android-sdk:3.23.1'
 }
