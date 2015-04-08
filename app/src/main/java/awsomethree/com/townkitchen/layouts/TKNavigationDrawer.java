@@ -162,7 +162,7 @@ public class TKNavigationDrawer extends DrawerLayout {
                         .setCustomAnimations(R.anim.slide_in_right_, R.anim.slide_out_left,
                                 R.anim.slide_in_left, R.anim.slide_out_right)
                         .replace(drawerContainerRes, fragment)
-                        .addToBackStack(null)
+//                        .addToBackStack(null)
                         .commit();
             }
         } catch (Exception e) {
