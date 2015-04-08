@@ -14,6 +14,7 @@ import awsomethree.com.townkitchen.interfaces.fragmentNavigationInterface;
 
 /**
  * Created by smulyono on 3/23/15.
+ * coauthor long huynh
  */
 public abstract class TKFragment extends Fragment {
 
