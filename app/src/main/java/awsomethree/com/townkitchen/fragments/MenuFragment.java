@@ -26,6 +26,10 @@ import awsomethree.com.townkitchen.interfaces.ParseQueryCallback;
 import awsomethree.com.townkitchen.models.DailyMenu;
 import awsomethree.com.townkitchen.models.OrderLineItem;
 import awsomethree.com.townkitchen.models.ShoppingCart;
+import it.gmariotti.cardslib.library.internal.Card;
+import it.gmariotti.cardslib.library.internal.CardExpand;
+import it.gmariotti.cardslib.library.internal.CardHeader;
+import it.gmariotti.cardslib.library.view.CardViewNative;
 
 /**
  * Created by smulyono on 3/22/15.
@@ -62,6 +66,7 @@ public class MenuFragment extends TKFragment implements ParseQueryCallback {
 
     private void setupView(View v){
         lvMenu = (ListView) v.findViewById(R.id.lvMenu);
+
     }
 
     private void setupAdaptersAndListeners() {
