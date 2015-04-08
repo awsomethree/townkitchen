@@ -36,6 +36,6 @@ dependencies {
     //for rounded courners
     compile 'com.makeramen:roundedimageview:2.0.0'
     //https://github.com/futuresimple/android-floating-action-button
-    compile 'com.getbase:floatingactionbutton:1.9.0'
+    compile 'com.getbase:floatingactionbutton:1.8.0'
     compile 'net.danlew:android.joda:2.7.1'
 }
