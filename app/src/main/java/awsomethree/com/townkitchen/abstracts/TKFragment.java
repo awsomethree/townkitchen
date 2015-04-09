@@ -47,29 +47,35 @@ public abstract class TKFragment extends Fragment {
 
         //SHOPPING CART
         final FloatingActionButton actionA = (FloatingActionButton) v.findViewById(R.id.action_a);
-        actionA.setSize(FloatingActionButton.SIZE_NORMAL);
-        actionA.setIcon(R.mipmap.ic_shoppingcart);
-        actionA.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                actionA.setTitle("Go to shopping cart...");
-                redirectFragmentTo(MainActivity.SHOPPINGCART_DRAWER_POSITION);
-            }
-        });
+        if(actionA != null) {
+                actionA.setSize(FloatingActionButton.SIZE_NORMAL);
+                actionA.setIcon(R.mipmap.ic_shoppingcart);
+                actionA.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        actionA.setTitle("Go to shopping cart...");
+                        redirectFragmentTo(MainActivity.SHOPPINGCART_DRAWER_POSITION);
+                }
+            });
+        }
 
 
         //HOME
         final FloatingActionButton actionB = (FloatingActionButton) v.findViewById(R.id.action_b);
-        actionB.setSize(FloatingActionButton.SIZE_NORMAL);
-        actionB.setIcon(R.mipmap.ic_home);
-        actionB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                actionA.setTitle("Going Home...");
-                redirectFragmentTo(MainActivity.HOME_DRAWER_POSITION);
-            }
-        });
+        if(actionB != null) {
+            actionB.setSize(FloatingActionButton.SIZE_NORMAL);
+            actionB.setIcon(R.mipmap.ic_home);
+            actionB.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    actionA.setTitle("Going Home...");
+                    redirectFragmentTo(MainActivity.HOME_DRAWER_POSITION);
+                }
+            });
+        }
 
+
+        //getEmptyShoppingCart
 
         v.findViewById(R.id.pink_icon).setOnClickListener(new View.OnClickListener() {
             @Override

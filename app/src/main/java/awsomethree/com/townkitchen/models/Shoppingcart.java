@@ -1,5 +1,10 @@
 package awsomethree.com.townkitchen.models;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.util.Log;
+
 import com.parse.DeleteCallback;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -8,11 +13,6 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.util.Log;
 
 import java.util.Collections;
 import java.util.List;
@@ -224,6 +224,11 @@ public class ShoppingCart {
     }
 
     public static void clearShoppingCart(Context localContext){
+        clearShoppingCart(localContext, null);
+
+    }
+
+    public static void clearShoppingCart(Context localContext, final fragmentNavigationInterface mainActivityParent) {
         SharedPreferences pref = PreferenceManager
                 .getDefaultSharedPreferences(localContext);
         String objectId = pref.getString("shoppingCartId", "-");
@@ -240,10 +245,9 @@ public class ShoppingCart {
             @Override
             public void done(ParseException e) {
                 OrderLineItem.unpinAllInBackground();
-                ShoppingCart.prepareShoppingCart(ctx);
+                ShoppingCart.prepareShoppingCart(ctx, mainActivityParent);
             }
         });
-
     }
 
     public static void setupShoppingCartOnPreferences(Context localContext, String shoppingCartId){

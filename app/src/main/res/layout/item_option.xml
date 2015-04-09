@@ -2,7 +2,9 @@
 <it.gmariotti.cardslib.library.view.CardViewNative
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/carddemo"
+    app:cardBackgroundColor="@android:color/holo_orange_light"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="15dp"

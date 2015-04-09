@@ -1,8 +1,6 @@
 package awsomethree.com.townkitchen.fragments;
 
-import com.parse.ParseException;
-import com.parse.ParseObject;
-
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Html;
@@ -14,6 +12,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.parse.ParseException;
+import com.parse.ParseObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,7 +106,9 @@ public class ShoppingCartFragment extends TKFragment implements dialogInterfaceL
         subTotalAmount.setText(shoppingCart.getSubTotalString());
         taxAmount.setText(shoppingCart.getTaxString());
         shippingAmount.setText(shoppingCart.getShippingString());
+        shippingAmount.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
         totalAmount.setText(shoppingCart.getTotalString());
+
     }
 
 

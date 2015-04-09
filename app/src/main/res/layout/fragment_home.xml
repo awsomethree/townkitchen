@@ -52,14 +52,6 @@
             fab:fab_title="Shopping Cart"
             />
 
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/action_b"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_colorNormal="@color/pink"
-            fab:fab_colorPressed="@color/pink_pressed"
-            fab:fab_title="Home"
-            />
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 

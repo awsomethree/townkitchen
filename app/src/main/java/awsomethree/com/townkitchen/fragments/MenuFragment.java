@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 
@@ -23,6 +24,7 @@ import awsomethree.com.townkitchen.abstracts.TKFragment;
 import awsomethree.com.townkitchen.activities.MainActivity;
 import awsomethree.com.townkitchen.adapters.TKMenuListAdapter;
 import awsomethree.com.townkitchen.interfaces.ParseQueryCallback;
+import awsomethree.com.townkitchen.interfaces.fragmentNavigationInterface;
 import awsomethree.com.townkitchen.models.DailyMenu;
 import awsomethree.com.townkitchen.models.OrderLineItem;
 import awsomethree.com.townkitchen.models.ShoppingCart;
@@ -63,6 +65,26 @@ public class MenuFragment extends TKFragment implements ParseQueryCallback {
     private void setupView(View v){
         lvMenu = (ListView) v.findViewById(R.id.lvMenu);
 
+
+        //CLEAR CART
+        final FloatingActionButton actionCLear = (FloatingActionButton) v.findViewById(R.id.action_clear);
+        if(actionCLear != null) {
+            actionCLear.setSize(FloatingActionButton.SIZE_NORMAL);
+            actionCLear.setIcon(R.mipmap.ic_clear_cart);
+            actionCLear.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    actionCLear.setTitle("Clearing cart...");
+                    // Clearout the shopping cart
+                    ShoppingCart.clearShoppingCart(getActivity().getApplicationContext());
+                    ShoppingCart.updateCartTotal(getActivity().getApplicationContext(),
+                            (fragmentNavigationInterface) getActivity());
+                    redirectFragmentTo(MainActivity.HOME_DRAWER_POSITION);
+                }
+            });
+        }
+
+
     }
 
     private void setupAdaptersAndListeners() {
@@ -85,7 +107,6 @@ public class MenuFragment extends TKFragment implements ParseQueryCallback {
         });
 
 
-        //populateMenuOptions(0);
 
         // Example for retrieving Parse Object
         // get the menu for 2015-04-01, month starts from 0

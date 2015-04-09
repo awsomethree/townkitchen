@@ -36,9 +36,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/optionNameDesc"
         android:id="@+id/tvOptionName"
+        android:textColor="#ff000027"
         android:layout_toRightOf="@+id/tvQty"
         android:layout_below="@+id/tvShippingDay" />
 
@@ -60,15 +60,16 @@
               android:text="@string/foodPrice"
               android:id="@+id/tvFoodPrice"
               android:layout_alignParentRight="true"
-              android:layout_alignTop="@id/tvOptionDesc"
+              android:layout_alignTop="@id/tvOptionName"
               android:gravity="right"
+              android:textColor="#ff0000ff"
             />
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0"
             android:id="@+id/tvQty"
-            android:layout_alignBottom="@+id/tvOptionDesc"
+            android:layout_alignTop="@+id/tvOptionDesc"
             android:background="@drawable/blue_badge_shape"
             android:textColor="#fff"
             android:layout_marginRight="10dp"

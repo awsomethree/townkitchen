@@ -112,7 +112,7 @@ public class TKMenuListAdapter extends ArrayAdapter<DailyMenu> {
         //This provides a simple (and useless) expand area
         CardExpand expand = new CardExpand(convertView.getContext());
         //Set inner title in Expand Area
-        expand.setTitle(option.getFoodMenu().getDescription());
+        expand.setTitle("Delivery included! Comes with Drink + Dessert.");
         card.addCardExpand(expand);
 
         //Set card in the cardView
