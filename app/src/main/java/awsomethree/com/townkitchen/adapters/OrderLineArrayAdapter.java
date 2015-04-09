@@ -31,6 +31,7 @@ public class OrderLineArrayAdapter extends ArrayAdapter<OrderLineItem> {
         public TextView optionName;
         public TextView optionDesc;
         public TextView price;
+        //public TextView more;
     }
 
     public OrderLineArrayAdapter(Context context, List<OrderLineItem> tweets) {
@@ -58,6 +59,7 @@ public class OrderLineArrayAdapter extends ArrayAdapter<OrderLineItem> {
             viewHolder.optionName = (TextView)convertView.findViewById(R.id.tvOptionName);
             viewHolder.optionDesc = (TextView)convertView.findViewById(R.id.tvOptionDesc);
             viewHolder.price = (TextView)convertView.findViewById(R.id.tvPrice);
+           // viewHolder.more = (TextView)convertView.findViewById(R.id.tvMore);
 
 //            viewHolder.orderHistoryFooter = (TextView)convertView.findViewById(R.id.tvOrderHistoryFooter);
 
@@ -85,6 +87,8 @@ public class OrderLineArrayAdapter extends ArrayAdapter<OrderLineItem> {
                 viewHolder.shippingDay.setText(relativeTimeSpanString);
             }
         }
+
+       // viewHolder.more.setText("more...");
         viewHolder.price.setText("$"+orderLineItem.getPrice());
         viewHolder.optionName.setText(orderLineItem.getMenu().getFoodMenu().getName());
         viewHolder.optionDesc.setText(Html.fromHtml(orderLineItem.getMenu().getFoodMenu().getDescription()));

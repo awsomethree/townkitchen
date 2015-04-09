@@ -83,12 +83,13 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Small Text"
         android:id="@+id/tvItems"
-        android:paddingLeft="3dp"
-        android:paddingRight="12dp"
-        android:textColor="#ff1622ff"
+        android:background="@drawable/blue_badge_shape"
+        android:textColor="#fff"
         android:layout_below="@+id/ibUp"
+        android:layout_marginRight="15dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
 
     <ImageView
         android:layout_width="wrap_content"
