@@ -1,8 +1,10 @@
 package awsomethree.com.townkitchen.layouts;
 
 import com.parse.ParseUser;
+import com.parse.ui.ParseLoginBuilder;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -16,7 +18,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -24,6 +25,7 @@ import awsomethree.com.townkitchen.R;
 import awsomethree.com.townkitchen.activities.MainActivity;
 import awsomethree.com.townkitchen.adapters.TKDrawerListAdapter;
 import awsomethree.com.townkitchen.models.NavDrawerItem;
+import awsomethree.com.townkitchen.models.User;
 
 /**
  * Created by smulyono on 3/22/15.
@@ -74,7 +76,15 @@ public class TKNavigationDrawer extends DrawerLayout {
         drawerAdapter = new TKDrawerListAdapter(getActivity(), navDrawerItems);
         lvDrawer.setAdapter(drawerAdapter);
 
-        // setup list view on click listener
+        // setup drawer header
+        View headerView= (View) getActivity().getLayoutInflater().inflate(R.layout.drawer_header_item, null);
+        View footerView = (View) getActivity().getLayoutInflater().inflate(R.layout.drawer_footer_item, null);
+        lvDrawer.addFooterView(footerView);
+        // Setup header
+        lvDrawer.addHeaderView(headerView);
+
+        // start background task to get profile image
+        User.populateTwitterProfileImage(headerView);
 
         // setup toolbar
         toolbar = drawerToolbar;
@@ -127,13 +137,17 @@ public class TKNavigationDrawer extends DrawerLayout {
         // position
         mainActivity.showAllOption();
 
-        FragmentNavItem navItem = drawerNavItems.get(position);
+        int mposition = (position > 0 ? position -1  : 0);
+        FragmentNavItem navItem = drawerNavItems.get(mposition); // -1 for the header
 
         // Special case for Logout
         if (navItem.getTitle().equalsIgnoreCase(getActivity().getString(R.string.menu_logout))){
-            Toast.makeText(getActivity(), "LOGOUT", Toast.LENGTH_SHORT).show();
             ParseUser.logOut();
-            // TODO... need to redirect back to login page
+            ParseLoginBuilder builder = new ParseLoginBuilder(getContext());
+            Intent i = builder.build();
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP );
+            getActivity().startActivityForResult(i, 100);
+
         } else {
             Bundle fragmentArgs = navItem.getFragmentArgs();
             if (args != null) {

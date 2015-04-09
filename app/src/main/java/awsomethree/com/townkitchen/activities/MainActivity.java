@@ -45,7 +45,7 @@ public class MainActivity extends
     public static final int FEEDBACK_DRAWER_POSITION = 4;
 
     // SOME FRAGMENT WHICH IS NOT VISIBLE IN DRAWER
-    public static final int MENU_DRAWER_POSITION = 5;
+    public static final int MENU_DRAWER_POSITION = 6;
 
     // add to cart, calendar in toolbar
     private Menu menuToolbar;
@@ -75,7 +75,7 @@ public class MainActivity extends
         // setup drawer view
         tkDrawer.setupDrawerConfiguration((ListView) findViewById(R.id.lvDrawer), toolbar, R.id.flContent, this);
         // adding navigation drawer items
-        tkDrawer.addNavItem("Home", R.mipmap.ic_townkitchen, "Home", HomeFragment.class);
+        tkDrawer.addNavItem("Home", R.mipmap.ic_home, "Home", HomeFragment.class);
         tkDrawer.addNavItem("Shopping Cart", R.mipmap.ic_shoppingcart, "Shopping Cart",
                 ShoppingCartFragment.class);
         tkDrawer.addNavItem("Order History", R.mipmap.ic_folder, "Order History", OrderHistoryFragment.class);
@@ -84,7 +84,7 @@ public class MainActivity extends
                 TrackOrderFragment.class, false);
         tkDrawer.addNavItem("Feedbacks History", R.mipmap.ic_star, "Feedbacks History",
                 OrderFeedbackFragment.class, false);
-        tkDrawer.addNavItem(getString(R.string.menu_logout), R.mipmap.ic_star, getString(R.string.menu_logout),
+        tkDrawer.addNavItem(getString(R.string.menu_logout), R.mipmap.ic_logout, getString(R.string.menu_logout),
                 OrderFeedbackFragment.class, false);
         // draw the invisible fragment (from drawer perspective)
         tkDrawer.addNavItem("Menu", R.mipmap.ic_launcher, "Menu",

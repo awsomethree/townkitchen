@@ -1,5 +1,8 @@
 package awsomethree.com.townkitchen.fragments;
 
+import com.parse.ParseException;
+import com.parse.ParseObject;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -10,9 +13,6 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import com.parse.ParseException;
-import com.parse.ParseObject;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,10 +26,6 @@ import awsomethree.com.townkitchen.interfaces.ParseQueryCallback;
 import awsomethree.com.townkitchen.models.DailyMenu;
 import awsomethree.com.townkitchen.models.OrderLineItem;
 import awsomethree.com.townkitchen.models.ShoppingCart;
-import it.gmariotti.cardslib.library.internal.Card;
-import it.gmariotti.cardslib.library.internal.CardExpand;
-import it.gmariotti.cardslib.library.internal.CardHeader;
-import it.gmariotti.cardslib.library.view.CardViewNative;
 
 /**
  * Created by smulyono on 3/22/15.
@@ -95,10 +91,9 @@ public class MenuFragment extends TKFragment implements ParseQueryCallback {
         // get the menu for 2015-04-01, month starts from 0
 
         // get the Dates from arguments or default to today
-        Long dateArgs = getArguments().getLong("menuDate");
-        if (dateArgs == null){
-            // get today or current time
-            dateArgs = new Date().getTime();
+        Long dateArgs = new Date().getTime();
+        if (getArguments() != null){
+            dateArgs = getArguments().getLong("menuDate");
         }
 
         lrecs = new ArrayList<>();

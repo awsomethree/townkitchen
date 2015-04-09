@@ -50,7 +50,7 @@
             <!-- For more options, see https://www.parse.com/docs/android_guide#ui-login -->
             <meta-data
                     android:name="com.parse.ui.ParseLoginActivity.FACEBOOK_LOGIN_ENABLED"
-                    android:value="true"/>
+                    android:value="false"/>
             <meta-data
                     android:name="com.parse.ui.ParseLoginActivity.TWITTER_LOGIN_ENABLED"
                     android:value="true"/>
