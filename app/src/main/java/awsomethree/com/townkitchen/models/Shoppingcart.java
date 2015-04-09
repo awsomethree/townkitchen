@@ -156,13 +156,15 @@ public class ShoppingCart {
         return sb.toString();
     }
 
-
+    public static void prepareShoppingCart(Context ctx){
+        prepareShoppingCart(ctx, null);
+    }
     /**
      * Query locally, find the first shopping cart object on this device otherwise
      * create new one (locally)
      *
      */
-    public static void prepareShoppingCart(Context ctx){
+    public static void prepareShoppingCart(Context ctx, final fragmentNavigationInterface mainActivityParent){
         SharedPreferences pref = PreferenceManager
                 .getDefaultSharedPreferences(ctx);
 
@@ -186,18 +188,22 @@ public class ShoppingCart {
                     if (orders.size() > 0){
                         // always get the first one
                         shoppingCart = orders.get(0);
-                        ShoppingCart.setupShoppingCartOnPreferences(localContext, shoppingCart.getObjectId());
+                        ShoppingCart.setupShoppingCartOnPreferences(localContext, shoppingCart.getObjectId(), mainActivityParent);
                     } else {
-                        createNewShoppingCartObjectInParse(localContext);
+                        createNewShoppingCartObjectInParse(localContext, mainActivityParent);
                     }
                 }
             });
         } else {
-            createNewShoppingCartObjectInParse(localContext);
+            createNewShoppingCartObjectInParse(localContext, mainActivityParent);
         }
     }
 
     private static void createNewShoppingCartObjectInParse(Context ctx){
+        createNewShoppingCartObjectInParse(ctx, null);
+    }
+    private static void createNewShoppingCartObjectInParse(Context ctx,
+            final fragmentNavigationInterface mainActivityParent){
         final Context localContext = ctx;
 
         ParseUser user = ParseUser.getCurrentUser();
@@ -210,7 +216,7 @@ public class ShoppingCart {
             public void done(ParseException e) {
                 if (e == null) {
                     ShoppingCart.setupShoppingCartOnPreferences(localContext,
-                            shoppingCart.getObjectId());
+                            shoppingCart.getObjectId(), mainActivityParent);
                 }
             }
         });
@@ -241,6 +247,11 @@ public class ShoppingCart {
     }
 
     public static void setupShoppingCartOnPreferences(Context localContext, String shoppingCartId){
+        setupShoppingCartOnPreferences(localContext, shoppingCartId, null);
+    }
+
+    public static void setupShoppingCartOnPreferences(Context localContext, String shoppingCartId,
+            final fragmentNavigationInterface mainActivityParent){
         SharedPreferences pref = PreferenceManager
                 .getDefaultSharedPreferences(localContext);
         SharedPreferences.Editor edit = pref.edit();
@@ -248,6 +259,8 @@ public class ShoppingCart {
         Log.d(MainActivity.APP, "shopping Cart ID record : " + shoppingCartId);
         edit.putInt("shoppingCartTotal", 0);
         edit.commit();
+
+        updateCartTotal(localContext, mainActivityParent);
     }
 
     public static void updateCartTotal(Context localContext, fragmentNavigationInterface mainActivityParent){
@@ -281,7 +294,9 @@ public class ShoppingCart {
                 edit.putInt("shoppingCartTotal", newQty);
                 edit.commit();
                 String newQtyString = Integer.toString(newQty);
-                fragmentParent.updateCartBadge(newQtyString);
+                if (fragmentParent != null){
+                    fragmentParent.updateCartBadge(newQtyString);
+                }
             }
         });
 
@@ -302,6 +317,7 @@ public class ShoppingCart {
         ParseQuery<Order> order = ParseQuery.getQuery(Order.class);
         order.whereEqualTo("deliveryStatus", CART_STATUS);
         order.whereEqualTo("objectId", orderId);
+        order.whereEqualTo("user", ParseUser.getCurrentUser());
 
         // only look in this device
 //        order.fromLocalDatastore();
@@ -311,6 +327,7 @@ public class ShoppingCart {
 
         ParseQuery<DailyMenu> dailyMenu = ParseQuery.getQuery(DailyMenu.class);
         dailyMenu.whereMatchesQuery("FoodMenu", foodMenu);
+        dailyMenu.whereEqualTo("objectId", orderItem.getObjectId());
 
         // query the order line item (which match)
         ParseQuery<OrderLineItem> lineItems = ParseQuery.getQuery(OrderLineItem.class);

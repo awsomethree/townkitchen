@@ -57,6 +57,13 @@ public class ShoppingCartFragment extends TKFragment implements dialogInterfaceL
 
         //todo viewholder for footer
 //        shoppingCartFooterView = getLayoutInflater(savedInstanceState).inflate(R.layout.shopping_cart_footer_layout, null);
+        setupView(v);
+        setupAdaptersAndListeners();
+        return v;
+    }
+
+    private void setupView(View v) {
+        lvMenu = (ListView) v.findViewById(R.id.lvShoppingCart);
         shippingAddress = (TextView) v.findViewById(R.id.tvShippingAddress);
         subTotalAmount = (TextView) v.findViewById(R.id.tvSubTotalAmount);
         taxAmount = (TextView) v.findViewById(R.id.tvTaxAmount);
@@ -65,14 +72,6 @@ public class ShoppingCartFragment extends TKFragment implements dialogInterfaceL
 
         btnCheckout = (Button) v.findViewById(R.id.btnCheckout);
 
-        setupView(v);
-        setupAdaptersAndListeners();
-        return v;
-    }
-
-    private void setupView(View v) {
-        lvMenu = (ListView) v.findViewById(R.id.lvShoppingCart);
-//        btnCheckout = (Button) v.findViewById(R.id.btnCheckout);
     }
 
     private void setupAdaptersAndListeners() {
@@ -90,7 +89,6 @@ public class ShoppingCartFragment extends TKFragment implements dialogInterfaceL
             @Override
             public void onClick(View v) {
                 // populate the shipping address
-
 
                 // open up new dialogs for paying
                 PaymentDialog payDialog = PaymentDialog.newInstance(ShoppingCartFragment.this, shoppingCartModel);

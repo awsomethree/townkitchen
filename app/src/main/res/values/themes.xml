@@ -3,6 +3,8 @@
     <!-- Base application theme. -->
     <style name="TownKitchenTheme" parent="BaseTheme">
         <!-- Customize your theme here. -->
+        <item name="android:buttonStyle">@style/TKButton</item>
+        <item name="android:windowContentTransitions">true</item>
     </style>
 
 </resources>

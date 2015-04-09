@@ -69,7 +69,7 @@ public class MainActivity extends
         }
 
         // Prepare default shopping cart
-        ShoppingCart.prepareShoppingCart(getApplicationContext());
+        ShoppingCart.prepareShoppingCart(getApplicationContext(), this);
     }
 
     private void settingUpDrawerView() {

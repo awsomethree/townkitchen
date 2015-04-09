@@ -61,6 +61,7 @@ public class Daily extends ParseObject {
         ParseQuery<Daily> query = ParseQuery.getQuery(Daily.class);
         query.whereEqualTo("active", true);
         query.include("Daily");
+        query.orderByAscending("menuDate");
         query.findInBackground(new FindCallback<Daily>() {
             @Override
             public void done(List<Daily> dailies, ParseException e) {

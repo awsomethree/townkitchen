@@ -146,7 +146,6 @@
                 android:layout_alignStart="@+id/tvShippingAmount"
                 android:gravity="right"
                 />
-
         <Button
                 android:id="@+id/btnCheckout"
                 android:layout_width="wrap_content"

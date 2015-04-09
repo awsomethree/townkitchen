@@ -2,13 +2,16 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape>
-            <solid android:color="@color/tk_red_color"/>
+            <solid android:color="@color/gray_color"/>
+            <stroke android:dashGap="1dp"
+                    android:width="2dp"
+                    android:color="@color/gray_color"/>
         </shape>
     </item>
     <item
             android:bottom="2dp">
         <shape>
-            <solid android:color="@color/white"/>
+            <solid android:color="@color/tk_white_color"/>
         </shape>
     </item>
 </layer-list>

@@ -8,6 +8,14 @@
      -->
     <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
+
+    </style>
+
+    <style name="TKButton" parent="android:Widget.Button">
+        <item name="android:background">@drawable/tk_button_states</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/tk_white_color</item>
+        <item name="android:padding">10dp</item>
     </style>
 
     <style name="TKDialog" parent="Theme.AppCompat.Light.Dialog">

@@ -2,7 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingBottom="10dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="10dp"
+    android:background="@drawable/shopping_cart_item_bg"
+    >
 
 
     <ImageView
@@ -12,7 +17,8 @@
         android:contentDescription="@string/foodImageDesc"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+            android:visibility="gone"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -24,7 +30,8 @@
         android:layout_toEndOf="@+id/ivFoodImageUrl"
         android:paddingRight="2dp"
         android:paddingLeft="2dp"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+            android:visibility="gone"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -32,7 +39,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/optionNameDesc"
         android:id="@+id/tvOptionName"
-        android:layout_toRightOf="@+id/ivFoodImageUrl"
+        android:layout_toRightOf="@+id/tvQty"
         android:layout_below="@+id/tvShippingDay" />
 
     <TextView
@@ -44,7 +51,7 @@
         android:id="@+id/tvOptionDesc"
         android:text="@string/optionNameDesc"
         android:layout_below="@+id/tvOptionName"
-        android:layout_toRightOf="@+id/ivFoodImageUrl"
+        android:layout_toRightOf="@+id/tvQty"
             />
 
     <TextView android:layout_width="wrap_content"
@@ -52,10 +59,8 @@
               android:textAppearance="?android:attr/textAppearanceSmall"
               android:text="@string/foodPrice"
               android:id="@+id/tvFoodPrice"
-              android:layout_below="@+id/tvOptionDesc"
-              android:layout_toRightOf="@+id/ivFoodImageUrl"
-              android:layout_toEndOf="@+id/ivFoodImageUrl"
               android:layout_alignParentRight="true"
+              android:layout_alignTop="@id/tvOptionDesc"
               android:gravity="right"
             />
     <TextView
@@ -66,8 +71,8 @@
             android:layout_alignBottom="@+id/tvOptionDesc"
             android:background="@drawable/blue_badge_shape"
             android:textColor="#fff"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"/>
+            android:layout_marginRight="10dp"
+            />
 
 
 </RelativeLayout>

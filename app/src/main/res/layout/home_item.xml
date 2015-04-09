@@ -17,12 +17,12 @@
             android:maxWidth="20dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="3dp"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="6dp"
             />
 
     <TextView
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="32dp"
             android:text="Option"
             android:id="@+id/tvDaytext"
             android:textColor="#ff5e5e5e"
@@ -30,7 +30,7 @@
             android:gravity="right"
             android:layout_marginTop="2dp"
             android:layout_marginRight="7dp"
-            android:layout_marginLeft="7dp"
+            android:layout_marginLeft="8dp"
             android:paddingRight="10dp"
             android:layout_alignParentRight="true"
             android:layout_below="@id/ivFoodImage"
