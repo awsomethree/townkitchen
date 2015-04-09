@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
+    android:padding="5dp"
     android:layout_height="match_parent">
 
     <ImageView
@@ -44,6 +45,7 @@
         android:id="@+id/tvOptionDesc"
         android:layout_below="@+id/tvOptionName"
         android:layout_toRightOf="@+id/ivFoodImageUrl"
+        android:layout_marginTop="10dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
@@ -56,4 +58,24 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_below="@+id/tvOptionDesc"
+        android:layout_alignRight="@+id/tvOptionDesc"
+        android:src="@mipmap/ic_star"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignEnd="@+id/tvOptionDesc" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Rate Me:"
+        android:id="@+id/textView2"
+        android:textSize="10dp"
+        android:layout_below="@+id/tvOptionDesc"
+        android:layout_toLeftOf="@+id/imageView2"
+        android:layout_toStartOf="@+id/imageView2" />
 </RelativeLayout>

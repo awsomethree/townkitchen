@@ -106,6 +106,8 @@ public class TKMenuListAdapter extends ArrayAdapter<DailyMenu> {
         //Add Header to card
         card.addCardHeader(header);
 
+        //Card elevation
+        card.setCardElevation(56.5f);
 
         //This provides a simple (and useless) expand area
         CardExpand expand = new CardExpand(convertView.getContext());

@@ -30,6 +30,7 @@
         android:id="@+id/ratingBar"
         android:textAlignment="center"
         android:layout_below="@+id/etComment"
+        android:progressDrawable="@drawable/ratingbar_red"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

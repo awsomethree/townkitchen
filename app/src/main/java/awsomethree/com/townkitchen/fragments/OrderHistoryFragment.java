@@ -96,7 +96,7 @@ public class OrderHistoryFragment extends TKFragment implements dialogInterfaceL
             }
         });
 
-        orderHistoryFooter.setText(Html.fromHtml("Want To Change Order ? Call <br> <b>1-800-town-app</b>"));
+        orderHistoryFooter.setText(Html.fromHtml("Want To Change Order ? Call: <b>1-800-town-app</b>"));
         // get the menu for 2015-04-01, month starts from 0
         OrderLineItem.listAllOrderLineItemsByDates(new GregorianCalendar(2015, 3, 1).getTime(), this, OrderLineItem.ORDERLINEITEM_CODE);
 

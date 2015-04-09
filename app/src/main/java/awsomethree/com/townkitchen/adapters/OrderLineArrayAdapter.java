@@ -89,7 +89,7 @@ public class OrderLineArrayAdapter extends ArrayAdapter<OrderLineItem> {
         }
 
        // viewHolder.more.setText("more...");
-        viewHolder.price.setText("$"+orderLineItem.getPrice());
+        viewHolder.price.setText("$"+orderLineItem.getMenu().getFoodMenu().getPrice());
         viewHolder.optionName.setText(orderLineItem.getMenu().getFoodMenu().getName());
         viewHolder.optionDesc.setText(Html.fromHtml(orderLineItem.getMenu().getFoodMenu().getDescription()));
 

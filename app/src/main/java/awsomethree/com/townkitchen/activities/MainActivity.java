@@ -1,5 +1,6 @@
 package awsomethree.com.townkitchen.activities;
 
+import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -23,6 +24,7 @@ import awsomethree.com.townkitchen.fragments.TrackOrderListFragment;
 import awsomethree.com.townkitchen.interfaces.fragmentNavigationInterface;
 import awsomethree.com.townkitchen.layouts.TKNavigationDrawer;
 import awsomethree.com.townkitchen.models.ShoppingCart;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
 /**
@@ -231,5 +233,10 @@ public class MainActivity extends
         RelativeLayout cartBadge = (RelativeLayout) this.menuToolbar.findItem(R.id.action_shoppingcart).getActionView();
         TextView tv = (TextView) cartBadge.findViewById(R.id.tvCartBadge);
         tv.setText(countText);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 }

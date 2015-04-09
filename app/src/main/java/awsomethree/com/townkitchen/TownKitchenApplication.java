@@ -1,10 +1,10 @@
 package awsomethree.com.townkitchen;
 
+import android.app.Application;
+
 import com.parse.Parse;
 import com.parse.ParseObject;
 import com.parse.ParseTwitterUtils;
-
-import android.app.Application;
 
 import awsomethree.com.townkitchen.models.Daily;
 import awsomethree.com.townkitchen.models.DailyMenu;
@@ -12,6 +12,7 @@ import awsomethree.com.townkitchen.models.Feedback;
 import awsomethree.com.townkitchen.models.FoodMenu;
 import awsomethree.com.townkitchen.models.Order;
 import awsomethree.com.townkitchen.models.OrderLineItem;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
  * Created by smulyono on 3/23/15.
@@ -37,5 +38,14 @@ public class TownKitchenApplication extends Application {
         ParseTwitterUtils.initialize(getString(R.string.twitter_consumer_key),
                 getString(R.string.twitter_consumer_secret));
 
+
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                        .setDefaultFontPath("fonts/gtw.ttf")
+                        .setFontAttrId(R.attr.fontPath)
+                        .build()
+        );
+
     }
+
+
 }
