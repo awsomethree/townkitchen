@@ -1,5 +1,9 @@
 package awsomethree.com.townkitchen.fragments;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -10,10 +14,6 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.parse.ParseException;
-import com.parse.ParseObject;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -76,9 +76,7 @@ public class MenuFragment extends TKFragment implements ParseQueryCallback {
                 public void onClick(View view) {
                     actionCLear.setTitle("Clearing cart...");
                     // Clearout the shopping cart
-                    ShoppingCart.clearShoppingCart(getActivity().getApplicationContext());
-                    ShoppingCart.updateCartTotal(getActivity().getApplicationContext(),
-                            (fragmentNavigationInterface) getActivity());
+                    ShoppingCart.clearShoppingCart(getActivity().getApplicationContext(),(fragmentNavigationInterface) getActivity());
                     redirectFragmentTo(MainActivity.HOME_DRAWER_POSITION);
                 }
             });
