@@ -30,7 +30,7 @@
         android:maxWidth="20dp"
         android:layout_marginRight="15dp"/>
 
-    <!--TextView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Option"
@@ -39,7 +39,7 @@
         android:layout_toRightOf="@+id/ivFoodImage"
         android:layout_toEndOf="@+id/ivFoodImage"
         android:textColor="#ff1622ff"
-        android:paddingBottom="5dp" /-->
+        android:paddingBottom="5dp" />
 
     <TextView
         tools:ignore="MissingPrefix"
@@ -49,10 +49,10 @@
         android:text="desc"
         android:id="@+id/tvComment"
         android:ellipsize="end"
+        android:lines="4"
         android:layout_below="@+id/tvOptionName"
         android:layout_toRightOf="@+id/ivFoodImage"
-        android:layout_alignBottom="@+id/ivFoodImage"
-        android:layout_toEndOf="@+id/ivFoodImage" />
+            />
 
     <TextView
         tools:ignore="MissingPrefix"
@@ -63,9 +63,8 @@
         android:text="price"
         android:textColor="#ff1622ff"
         android:id="@+id/tvPrice"
-        android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/tvComment"
-        android:layout_alignStart="@+id/tvComment" />
+        android:layout_below="@id/ivFoodImage"
+            />
 
     <ImageView
         android:layout_width="wrap_content"

@@ -1,5 +1,7 @@
 package awsomethree.com.townkitchen.adapters;
 
+import com.squareup.picasso.Picasso;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,8 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -51,7 +51,7 @@ public class TKMenuListAdapter extends ArrayAdapter<DailyMenu> {
         // 3. Find the subviews (components) from the layout to fill with data in the template
         //    ivFoodImage, tvOptionName, tvDesc, tvPrice
         ImageView ivFoodImage = (ImageView) convertView.findViewById(R.id.ivFoodImage);
-        //TextView tvOptionName = (TextView) convertView.findViewById(R.id.tvOptionName);
+        TextView tvOptionName = (TextView) convertView.findViewById(R.id.tvOptionName);
         TextView tvDesc = (TextView) convertView.findViewById(R.id.tvComment);
         TextView tvPrice = (TextView) convertView.findViewById(R.id.tvPrice);
         final TextView tvItems = (TextView) convertView.findViewById(R.id.tvItems);
@@ -86,7 +86,7 @@ public class TKMenuListAdapter extends ArrayAdapter<DailyMenu> {
 
 
         // 4. Populate data into the subviews
-        //tvOptionName.setText(option.getFoodMenu().getName());
+        tvOptionName.setText(option.getFoodMenu().getName());
         tvDesc.setText(option.getFoodMenu().getDescription());
         tvPrice.setText("$"+option.getFoodMenu().getPrice());
         ivFoodImage.setImageResource(android.R.color.transparent);// clear out the old image for a recycled view
@@ -100,14 +100,14 @@ public class TKMenuListAdapter extends ArrayAdapter<DailyMenu> {
         //Create a CardHeader
         CardHeader header = new CardHeader(convertView.getContext());
         //Set the header title
-        header.setTitle(option.getFoodMenu().getName());
+        header.setTitle("");
         //Set visible the expand/collapse button
         header.setButtonExpandVisible(true);
         //Add Header to card
         card.addCardHeader(header);
 
         //Card elevation
-        card.setCardElevation(56.5f);
+//        card.setCardElevation(56.5f);
 
         //This provides a simple (and useless) expand area
         CardExpand expand = new CardExpand(convertView.getContext());
