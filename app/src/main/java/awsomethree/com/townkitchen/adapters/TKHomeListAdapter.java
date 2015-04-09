@@ -1,6 +1,8 @@
 package awsomethree.com.townkitchen.adapters;
 
+import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -58,10 +60,19 @@ public class TKHomeListAdapter extends ArrayAdapter<Daily> {
         viewHolder.tvOptionName.setText(sdf.format(option.getMenuDate()));
 
         viewHolder.mImageView.setImageResource(android.R.color.transparent);// clear out the old image for a recycled view
+
+        Transformation transformation = new RoundedTransformationBuilder()
+                .borderWidthDp(0)
+                .cornerRadiusDp(2)
+                .oval(false)
+                .build();
+
         Picasso.with(getContext())
                 .load(option.getImageUrl())
-                .resize(0,100)
-                .into(viewHolder.mImageView);
+                .transform(transformation)
+                .fit().centerCrop()
+                .into(viewHolder.mImageView)
+        ;
 
         // return views
         return convertView;

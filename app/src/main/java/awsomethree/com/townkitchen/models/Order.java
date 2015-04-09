@@ -8,6 +8,10 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +21,7 @@ import awsomethree.com.townkitchen.interfaces.ParseQueryCallback;
  * Created by smulyono on 3/24/15.
  */
 @ParseClassName("Order")
-public class Order extends ParseObject{
+public class Order extends ParseObject implements Parcelable {
     public static final int ORDER_CODE = 2;
 
     public static final String DELIVERED_STATUS = "delivered";
@@ -142,8 +146,11 @@ public class Order extends ParseObject{
 
     public static void getOrderInDelivery(final ParseQueryCallback callback, final int queryCode){
         ParseQuery<Order> query = ParseQuery.getQuery(Order.class);
-        query.whereEqualTo("deliveryStatus", OUT_FOR_DELIVERY_STATUS);
-        query.orderByAscending("createdAt");
+        String[] notIncludedStatus = {ShoppingCart.CART_STATUS, PENDING_STATUS};
+        query.whereNotContainedIn("deliveryStatus", Arrays.asList(notIncludedStatus));
+        query.whereEqualTo("user", ParseUser.getCurrentUser());
+        query.addDescendingOrder("createdAt");
+        query.addDescendingOrder("deliveryStatus");
         query.findInBackground(new FindCallback<Order>() {
             @Override
             public void done(List<Order> orders, ParseException e) {
@@ -159,4 +166,51 @@ public class Order extends ParseObject{
     public void setShipDate(Date shipDate){
         put("shipDate", shipDate);
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(transactionDate != null ? transactionDate.getTime() : -1);
+        dest.writeDouble(this.priceBeforeTax);
+        dest.writeDouble(this.tax);
+        dest.writeDouble(this.priceAfterTax);
+        dest.writeInt(this.totalOrder);
+        dest.writeString(this.deliveryStatus);
+        dest.writeString(this.deliveryAddressStr);
+        dest.writeString(this.deliveryAddressState);
+        dest.writeString(this.deliveryAddressZip);
+        dest.writeLong(shipDate != null ? shipDate.getTime() : -1);
+    }
+
+    public Order() {
+    }
+
+    private Order(Parcel in) {
+        long tmpTransactionDate = in.readLong();
+        this.transactionDate = tmpTransactionDate == -1 ? null : new Date(tmpTransactionDate);
+        this.priceBeforeTax = in.readDouble();
+        this.tax = in.readDouble();
+        this.priceAfterTax = in.readDouble();
+        this.totalOrder = in.readInt();
+        this.deliveryStatus = in.readString();
+        this.deliveryAddressStr = in.readString();
+        this.deliveryAddressState = in.readString();
+        this.deliveryAddressZip = in.readString();
+        long tmpShipDate = in.readLong();
+        this.shipDate = tmpShipDate == -1 ? null : new Date(tmpShipDate);
+    }
+
+    public static final Parcelable.Creator<Order> CREATOR = new Parcelable.Creator<Order>() {
+        public Order createFromParcel(Parcel source) {
+            return new Order(source);
+        }
+
+        public Order[] newArray(int size) {
+            return new Order[size];
+        }
+    };
 }

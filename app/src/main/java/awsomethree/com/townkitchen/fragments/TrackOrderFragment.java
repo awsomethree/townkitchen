@@ -14,9 +14,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
-import com.parse.ParseObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,22 +40,21 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.List;
 
 import awsomethree.com.townkitchen.R;
 import awsomethree.com.townkitchen.abstracts.TKFragment;
 import awsomethree.com.townkitchen.activities.MainActivity;
 import awsomethree.com.townkitchen.helpers.GeoCodingLocation;
-import awsomethree.com.townkitchen.interfaces.ParseQueryCallback;
 import awsomethree.com.townkitchen.models.Order;
 
 /**
  * Created by smulyono on 3/22/15.
  */
-public class TrackOrderFragment extends TKFragment implements ParseQueryCallback {
+public class TrackOrderFragment extends TKFragment {
     private TextView tvEstDeliveryTime;
     private TextView tvDeliveryLocation;
     private Button refreshButton;
+    private Button backButton;
 
     private SupportMapFragment mapFragment;
     private GoogleMap map;
@@ -70,6 +67,7 @@ public class TrackOrderFragment extends TKFragment implements ParseQueryCallback
     private LocationRequest mLocationRequest;
     private long UPDATE_INTERVAL = 60000;  /* 60 secs */
     private long FASTEST_INTERVAL = 5000; /* 5 secs */
+    private Order currentOrder;
 
     /*
      * Define a request code to send to Google Play services This code is
@@ -96,6 +94,8 @@ public class TrackOrderFragment extends TKFragment implements ParseQueryCallback
         tvEstDeliveryTime = (TextView) v.findViewById(R.id.tvEstDeliverTime);
         tvDeliveryLocation = (TextView) v.findViewById(R.id.tvDeliveryLocation);
         refreshButton = (Button) v.findViewById(R.id.btnRefresh);
+        backButton = (Button) v.findViewById(R.id.btnBack);
+
 
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +103,15 @@ public class TrackOrderFragment extends TKFragment implements ParseQueryCallback
                 retrieveOrderLocation();
             }
         });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectFragmentTo(MainActivity.TRACKMYODER_DRAWER_POSITION);
+            }
+        });
+
+
         mapFragment = new SupportMapFragment(){
             @Override
             public void onActivityCreated(Bundle savedInstanceState) {
@@ -116,6 +125,9 @@ public class TrackOrderFragment extends TKFragment implements ParseQueryCallback
 
         getChildFragmentManager().beginTransaction()
                 .add(R.id.map, mapFragment).commit();
+
+        currentOrder = (Order) getArguments().getParcelable("order");
+
     }
 
     protected void loadMap(GoogleMap googleMap) {
@@ -141,8 +153,8 @@ public class TrackOrderFragment extends TKFragment implements ParseQueryCallback
         if (destinationMarker != null){
             destinationMarker.remove();
         }
-        // retrieve order from Parse
-        Order.getOrderInDelivery(this, Order.ORDER_CODE);
+        // get the order
+        updateInfo(currentOrder);
     }
 
     private boolean isGooglePlayServicesAvailable() {
@@ -164,19 +176,6 @@ public class TrackOrderFragment extends TKFragment implements ParseQueryCallback
             }
 
             return false;
-        }
-    }
-
-    @Override
-    public void parseQueryDone(List<? extends ParseObject> parseObjects, ParseException e,
-            int queryCode) {
-        if (queryCode == Order.ORDER_CODE){
-            List<Order> orders = (List<Order>) parseObjects;
-            // do something on the orders
-            if (orders.size() > 0){
-                Order order = orders.get(0);
-                updateInfo(order);
-            }
         }
     }
 

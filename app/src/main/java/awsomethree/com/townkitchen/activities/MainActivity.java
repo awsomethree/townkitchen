@@ -19,6 +19,7 @@ import awsomethree.com.townkitchen.fragments.OrderFeedbackFragment;
 import awsomethree.com.townkitchen.fragments.OrderHistoryFragment;
 import awsomethree.com.townkitchen.fragments.ShoppingCartFragment;
 import awsomethree.com.townkitchen.fragments.TrackOrderFragment;
+import awsomethree.com.townkitchen.fragments.TrackOrderListFragment;
 import awsomethree.com.townkitchen.interfaces.fragmentNavigationInterface;
 import awsomethree.com.townkitchen.layouts.TKNavigationDrawer;
 import awsomethree.com.townkitchen.models.ShoppingCart;
@@ -38,14 +39,15 @@ public class MainActivity extends
     protected Toolbar toolbar;
 
     // ORDER OF THE MENU ITEM
-    public static final int HOME_DRAWER_POSITION = 0;
-    public static final int SHOPPINGCART_DRAWER_POSITION = 1;
-    public static final int ORDERHISTORY_DRAWER_POSITION = 2;
-    public static final int TRACKMYODER_DRAWER_POSITION = 3;
-    public static final int FEEDBACK_DRAWER_POSITION = 4;
+    public static final int HOME_DRAWER_POSITION = 1;
+    public static final int SHOPPINGCART_DRAWER_POSITION = 2;
+    public static final int ORDERHISTORY_DRAWER_POSITION = 3;
+    public static final int TRACKMYODER_DRAWER_POSITION = 4;
+    public static final int FEEDBACK_DRAWER_POSITION = 5;
 
     // SOME FRAGMENT WHICH IS NOT VISIBLE IN DRAWER
-    public static final int MENU_DRAWER_POSITION = 6;
+    public static final int MENU_DRAWER_POSITION = 7;
+    public static final int MENU_TRACKMYODER_DETAIL_DRAWER_POSITION = 8;
 
     // add to cart, calendar in toolbar
     private Menu menuToolbar;
@@ -81,7 +83,7 @@ public class MainActivity extends
         tkDrawer.addNavItem("Order History", R.mipmap.ic_folder, "Order History", OrderHistoryFragment.class);
         // Below pages, will not showing the other navigation (calendar and add shopping cart)
         tkDrawer.addNavItem("Track My Order", R.mipmap.ic_trackorder, "Track My Order",
-                TrackOrderFragment.class, false);
+                TrackOrderListFragment.class, false);
         tkDrawer.addNavItem("Feedbacks History", R.mipmap.ic_star, "Feedbacks History",
                 OrderFeedbackFragment.class, false);
         tkDrawer.addNavItem(getString(R.string.menu_logout), R.mipmap.ic_logout, getString(R.string.menu_logout),
@@ -89,6 +91,8 @@ public class MainActivity extends
         // draw the invisible fragment (from drawer perspective)
         tkDrawer.addNavItem("Menu", R.mipmap.ic_launcher, "Menu",
                 MenuFragment.class, true, false);
+        tkDrawer.addNavItem("Track My Order Item", R.mipmap.ic_trackorder, "Track My Order Item",
+                TrackOrderFragment.class, false, false);
 
     }
 

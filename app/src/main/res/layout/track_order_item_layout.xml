@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:background="@drawable/rounded_item_list"
+
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Total Order"
+        android:id="@+id/tvTotalOrder"
+        android:paddingRight="2dp"
+        android:paddingLeft="2dp"
+        android:paddingTop="15dp"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+
+            />
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10 N 1st St, San Jose"
+            android:id="@+id/tvDeliveryLocation"
+            android:layout_below="@+id/tvTotalOrder"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:textStyle="italic"
+            android:paddingLeft="7dp"
+            android:lines="2"
+            />
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delivery status : "
+            android:id="@+id/labelEstDelivery"
+            android:layout_below="@+id/tvDeliveryLocation"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:textStyle="italic"
+            android:paddingLeft="7dp"
+            />
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:id="@+id/tvDeliveryStatus"
+            android:textStyle="bold"
+            android:textColor="@color/tk_red_color"
+            android:paddingLeft="7dp"
+            android:layout_toRightOf="@id/labelEstDelivery"
+            android:layout_alignTop="@id/labelEstDelivery"
+            />
+
+    <ImageButton
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:id="@+id/ibShowMap"
+            android:src="@mipmap/ic_trackorder"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/tk_white_color"
+            />
+</RelativeLayout>

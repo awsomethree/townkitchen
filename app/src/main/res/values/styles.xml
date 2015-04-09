@@ -1,6 +1,7 @@
 <resources>
     <color name="tk_red_color">#ff9c091d</color>
     <color name="tk_white_color">#fff2eef0</color>
+    <color name="white_color">#FFFFFF</color>
     <color name="gray_color">#ff4f4f54</color>
     <color name="blue_color">#ff1db9ff</color>
     <!-- Base application theme. Will be overriden for Townkitchen (look at themes.xml)
