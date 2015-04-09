@@ -1,8 +1,5 @@
 package awsomethree.com.townkitchen.fragments;
 
-import com.parse.ParseException;
-import com.parse.ParseObject;
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -13,6 +10,9 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.parse.ParseException;
+import com.parse.ParseObject;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -80,7 +80,7 @@ public class MenuFragment extends TKFragment implements ParseQueryCallback {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // move to cart or something
-                Toast.makeText(getActivity(), "clicked!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "clicked!", Toast.LENGTH_SHORT).show();
             }
         });
 

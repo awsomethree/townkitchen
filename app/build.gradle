@@ -62,4 +62,6 @@ dependencies {
     compile project(':ParseLoginUI')
     compile files('libs/ParseFacebookUtils-1.8.4.jar')
     compile 'com.facebook.android:facebook-android-sdk:3.23.1'
+    compile 'com.joanzapata.android:android-iconify:1.0.9'
+    compile 'uk.co.chrisjenx:calligraphy:2.0.2'
 }

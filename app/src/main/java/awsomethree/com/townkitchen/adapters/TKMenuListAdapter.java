@@ -51,7 +51,7 @@ public class TKMenuListAdapter extends ArrayAdapter<DailyMenu> {
         // 3. Find the subviews (components) from the layout to fill with data in the template
         //    ivFoodImage, tvOptionName, tvDesc, tvPrice
         ImageView ivFoodImage = (ImageView) convertView.findViewById(R.id.ivFoodImage);
-        TextView tvOptionName = (TextView) convertView.findViewById(R.id.tvOptionName);
+        //TextView tvOptionName = (TextView) convertView.findViewById(R.id.tvOptionName);
         TextView tvDesc = (TextView) convertView.findViewById(R.id.tvComment);
         TextView tvPrice = (TextView) convertView.findViewById(R.id.tvPrice);
         final TextView tvItems = (TextView) convertView.findViewById(R.id.tvItems);
@@ -86,7 +86,7 @@ public class TKMenuListAdapter extends ArrayAdapter<DailyMenu> {
 
 
         // 4. Populate data into the subviews
-        tvOptionName.setText(option.getFoodMenu().getName());
+        //tvOptionName.setText(option.getFoodMenu().getName());
         tvDesc.setText(option.getFoodMenu().getDescription());
         tvPrice.setText("$"+option.getFoodMenu().getPrice());
         ivFoodImage.setImageResource(android.R.color.transparent);// clear out the old image for a recycled view
@@ -100,17 +100,17 @@ public class TKMenuListAdapter extends ArrayAdapter<DailyMenu> {
         //Create a CardHeader
         CardHeader header = new CardHeader(convertView.getContext());
         //Set the header title
-        header.setTitle("SOME");
+        header.setTitle(option.getFoodMenu().getName());
         //Set visible the expand/collapse button
         header.setButtonExpandVisible(true);
         //Add Header to card
-       // card.addCardHeader(header);
+        card.addCardHeader(header);
 
 
         //This provides a simple (and useless) expand area
         CardExpand expand = new CardExpand(convertView.getContext());
         //Set inner title in Expand Area
-        expand.setTitle("THING");
+        expand.setTitle(option.getFoodMenu().getDescription());
         card.addCardExpand(expand);
 
         //Set card in the cardView

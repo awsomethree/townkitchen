@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <it.gmariotti.cardslib.library.view.CardViewNative
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/carddemo"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="12dp"
-    android:layout_marginRight="12dp"
-    android:layout_marginTop="12dp">
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginTop="15dp">
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:layout_marginTop="25dp"
+    >
 
     <ImageView
         android:layout_width="100dp"
@@ -21,9 +25,10 @@
         android:layout_alignParentStart="true"
         android:background="#ff2669c2"
         android:maxHeight="20dp"
-        android:maxWidth="20dp" />
+        android:maxWidth="20dp"
+        android:layout_marginRight="15dp"/>
 
-    <TextView
+    <!--TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Option"
@@ -32,9 +37,11 @@
         android:layout_toRightOf="@+id/ivFoodImage"
         android:layout_toEndOf="@+id/ivFoodImage"
         android:textColor="#ff1622ff"
-        android:paddingBottom="5dp" />
+        android:paddingBottom="5dp" /-->
 
     <TextView
+        tools:ignore="MissingPrefix"
+        fontPath="fonts/gtw.ttf"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:text="desc"
@@ -46,47 +53,64 @@
         android:layout_toEndOf="@+id/ivFoodImage" />
 
     <TextView
+        tools:ignore="MissingPrefix"
+        fontPath="fonts/gtw.ttf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="price"
+        android:textColor="#ff1622ff"
         android:id="@+id/tvPrice"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignLeft="@+id/tvComment"
+        android:layout_alignStart="@+id/tvComment" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ibDown"
         android:src="@drawable/ic_action_down"
-        android:layout_below="@+id/tvOptionName"
-        android:layout_toLeftOf="@+id/tvItems"
-        android:layout_toStartOf="@+id/tvItems"
-        android:clickable="true" />
+        android:clickable="true"
+        android:layout_below="@+id/tvItems"
+        android:layout_alignRight="@+id/tvItems"
+        android:layout_alignEnd="@+id/tvItems" />
 
     <TextView
+        tools:ignore="MissingPrefix"
+        fontPath="fonts/gtw.ttf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Small Text"
         android:id="@+id/tvItems"
         android:paddingLeft="3dp"
-        android:paddingRight="3dp"
-        android:layout_alignTop="@+id/tvComment"
-        android:layout_toLeftOf="@+id/ibUp"
-        android:layout_toStartOf="@+id/ibUp" />
+        android:paddingRight="12dp"
+        android:textColor="#ff1622ff"
+        android:layout_below="@+id/ibUp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ibUp"
         android:src="@drawable/ic_action_up"
-        android:layout_alignTop="@+id/ibDown"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:clickable="true" />
+        android:clickable="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/tvItems"
+        android:layout_alignEnd="@+id/tvItems" />
 
+    <!--IconTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="{fa-android} here"
+        android:shadowColor="#22000000"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowRadius="1"
+        android:textSize="90dp"
+        android:textColor="#FF33B5E5"
+    /-->
 
 </RelativeLayout>
 </it.gmariotti.cardslib.library.view.CardViewNative>

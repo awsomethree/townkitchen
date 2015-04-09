@@ -17,6 +17,18 @@
             android:layout_alignParentEnd="true"/>
 
 
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/pink_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        fab:fab_icon="@mipmap/ic_shoppingcart"
+        fab:fab_colorNormal="@color/pink"
+        fab:fab_colorPressed="@color/pink_pressed"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="false"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="16dp"/>
+
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/multiple_actions"
         android:layout_width="wrap_content"
@@ -36,17 +48,19 @@
             android:id="@+id/action_a"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            fab:fab_colorNormal="@color/white"
-            fab:fab_title="Action A"
-            fab:fab_colorPressed="@color/white_pressed"/>
+            fab:fab_colorNormal="@color/pink"
+            fab:fab_colorPressed="@color/pink_pressed"
+            fab:fab_title="Shopping Cart"
+            />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/action_b"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            fab:fab_colorNormal="@color/white"
-            fab:fab_title="Action with a very long name that won\'t fit on the screen"
-            fab:fab_colorPressed="@color/white_pressed"/>
+            fab:fab_colorNormal="@color/pink"
+            fab:fab_colorPressed="@color/pink_pressed"
+            fab:fab_title="Home"
+            />
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 </RelativeLayout>
