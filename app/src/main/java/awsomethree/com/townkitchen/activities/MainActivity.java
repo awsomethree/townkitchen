@@ -72,10 +72,12 @@ public class MainActivity extends
 
         // Prepare default shopping cart
         ShoppingCart.prepareShoppingCart(getApplicationContext(), this);
+
     }
 
     private void settingUpDrawerView() {
         tkDrawer = (TKNavigationDrawer) findViewById(R.id.tkdrawer_layout);
+
         // setup drawer view
         tkDrawer.setupDrawerConfiguration((ListView) findViewById(R.id.lvDrawer), toolbar, R.id.flContent, this);
         // adding navigation drawer items
@@ -239,4 +241,5 @@ public class MainActivity extends
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
+
 }

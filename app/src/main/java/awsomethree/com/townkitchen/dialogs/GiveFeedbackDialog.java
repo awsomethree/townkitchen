@@ -101,11 +101,10 @@ public class GiveFeedbackDialog extends DialogFragment implements ParseQueryCall
                     }
 
 
-                    if (mListener != null && allValid) {
+                    if (allValid) {
                         mfeedback.setComment(etComment.getText().toString());
                         mfeedback.setRating(ratingBar.getRating());
                         //mListener.onSuccessDialog();
-                        //getDialog().dismiss();
                         saveFeedback();
                     }
                 }
@@ -124,7 +123,7 @@ public class GiveFeedbackDialog extends DialogFragment implements ParseQueryCall
             int queryCode) {
         if (queryCode == Feedback.FEED_CODE){
             //ShoppingCart.clearShoppingCart(getActivity().getApplicationContext());
-            mListener.onSuccessDialog();
+//            mListener.onSuccessDialog();
             getDialog().dismiss();
         }
     }

@@ -1,10 +1,10 @@
 package awsomethree.com.townkitchen.abstracts;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
-
-import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -94,4 +94,5 @@ public abstract class TKFragment extends Fragment {
         fragmentNavigationInterface listener = (fragmentNavigationInterface) getActivity();
         listener.changeFragmentTo(posId, args);
     }
+
 }

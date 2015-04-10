@@ -1,20 +1,22 @@
 package awsomethree.com.townkitchen.fragments;
 
+import com.parse.ParseException;
+import com.parse.ParseObject;
+
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.parse.ParseException;
-import com.parse.ParseObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,10 +48,13 @@ public class ShoppingCartFragment extends TKFragment implements dialogInterfaceL
     public TextView taxAmount;
     public TextView shippingAmount;
     public TextView totalAmount;
-    public TextView shippingAddress;
+    public EditText shippingAddress;
 
     protected List<OrderLineItem> shoppingCartLists;
     protected ShoppingCart shoppingCartModel;
+    protected int counter = 0;
+    protected final int NUM_MAGIC_COUNTER = 5;
+    protected double discount = 0.0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -60,12 +65,29 @@ public class ShoppingCartFragment extends TKFragment implements dialogInterfaceL
 //        shoppingCartFooterView = getLayoutInflater(savedInstanceState).inflate(R.layout.shopping_cart_footer_layout, null);
         setupView(v);
         setupAdaptersAndListeners();
+
         return v;
     }
 
     private void setupView(View v) {
         lvMenu = (ListView) v.findViewById(R.id.lvShoppingCart);
-        shippingAddress = (TextView) v.findViewById(R.id.tvShippingAddress);
+
+        // setup on touch
+        lvMenu.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    counter++;
+                    if (counter == NUM_MAGIC_COUNTER){
+                        discount = 5.0;
+                        Toast.makeText(v.getContext(), "Discount applied", Toast.LENGTH_SHORT).show();
+                        getShoppingCart();
+                    }
+                }
+                return false;
+            }
+        });
+        shippingAddress = (EditText) v.findViewById(R.id.tvShippingAddress);
         subTotalAmount = (TextView) v.findViewById(R.id.tvSubTotalAmount);
         taxAmount = (TextView) v.findViewById(R.id.tvTaxAmount);
         shippingAmount = (TextView) v.findViewById(R.id.tvShippingAmount);
@@ -90,7 +112,13 @@ public class ShoppingCartFragment extends TKFragment implements dialogInterfaceL
             @Override
             public void onClick(View v) {
                 // populate the shipping address
+                Shipping shipInfo = new Shipping();
+                shipInfo.setAddressLine1(shippingAddress.getText().toString());
+                shipInfo.setApt("");
+//            shipInfo.setZip();
+                shipInfo.setState("");
 
+                shoppingCartModel.setShipping(shipInfo);
                 // open up new dialogs for paying
                 PaymentDialog payDialog = PaymentDialog.newInstance(ShoppingCartFragment.this, shoppingCartModel);
                 payDialog.show(getFragmentManager(), "Pay");
@@ -158,17 +186,17 @@ public class ShoppingCartFragment extends TKFragment implements dialogInterfaceL
             shoppingCartModel = new ShoppingCart(shoppingCartLists);
 
             Shipping shipInfo = new Shipping();
-            shipInfo.setAddressLine1("333 w san carlos");
+            shipInfo.setAddressLine1(shippingAddress.getText().toString());
             shipInfo.setApt("");
-            shipInfo.setZip(95110);
-            shipInfo.setState("CA");
+//            shipInfo.setZip();
+            shipInfo.setState("");
 
             shoppingCartModel.setShipping(shipInfo);
 
             Payment payment = new Payment();
             shoppingCartModel.setPayment(payment);
 
-            shoppingCartModel.calculateTotal();
+            shoppingCartModel.calculateTotal(discount);
 
             Log.i(this.getClass().getName(), "stuff shopping cart " + shoppingCartModel);
 

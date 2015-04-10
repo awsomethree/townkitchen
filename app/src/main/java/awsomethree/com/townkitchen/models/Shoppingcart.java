@@ -99,9 +99,9 @@ public class ShoppingCart {
     /**
      * stuff calculation, this should be from server side
      */
-    public void calculateTotal() {
+    public void calculateTotal(double discount) {
         subtotal = 0.0;
-        shippingCost = 10.0;
+        shippingCost = 10.0 - discount;
         taxTotal = 0.0;
         total = 0.0;
 
@@ -120,7 +120,7 @@ public class ShoppingCart {
         if(shipping != null) {
             builder.append(shipping.getAddressLine1());
             builder.append(shipping.getApt()).append("<br>");
-            builder.append(shipping.getState()).append(" ").append(shipping.getZip());
+            builder.append(shipping.getState()).append(" ");
         }
 
         return builder.toString();
@@ -414,7 +414,7 @@ public class ShoppingCart {
             final Order newOrder = new Order();
             Shipping shipping = shoppingCartModel.getShipping();
             newOrder.setDeliveryAddressStr(shipping.getAddressLine1() + " " + shipping.getApt()
-                + " , " + shipping.getState() + " " + Integer.toString(shipping.getZip()));
+                + " , " + shipping.getState());
 
             newOrder.setDeliveryCurrentLocation(new ParseGeoPoint(37.804364, -122.271114));
 
