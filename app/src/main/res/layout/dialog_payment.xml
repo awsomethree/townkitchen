@@ -4,63 +4,204 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
         android:padding="20dp"
+        android:minHeight="200dp"
         >
+    <!-- Total summary -->
+    <TextView
+            android:id="@+id/tvTotalLabel"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:text="@string/totalDesc"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="10dp"
+            />
 
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/CreditCard"
-            android:id="@+id/tvCC"
-            android:gravity="center_vertical"
-            android:layout_alignBottom="@+id/etCC"
-            android:layout_alignTop="@id/etCC"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/tvTotalAmount"
+            android:text="$ 0"
+            android:gravity="right"
+            android:layout_toRightOf="@id/tvTotalLabel"
             />
 
-    <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/etCC"
-            android:layout_toRightOf="@+id/tvCC"
-            android:layout_marginLeft="10dp"
-            />
+    <!-- Shipping Info section -->
     <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
-            android:text="Exp Date"
-            android:id="@+id/tvExpDate"
-            android:layout_below="@+id/tvCC"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignTop="@+id/etCCdate"
-            android:layout_alignBottom="@+id/etCCdate"
-            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_below="@id/tvTotalLabel"
+            android:id="@+id/tvShippingAddressLabel"
+            android:text="Deliver to"
             />
-    <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="date"
+
+    <TextView
+            android:id="@+id/tvShippingAddress"
+            android:layout_width="fill_parent"
+            android:layout_height="80dp"
+            android:inputType="textMultiLine"
+            android:hint="Shipping address"
             android:ems="10"
-            android:id="@+id/etCCdate"
-            android:layout_below="@+id/tvCC"
-            android:layout_alignStart="@id/etCC"
-            android:layout_alignLeft="@id/etCC"
-            />
-    <EditText android:layout_width="wrap_content" android:layout_height="wrap_content"
-              android:inputType="date" android:ems="10"
-              android:id="@+id/etCCV"
-              android:layout_below="@+id/etCCdate"
-              android:layout_alignStart="@id/etCCdate"
-              android:layout_alignLeft="@id/etCCdate"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:background="@drawable/shopping_cart_item_bg"
+            android:layout_alignTop="@id/tvShippingAddressLabel"
+            android:layout_toRightOf="@id/tvShippingAddressLabel"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="10dp"
             />
 
-    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-              android:text="CCV"
-              android:id="@+id/textView"
-              android:gravity="center"
-              android:layout_alignTop="@+id/etCCV"
-              android:layout_alignBottom="@id/etCCV"
-              android:layout_alignParentLeft="true"
-              android:layout_alignParentStart="true"
+    <!-- Payment selection option -->
+    <TextView
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvShippingAddress"
+            android:id="@+id/tvPaymentOptionLabel"
+            android:text="Payment"
             />
 
+    <TextView
+            android:id="@+id/tvCardMask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/tvPaymentOptionLabel"
+            android:layout_toRightOf="@id/tvPaymentOptionLabel"
+            android:textSize="12sp"
+            android:text="XXXXXXXXXXXX-"
+            android:gravity="right"
+            android:layout_alignParentRight="true"
+            android:layout_alignLeft="@id/tvShippingAddress"
+            />
+
+    <Button
+            android:id="@+id/btnAddCard"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:textSize="12sp"
+            android:text="@string/change_card_text"
+            android:adjustViewBounds="true"
+            android:layout_below="@id/tvCardMask"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/rounded_corner"
+            android:textColor="@color/tk_red_color"
+            android:padding="5dp"
+            />
+
+    <RelativeLayout
+            android:id="@+id/addNewPanel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnAddCard"
+            android:layout_marginTop="20dp"
+            >
+        <!-- Credit Card -->
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvCC"
+                android:gravity="center_vertical"
+                android:layout_alignBottom="@+id/etCC"
+                android:layout_alignTop="@id/etCC"
+                android:src="@mipmap/ic_creditcard"
+                />
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/CCNumberText"
+                android:id="@+id/etCC"
+                android:layout_toRightOf="@+id/tvCC"
+                android:layout_marginLeft="10dp"
+                />
+
+        <!-- Expired Date -->
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Exp Date"
+                android:id="@+id/tvExpDate"
+                android:layout_below="@+id/tvCC"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignTop="@+id/etCCMonth"
+                android:layout_alignBottom="@+id/etCCMonth"
+                android:gravity="center"
+                android:src="@mipmap/ic_calendar"
+                />
+
+        <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/etCCMonth"
+                style="@style/ExpMonth"
+                android:layout_below="@+id/tvCC"
+                android:layout_alignStart="@id/etCC"
+                android:layout_alignLeft="@id/etCC"
+                />
+        <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/etCCyear"
+                style="@style/ExpYear"
+                android:layout_below="@+id/tvCC"
+                android:layout_toRightOf="@id/etCCMonth"
+                android:layout_alignParentRight="true"
+                />
+
+        <!-- CCV -->
+
+        <EditText android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/etCCV"
+                  style="@style/CCVNumberText"
+                  android:layout_below="@+id/etCCMonth"
+                  android:layout_alignStart="@id/etCC"
+                  android:layout_alignLeft="@id/etCC"
+                />
+
+        <ImageView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:src="@mipmap/ic_lock"
+                  android:id="@+id/textView"
+                  android:gravity="center"
+                  android:layout_alignTop="@+id/etCCV"
+                  android:layout_alignBottom="@id/etCCV"
+                  android:layout_alignParentLeft="true"
+                  android:layout_alignParentStart="true"
+                />
+
+        <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageButton"
+                android:layout_below="@+id/textView"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:text="Save card information"
+                android:textOn="Save"
+                android:textOff="No"
+                android:layout_marginTop="10dp"
+                />
+
+    </RelativeLayout>
+
+    <!-- progress bar -->
+    <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:id="@+id/progressBar"
+            android:layout_alignParentBottom="true"
+            />
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/progress_payment_text"
+            android:id="@+id/tvProgressText"
+            android:layout_above="@id/progressBar"
+            />
 </RelativeLayout>

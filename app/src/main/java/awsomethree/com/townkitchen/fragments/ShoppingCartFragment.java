@@ -136,7 +136,6 @@ public class ShoppingCartFragment extends TKFragment implements dialogInterfaceL
         shippingAmount.setText(shoppingCart.getShippingString());
         shippingAmount.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
         totalAmount.setText(shoppingCart.getTotalString());
-
     }
 
 
@@ -148,7 +147,7 @@ public class ShoppingCartFragment extends TKFragment implements dialogInterfaceL
 
     @Override
     public void onFailDialog() {
-        Toast.makeText(getActivity(), "You have NOT make payment!!!!", Toast.LENGTH_SHORT).show();
+        // do nothing
     }
 
     /**

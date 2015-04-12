@@ -5,6 +5,7 @@
     <color name="gray_color">#ff4f4f54</color>
     <color name="blue_color">#ff1db9ff</color>
     <!-- Base application theme. Will be overriden for Townkitchen (look at themes.xml)
+
      -->
     <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
@@ -18,8 +19,55 @@
         <item name="android:padding">10dp</item>
     </style>
 
-    <style name="TKDialog" parent="Theme.AppCompat.Light.Dialog">
+    <style name="CCNumberText" parent="android:Widget.EditText">
+        <item name="android:textSize">14sp</item>
+        <item name="android:inputType">numberDecimal</item>
+        <item name="android:hint">@string/ccnumber</item>
+    </style>
+    <style name="CCVNumberText" parent="android:Widget.EditText">
+        <item name="android:textSize">14sp</item>
+        <item name="android:inputType">numberDecimal</item>
+        <item name="android:hint">@string/ccvnumber</item>
+    </style>
+
+    <style name="Spinner" parent="android:Widget.Holo.Light.Spinner">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:spinnerItemStyle">@style/SpinnerDropdownItem</item>
+    </style>
+
+    <style name="SpinnerDropdownItem" parent="android:Widget.Holo.DropDownItem.Spinner">
+        <item name="android:background">@color/tk_white_color</item>
+        <item name="android:textColor">@color/black_semi_transparent</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="ExpMonth" parent="@style/Spinner">
+        <item name="android:entries">@array/month_array</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1.0</item>
+    </style>
+
+    <style name="ExpYear" parent="@style/Spinner">
+        <item name="android:entries">@array/year_array</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">0.8</item>
+    </style>
+
+
+    <style name="TKHeaderTitle" parent="android:Widget.TextView">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/tk_white_color</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="TKDialog" parent="android:Theme.Holo.Light.Dialog">
+        <item name="android:layout_margin">0dp</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
         <item name="android:windowAnimationStyle">@style/UpDownDialogAnim</item>
+        <item name="android:dividerVertical">@android:color/transparent</item>
+        <item name="android:dividerHorizontal">@android:color/transparent</item>
     </style>
 
     <style name="UpDownDialogAnim">
