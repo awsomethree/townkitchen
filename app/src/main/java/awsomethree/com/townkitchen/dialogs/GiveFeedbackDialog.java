@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
+import android.widget.Switch;
 
 import java.util.List;
 
@@ -32,6 +33,7 @@ public class GiveFeedbackDialog extends DialogFragment implements ParseQueryCall
 
     protected EditText etComment;
     protected RatingBar ratingBar;
+    protected Switch feedToTwitter;
 
     public static GiveFeedbackDialog newInstance(Fragment targetFragment, Feedback feedback){
         GiveFeedbackDialog newDialog = new GiveFeedbackDialog();
@@ -59,6 +61,7 @@ public class GiveFeedbackDialog extends DialogFragment implements ParseQueryCall
 
         etComment = (EditText) bodyView.findViewById(R.id.etComment);
         ratingBar = (RatingBar) bodyView.findViewById(R.id.ratingBar);
+        feedToTwitter = (Switch) bodyView.findViewById(R.id.tweetFeedback);
 
         builder
 //                uncomment this for custom title
@@ -104,6 +107,7 @@ public class GiveFeedbackDialog extends DialogFragment implements ParseQueryCall
                     if (allValid) {
                         mfeedback.setComment(etComment.getText().toString());
                         mfeedback.setRating(ratingBar.getRating());
+                        mfeedback.setFeedToTwitter(feedToTwitter.isChecked());
                         //mListener.onSuccessDialog();
                         saveFeedback();
                     }

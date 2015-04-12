@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +19,6 @@ import awsomethree.com.townkitchen.R;
 import awsomethree.com.townkitchen.abstracts.TKFragment;
 import awsomethree.com.townkitchen.activities.MainActivity;
 import awsomethree.com.townkitchen.adapters.TKHomeListAdapter;
-import awsomethree.com.townkitchen.helpers.OnSwipeTouchListener;
 import awsomethree.com.townkitchen.interfaces.ParseQueryCallback;
 import awsomethree.com.townkitchen.models.Daily;
 

@@ -48,4 +48,5 @@
     <!-- dialog ok/cancel button -->
     <string name="ok">Ok</string>
     <string name="cancel">Cancel</string>
+    <string name="feedback_to_twitter">Share feedback</string>
 </resources>

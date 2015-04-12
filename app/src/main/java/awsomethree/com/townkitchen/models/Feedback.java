@@ -27,6 +27,7 @@ public class Feedback extends ParseObject{
     private FoodMenu foodMenu;
     private double rating;
     private String comment;
+
     private ParseUser user;
 
     public ParseUser getUser() {
@@ -39,6 +40,7 @@ public class Feedback extends ParseObject{
 
     // helper item
     private String orderLIid;
+    private boolean feedToTwitter;
 
     public String getOrderLIid() {
         return orderLIid;
@@ -70,6 +72,14 @@ public class Feedback extends ParseObject{
 
     public void setComment(String comment) {
         put("comment", comment);
+    }
+
+    public boolean isFeedToTwitter() {
+        return feedToTwitter;
+    }
+
+    public void setFeedToTwitter(boolean feedToTwitter) {
+        this.feedToTwitter = feedToTwitter;
     }
 
     // Retrieve all menu by specific date
@@ -119,6 +129,11 @@ public class Feedback extends ParseObject{
                 savedFeedback.put("FoodMenu", ParseObject.createWithoutData("FoodMenu", foodMenuId));
                 savedFeedback.put("user", user);
                 savedFeedback.saveInBackground();
+
+                if (feedbackModel.isFeedToTwitter()){
+                    User.TweetStatus(feedbackModel.getComment());
+                }
+
                 callback.parseQueryDone(null, null, queryCode);
             }
         });

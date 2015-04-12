@@ -4,9 +4,8 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
         android:padding="20dp"
+        android:background="@color/white_color"
         >
-
-
 
     <TextView
         android:layout_width="wrap_content"
@@ -31,6 +30,28 @@
         android:textAlignment="center"
         android:layout_below="@+id/etComment"
         android:progressDrawable="@drawable/ratingbar_red"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+            />
+
+    <ImageView
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/ivTwitterIcon"
+            android:layout_below="@+id/ratingBar"
+            android:src="@mipmap/ic_twitter"
+            />
+    <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/feedback_to_twitter"
+            android:id="@+id/tweetFeedback"
+            android:switchPadding="10dp"
+            android:layout_below="@+id/ratingBar"
+            android:layout_toRightOf="@id/ivTwitterIcon"
+            android:layout_alignTop="@id/ivTwitterIcon"
+            android:layout_alignBottom="@id/ivTwitterIcon"
+            />
 
 </RelativeLayout>

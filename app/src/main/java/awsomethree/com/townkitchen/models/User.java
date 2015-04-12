@@ -6,9 +6,13 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,6 +23,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import awsomethree.com.townkitchen.R;
 
@@ -94,4 +100,32 @@ public class User {
         }
     }
 
+    public static void TweetStatus(String newStatus){
+        new DoTweet().execute(newStatus);
+    }
+
+    static class DoTweet extends AsyncTask<String, Void, String>{
+
+        @Override
+        protected String doInBackground(String... params) {
+            // 1. do Twitter client api to get the twitter profile
+            String newStatus = params[0];
+            HttpClient client = new DefaultHttpClient();
+            HttpPost verifyPost = new HttpPost(
+                    "https://api.twitter.com/1.1/statuses/update.json");
+            List<NameValuePair> parameters = new ArrayList<>();
+            parameters.add(new BasicNameValuePair("status", newStatus));
+            String strResponse = "{}";
+            try {
+                verifyPost.setEntity(new UrlEncodedFormEntity(parameters));
+                ParseTwitterUtils.getTwitter().signRequest(verifyPost);
+                HttpResponse response = client.execute(verifyPost);
+                strResponse = EntityUtils.toString(response.getEntity());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return strResponse;
+        }
+    }
 }
