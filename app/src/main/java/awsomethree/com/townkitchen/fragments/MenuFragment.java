@@ -164,6 +164,10 @@ public class MenuFragment extends TKFragment implements ParseQueryCallback {
                     }
                 }
             }
+        } else {
+            for (DailyMenu rec : lrecs){
+                rec.setQtySelected(0);
+            }
         }
 
         aMenuAdapters.clear();//clear existing list

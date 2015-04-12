@@ -239,6 +239,24 @@ public class ShoppingCart {
         edit.commit();
 
         final Context ctx = localContext;
+
+        ParseQuery<Order> cartOrder = ParseQuery.getQuery(Order.class);
+        cartOrder.whereEqualTo("objectId", objectId);
+
+        // remove all cart order items
+        ParseQuery<OrderLineItem> cartLineItems = ParseQuery.getQuery(OrderLineItem.class);
+        cartLineItems.whereMatchesQuery("Order", cartOrder);
+
+        try {
+            List<OrderLineItem> orderLineItems = cartLineItems.find();
+            // delete them all one by one
+            for (OrderLineItem orderLI : orderLineItems){
+                orderLI.deleteInBackground();
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         // remove shopping cart model (unpin)
         ParseObject po = ParseObject.createWithoutData("Order", objectId);
         po.deleteInBackground(new DeleteCallback() {
@@ -248,6 +266,7 @@ public class ShoppingCart {
                 ShoppingCart.prepareShoppingCart(ctx, mainActivityParent);
             }
         });
+
     }
 
     public static void setupShoppingCartOnPreferences(Context localContext, String shoppingCartId){
@@ -372,7 +391,7 @@ public class ShoppingCart {
         final Context localContext = ctx;
 
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(localContext);
-        final String orderId = pref.getString("shoppingCartId", "-");
+        String orderId = pref.getString("shoppingCartId", "-");
         Log.d(MainActivity.APP, "Order ID : " + orderId);
         // query the order
         ParseQuery<Order> order = ParseQuery.getQuery(Order.class);

@@ -142,13 +142,6 @@ public class ShoppingCartFragment extends TKFragment implements dialogInterfaceL
 
     @Override
     public void onSuccessDialog() {
-        Toast.makeText(getActivity(), "You make payment and redirected to Order History", Toast.LENGTH_SHORT).show();
-
-        // Clearout the shopping cart
-        ShoppingCart.clearShoppingCart(getActivity().getApplicationContext());
-        ShoppingCart.updateCartTotal(getActivity().getApplicationContext(),
-                (fragmentNavigationInterface)getActivity());
-
         // redirect to order history
         redirectFragmentTo(MainActivity.ORDERHISTORY_DRAWER_POSITION);
     }
@@ -175,6 +168,8 @@ public class ShoppingCartFragment extends TKFragment implements dialogInterfaceL
     public void getShoppingCart() {
         // stuff for now
         ShoppingCart.getShoppingCart(this, ShoppingCart.SHOPPING_CART_CODE, getActivity().getApplicationContext());
+        // update the badge
+        ShoppingCart.updateCartTotal(getActivity().getApplicationContext(),(fragmentNavigationInterface) getActivity());
     }
 
     @Override
@@ -198,7 +193,7 @@ public class ShoppingCartFragment extends TKFragment implements dialogInterfaceL
 
             shoppingCartModel.calculateTotal(discount);
 
-            Log.i(this.getClass().getName(), "stuff shopping cart " + shoppingCartModel);
+            Log.d(this.getClass().getName(), "stuff shopping cart " + shoppingCartModel);
 
             // update footer
             updateShoppingCartFooter(shoppingCartModel);

@@ -20,6 +20,7 @@ import java.util.List;
 import awsomethree.com.townkitchen.R;
 import awsomethree.com.townkitchen.interfaces.ParseQueryCallback;
 import awsomethree.com.townkitchen.interfaces.dialogInterfaceListener;
+import awsomethree.com.townkitchen.interfaces.fragmentNavigationInterface;
 import awsomethree.com.townkitchen.models.ShoppingCart;
 
 /**
@@ -127,6 +128,9 @@ public class PaymentDialog extends DialogFragment implements ParseQueryCallback 
             int queryCode) {
         if (queryCode == ShoppingCart.SHOPPING_CART_CODE){
             ShoppingCart.clearShoppingCart(getActivity().getApplicationContext());
+            // Clearout the shopping cart
+            ShoppingCart.updateCartTotal(getActivity().getApplicationContext(),
+                    (fragmentNavigationInterface)getActivity());
             mListener.onSuccessDialog();
             getDialog().dismiss();
         }
