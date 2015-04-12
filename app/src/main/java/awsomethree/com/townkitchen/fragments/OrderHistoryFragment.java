@@ -1,6 +1,11 @@
 package awsomethree.com.townkitchen.fragments;
 
+import com.parse.ParseException;
+import com.parse.ParseObject;
+
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Html;
@@ -12,9 +17,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.parse.ParseException;
-import com.parse.ParseObject;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -96,11 +98,17 @@ public class OrderHistoryFragment extends TKFragment implements dialogInterfaceL
             }
         });
 
-        orderHistoryFooter.setText(Html.fromHtml("Want To Change Order ? Call: <b>1-800-town-app</b>"));
+        orderHistoryFooter.setText(Html.fromHtml("Call: <a href='tel:18008696277'><b>1-800-town-app</b></a>"));
         // get the menu for 2015-04-01, month starts from 0
-        OrderLineItem.listAllOrderLineItemsByDates(new GregorianCalendar(2015, 3, 1).getTime(), this, OrderLineItem.ORDERLINEITEM_CODE);
+        OrderLineItem.listAllOrderLineItemsByDates(new GregorianCalendar(2015, 3, 1).getTime(),
+                this, OrderLineItem.ORDERLINEITEM_CODE);
 
-
+        orderHistoryFooter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:18008696277")));
+            }
+        });
 
     }
 

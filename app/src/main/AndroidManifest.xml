@@ -5,7 +5,8 @@
     <!-- Internet capability is needed -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
+    <!-- enable calling phone -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <!-- Local storage -->
     <!-- Map permissions -->
     <permission android:name="awsomethree.com.townkitchen.permission.MAPS_RECEIVE"

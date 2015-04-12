@@ -49,4 +49,5 @@
     <string name="ok">Ok</string>
     <string name="cancel">Cancel</string>
     <string name="feedback_to_twitter">Share feedback</string>
+    <string name="change_order_text">Want to change order?</string>
 </resources>
