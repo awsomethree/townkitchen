@@ -111,17 +111,21 @@ public class ShoppingCartFragment extends TKFragment implements dialogInterfaceL
         btnCheckout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // populate the shipping address
-                Shipping shipInfo = new Shipping();
-                shipInfo.setAddressLine1(shippingAddress.getText().toString());
-                shipInfo.setApt("");
-//            shipInfo.setZip();
-                shipInfo.setState("");
+                // check on the shipping address first
+                if (shippingAddress.getText().toString().isEmpty()) {
+                    shippingAddress.setError(getString(R.string.error_empty_address));
+                } else {
+                    // populate the shipping address
+                    Shipping shipInfo = new Shipping();
+                    shipInfo.setAddressLine1(shippingAddress.getText().toString());
+                    shipInfo.setApt("");
+                    shipInfo.setState("");
 
-                shoppingCartModel.setShipping(shipInfo);
-                // open up new dialogs for paying
-                PaymentDialog payDialog = PaymentDialog.newInstance(ShoppingCartFragment.this, shoppingCartModel);
-                payDialog.show(getFragmentManager(), "Pay");
+                    shoppingCartModel.setShipping(shipInfo);
+                    // open up new dialogs for paying
+                    PaymentDialog payDialog = PaymentDialog.newInstance(ShoppingCartFragment.this, shoppingCartModel);
+                    payDialog.show(getFragmentManager(), "Pay");
+                }
             }
         });
 

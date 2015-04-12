@@ -14,6 +14,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.List;
 
@@ -41,7 +42,9 @@ public class ShoppingCart {
     private ParseUser user;
 
     public Double getTotal() {
-        return total;
+        // make sure it shown in 2 decimal format
+        DecimalFormat df = new DecimalFormat("#.##");
+        return Double.valueOf(df.format(total));
     }
 
     public Double getTaxTotal() {
@@ -119,8 +122,6 @@ public class ShoppingCart {
 
         if(shipping != null) {
             builder.append(shipping.getAddressLine1());
-            builder.append(shipping.getApt()).append("<br>");
-            builder.append(shipping.getState()).append(" ");
         }
 
         return builder.toString();

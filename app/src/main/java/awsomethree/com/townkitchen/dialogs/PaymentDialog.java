@@ -12,6 +12,7 @@ import com.stripe.exception.AuthenticationException;
 import com.stripe.exception.CardException;
 import com.stripe.exception.InvalidRequestException;
 import com.stripe.model.Charge;
+import com.stripe.model.Customer;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
@@ -35,8 +36,10 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +55,9 @@ import awsomethree.com.townkitchen.models.ShoppingCart;
  * Created by smulyono on 3/22/15.
  */
 public class PaymentDialog extends DialogFragment implements ParseQueryCallback {
+    protected final String STRIPE_CUSTOMER_ID = "stripeCustomerId";
+    protected final String STRIPE_CUSTOMER_CCNUMBER = "ccnumber";
+
     private dialogInterfaceListener mListener;
     private ShoppingCart mShoppingCart;
 
@@ -69,6 +75,7 @@ public class PaymentDialog extends DialogFragment implements ParseQueryCallback 
     protected Spinner etCCYear;
     protected ProgressBar progressBar;
     protected TextView progressText;
+    protected Switch switchSaveCard;
 
     private Map<String, Object> chargeParams;
 
@@ -107,6 +114,7 @@ public class PaymentDialog extends DialogFragment implements ParseQueryCallback 
         etCCV = (EditText) bodyView.findViewById(R.id.etCCV);
         etCCMonth = (Spinner) bodyView.findViewById(R.id.etCCMonth);
         etCCYear = (Spinner) bodyView.findViewById(R.id.etCCyear);
+        switchSaveCard = (Switch) bodyView.findViewById(R.id.switchSaveCard);
         progressBar = (ProgressBar) bodyView.findViewById(R.id.progressBar);
         progressText = (TextView) bodyView.findViewById(R.id.tvProgressText);
 
@@ -121,9 +129,13 @@ public class PaymentDialog extends DialogFragment implements ParseQueryCallback 
         String customerId = getSavedPaymentOptions();
         // hides the panels
         newCardPanel.setVisibility(View.INVISIBLE);
+        addNewCard.setVisibility(View.VISIBLE);
         addNewCardOpen = false;
         if (customerId.equals("-")){
+            // nothing is stored in preferences yet, so we need to force user to either
+            // input credit card and then store them (if they wanted to)
             newCardPanel.setVisibility(View.VISIBLE);
+            addNewCard.setVisibility(View.INVISIBLE);
             addNewCardOpen = true;
         } else {
             String ccnumber = getSavedCCnumber();
@@ -223,7 +235,7 @@ public class PaymentDialog extends DialogFragment implements ParseQueryCallback 
     private String getSavedPaymentOptions() {
         SharedPreferences pref = PreferenceManager
                 .getDefaultSharedPreferences(getActivity());
-        String objectId = pref.getString("paymentOptions", "a");
+        String objectId = pref.getString(STRIPE_CUSTOMER_ID, "-");
 
         return objectId;
     }
@@ -231,7 +243,7 @@ public class PaymentDialog extends DialogFragment implements ParseQueryCallback 
     private String getSavedCCnumber(){
         SharedPreferences pref = PreferenceManager
                 .getDefaultSharedPreferences(getActivity());
-        String objectId = pref.getString("ccnumber", "1234");
+        String objectId = pref.getString(STRIPE_CUSTOMER_CCNUMBER, "1234");
 
         return objectId;
     }
@@ -251,50 +263,63 @@ public class PaymentDialog extends DialogFragment implements ParseQueryCallback 
                 public void onClick(View v) {
                     boolean allValid = true;
                     showProgress();
-                    if (etCC.getText().toString().isEmpty()) {
-                        etCC.setError("Credit card cannot be empty");
-                        allValid = false;
-                    }
-                    if (etCCV.getText().toString().isEmpty()) {
-                        etCCV.setError("Please fill in the CCV number");
-                        allValid = false;
-                    }
-                    if (etCCMonth.getSelectedItem().toString().equalsIgnoreCase("month") ) {
-                        // must set some errors
-                        TextView errorText = (TextView) etCCMonth.getSelectedView();
-                        errorText.setError("");
-                        allValid = false;
-                    }
-                    if (etCCYear.getSelectedItem().toString().equalsIgnoreCase("year") ) {
-                        // must set some errors
-                        TextView errorText = (TextView) etCCYear.getSelectedView();
-                        errorText.setError("");
-                        allValid = false;
+                    if (addNewCardOpen){
+                        // only validate when add new card is open
+                        if (etCC.getText().toString().isEmpty()) {
+                            etCC.setError("Credit card cannot be empty");
+                            allValid = false;
+                        }
+                        if (etCCV.getText().toString().isEmpty()) {
+                            etCCV.setError("Please fill in the CCV number");
+                            allValid = false;
+                        }
+                        if (etCCMonth.getSelectedItem().toString().equalsIgnoreCase("month") ) {
+                            // must set some errors
+                            TextView errorText = (TextView) etCCMonth.getSelectedView();
+                            errorText.setError("");
+                            allValid = false;
+                        }
+                        if (etCCYear.getSelectedItem().toString().equalsIgnoreCase("year") ) {
+                            // must set some errors
+                            TextView errorText = (TextView) etCCYear.getSelectedView();
+                            errorText.setError("");
+                            allValid = false;
+                        }
                     }
 
                     if (mListener != null && allValid) {
-                        // move on with the Stripe validation before moving forward
-                        Card card = new Card(
-                                etCC.getText().toString(),
-                                Integer.parseInt(etCCMonth.getSelectedItem().toString()),
-                                Integer.parseInt(etCCYear.getSelectedItem().toString()),
-                                etCCV.getText().toString()
-                        );
-                        boolean validation = card.validateCard();
-                        if (validation){
-                            // create Token before it can be charged
-                            makePayment(card);
-                        } else if (!card.validateExpMonth()) {
-                            TextView errorText = (TextView) etCCMonth.getSelectedView();
-                            errorText.setError("");allValid = false;
-                        } else if (!card.validateExpYear()) {
-                            TextView errorText = (TextView) etCCYear.getSelectedView();
-                            errorText.setError("");allValid = false;
-                        } else if (!card.validateCVC()){
-                            etCCV.setError("CCV/CVC code not valid!");allValid = false;
+                        // check where should we get the card or customer information
+                        Card card;
+                        if (addNewCardOpen){
+                            card = new Card(
+                                    etCC.getText().toString(),
+                                    Integer.parseInt(etCCMonth.getSelectedItem().toString()),
+                                    Integer.parseInt(etCCYear.getSelectedItem().toString()),
+                                    etCCV.getText().toString()
+                            );
+                            // get the card information from add newcard
+                            if (validateCardInformation(card)){
+                                // see if this needs persistence
+                                if (switchSaveCard.isChecked()){
+                                    // persist the card information as customer, and put them into
+                                    // saved preferences
+                                    makePayment(card, true);
+                                } else {
+                                    // make one time payment with the card
+                                    makePayment(card);
+                                }
+                            } else {
+                                allValid = false;
+                            }
                         } else {
-                            etCC.setError("Credit card information not valid");allValid = false;
+                            // get the customer information from saved preferences
+                            if (validateCustomerInformation()){
+                                makePaymentWithCustomerInformation();
+                            } else {
+                                allValid = false;
+                            }
                         }
+
                         if (!allValid){
                             hideProgress();
                         }
@@ -306,7 +331,41 @@ public class PaymentDialog extends DialogFragment implements ParseQueryCallback 
         }
     }
 
+    /**
+     * From the saved preferences, retrieve the customer information and
+     * validate to stripe before making any future process.
+     * @return
+     */
+    private boolean validateCustomerInformation(){
+        return true;
+    }
+
+    private boolean validateCardInformation(Card card){
+        boolean allValid = true;
+        // move on with the Stripe validation before moving forward
+
+        boolean validation = card.validateCard();
+        if (validation){
+            allValid = true;
+        } else if (!card.validateExpMonth()) {
+            TextView errorText = (TextView) etCCMonth.getSelectedView();
+            errorText.setError("");allValid = false;
+        } else if (!card.validateExpYear()) {
+            TextView errorText = (TextView) etCCYear.getSelectedView();
+            errorText.setError("");allValid = false;
+        } else if (!card.validateCVC()){
+            etCCV.setError("CCV/CVC code not valid!");allValid = false;
+        } else {
+            etCC.setError("Credit card information not valid");allValid = false;
+        }
+        return allValid;
+    }
+
     private void makePayment(Card card){
+        makePayment(card, false);
+    }
+
+    private void makePayment(final Card card, final boolean isSaved){
         new Stripe().createToken(
                 card,
                 getString(R.string.stripe_publishable_key),
@@ -319,15 +378,38 @@ public class PaymentDialog extends DialogFragment implements ParseQueryCallback 
                     @Override
                     public void onSuccess(Token token) {
                         Log.d(MainActivity.APP, token.toString());
-                        chargeParams = new HashMap<>();
-                        chargeParams.put("currency", "usd");
-                        chargeParams.put("card", token.getId());
-                        chargeParams.put("amount", mShoppingCart.getTotal());
-                        chargeParams.put("description", "TK Payment");
-                        new stripeCardPayment().execute();
+                        if (isSaved){
+                            // this means that we need to create customer information first and then
+                            // charge the customer instead of actual card
+                            // Immediately charged the card
+                            chargeParams = new HashMap<>();
+                            chargeParams.put("description", "new credit card info");
+                            chargeParams.put("card", token.getId());
+                            new stripeCustomerCreate().execute(card.getLast4());
+                        } else {
+                            // Immediately charged the card
+                            chargeParams = new HashMap<>();
+                            chargeParams.put("currency", "usd");
+                            chargeParams.put("card", token.getId());
+                            chargeParams.put("amount", getTotalAmountsInCents(mShoppingCart.getTotal()));
+                            chargeParams.put("description", "TK Payment");
+                            new stripeCardPayment().execute();
+                        }
                     }
                 }
         );
+    }
+
+    private void makePaymentWithCustomerInformation() {
+        // Retrieve customer information from saved preferences
+        String customeriId = getSavedPaymentOptions();
+        chargeParams = new HashMap<>();
+        chargeParams.put("currency", "usd");
+        chargeParams.put("customer", customeriId);
+        chargeParams.put("amount", getTotalAmountsInCents(mShoppingCart.getTotal()));
+        chargeParams.put("description", "TK Payment");
+        new stripeCardPayment().execute();
+
     }
 
     public void flushShoppingCart(Card card){
@@ -371,7 +453,45 @@ public class PaymentDialog extends DialogFragment implements ParseQueryCallback 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            // now shopping cart can be flushed
             hideProgress();
+        }
+    }
+
+    class stripeCustomerCreate extends AsyncTask<String, Void, Void>{
+        Customer mCustomer;
+        @Override
+        protected Void doInBackground(String... params) {
+            try {
+                mCustomer= Customer.create(chargeParams, getString(R.string.stripe_secret_key));
+                // saved the customer information in saved preferneces
+                SharedPreferences pref = PreferenceManager
+                        .getDefaultSharedPreferences(getActivity());
+                SharedPreferences.Editor edit = pref.edit();
+                edit.putString(STRIPE_CUSTOMER_ID, mCustomer.getId());
+                String last4CardDigit = params[0];
+                edit.putString(STRIPE_CUSTOMER_CCNUMBER, last4CardDigit);
+                edit.commit();
+
+            } catch (AuthenticationException e) {
+                e.printStackTrace();
+            } catch (InvalidRequestException e) {
+                e.printStackTrace();
+            } catch (APIConnectionException e) {
+                e.printStackTrace();
+            } catch (CardException e) {
+                e.printStackTrace();
+            } catch (APIException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            //
+            makePaymentWithCustomerInformation();
         }
     }
 
@@ -386,5 +506,14 @@ public class PaymentDialog extends DialogFragment implements ParseQueryCallback 
         progressText.setVisibility(View.INVISIBLE);
     }
 
-
+    /**
+     * For stripe, it needs the amounts in cents
+     * @param df
+     * @return
+     */
+    private Integer getTotalAmountsInCents(Double df){
+        // make sure that there are no decimal points
+        DecimalFormat dformat = new DecimalFormat("#");
+        return Integer.valueOf(dformat.format(df * 100));
+    }
 }
