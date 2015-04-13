@@ -1,21 +1,23 @@
 package awsomethree.com.townkitchen.fragments;
 
+import com.parse.ParseException;
+import com.parse.ParseObject;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-
-import com.parse.ParseException;
-import com.parse.ParseObject;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import awsomethree.com.townkitchen.R;
+import awsomethree.com.townkitchen.abstracts.EndlessScrollListener;
 import awsomethree.com.townkitchen.abstracts.TKFragment;
 import awsomethree.com.townkitchen.activities.MainActivity;
 import awsomethree.com.townkitchen.adapters.TKFeedListAdapter;
@@ -32,6 +34,9 @@ public class OrderFeedbackFragment extends TKFragment  implements ParseQueryCall
     //private ArrayAdapter<String> menuAdapters;
     protected TKFeedListAdapter aFeedAdapters;
 
+    protected int pageScroll;
+    protected SwipeRefreshLayout swipeContainer;
+    protected ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -44,12 +49,14 @@ public class OrderFeedbackFragment extends TKFragment  implements ParseQueryCall
     }
 
     private void setupView(View v){
+        progressBar = (ProgressBar) v.findViewById(R.id.progressBar);
+        swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.swipeContainer);
+
         lvMenu = (ListView) v.findViewById(R.id.lvShoppingCart);
     }
 
     private void setupAdaptersAndListeners() {
         // arbitrary menu
-        //String[] menus = {"Order 1 - Pending Review", "Order 2 - Pending Review", "Order 3 - Pending Review", "Order 4 - Pending Review"};
         feeds = new ArrayList<>();
 
         // setup the adapters (Using basic)
@@ -59,8 +66,33 @@ public class OrderFeedbackFragment extends TKFragment  implements ParseQueryCall
 
         lvMenu.setAdapter(aFeedAdapters);
 
-        // get the menu for 2015-04-01, month starts from 0
-        Feedback.listAllFeedsByDates(new GregorianCalendar(2015, 3, 1).getTime(), this, Feedback.FEED_CODE);
+        lvMenu.setOnScrollListener(new EndlessScrollListener() {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                int nextSkip = (page-1) * MainActivity.PAGE_SIZE;
+                Log.d(MainActivity.APP, "scrolling for " + nextSkip);
+                loadData(nextSkip);
+            }
+        });
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadData(0);
+            }
+        });
+
+        loadData(0);
+
+    }
+
+    private void loadData(int skipSize){
+        progressBar.setVisibility(View.VISIBLE);
+        pageScroll = skipSize;
+        if (skipSize == 0){
+            aFeedAdapters.clear();
+        }
+        // Do async query to get the daily data
+        Feedback.listAllFeedsByDates(pageScroll, this, Feedback.FEED_CODE);
     }
 
     @Override
@@ -71,8 +103,11 @@ public class OrderFeedbackFragment extends TKFragment  implements ParseQueryCall
             List<Feedback> recs = (List<Feedback>) parseObjects;
             Log.d(MainActivity.APP, recs.size() + " total menu");
 
-            aFeedAdapters.clear();//clear existing list
             aFeedAdapters.addAll(recs);
+
+            swipeContainer.setRefreshing(false);
+            progressBar.setVisibility(View.INVISIBLE);
+
         }
     }
 }

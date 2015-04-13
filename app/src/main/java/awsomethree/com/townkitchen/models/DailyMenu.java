@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+import awsomethree.com.townkitchen.activities.MainActivity;
 import awsomethree.com.townkitchen.interfaces.ParseQueryCallback;
 
 /**
@@ -62,7 +63,7 @@ public class DailyMenu extends ParseObject{
     }
 
     // Retrieve all menu by specific date
-    public static void listAllMenuByDates(Date menuDate,
+    public static void listAllMenuByDates(int skipSize, Date menuDate,
             final ParseQueryCallback callback, final int queryCode){
 
         Calendar lowDate = Calendar.getInstance();
@@ -87,6 +88,10 @@ public class DailyMenu extends ParseObject{
         query.include("FoodMenu");
         query.include("Daily");
         query.whereMatchesQuery("menuDate", innerQuery);
+
+        query.setLimit(MainActivity.PAGE_SIZE);
+        query.setSkip(skipSize);
+
         query.findInBackground(new FindCallback<DailyMenu>() {
             @Override
             public void done(List<DailyMenu> foodMenus, ParseException e) {

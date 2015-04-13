@@ -5,17 +5,20 @@ import com.parse.ParseObject;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import awsomethree.com.townkitchen.R;
+import awsomethree.com.townkitchen.abstracts.EndlessScrollListener;
 import awsomethree.com.townkitchen.abstracts.TKFragment;
 import awsomethree.com.townkitchen.activities.MainActivity;
 import awsomethree.com.townkitchen.adapters.TKHomeListAdapter;
@@ -32,6 +35,10 @@ public class HomeFragment extends TKFragment implements ParseQueryCallback {
     protected ArrayList<Daily> options;//array of FoodMenu models
     protected TKHomeListAdapter aMenuAdapters;
 
+    protected int pageScroll;
+    protected SwipeRefreshLayout swipeContainer;
+    protected ProgressBar progressBar;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
@@ -45,6 +52,8 @@ public class HomeFragment extends TKFragment implements ParseQueryCallback {
     }
 
     private void setupView(View v){
+        progressBar = (ProgressBar) v.findViewById(R.id.progressBar);
+        swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.swipeContainer);
 
         lvMenu = (ListView) v.findViewById(R.id.lvHomeMenu);
     }
@@ -74,9 +83,32 @@ public class HomeFragment extends TKFragment implements ParseQueryCallback {
                 }
             }
         });
+        lvMenu.setOnScrollListener(new EndlessScrollListener() {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                int nextSkip = (page-1) * MainActivity.PAGE_SIZE;
+                Log.d(MainActivity.APP, "scrolling for " + nextSkip);
+                loadData(nextSkip);
+            }
+        });
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadData(0);
+            }
+        });
 
+        loadData(0);
+    }
+
+    private void loadData(int skipSize){
+        progressBar.setVisibility(View.VISIBLE);
+        pageScroll = skipSize;
+        if (skipSize == 0){
+            aMenuAdapters.clear();
+        }
         // Do async query to get the daily data
-        Daily.listAllAvailableDays(this, Daily.DAILY_CODE);
+        Daily.listAllAvailableDays(pageScroll, this, Daily.DAILY_CODE);
     }
 
     @Override
@@ -84,8 +116,11 @@ public class HomeFragment extends TKFragment implements ParseQueryCallback {
             int queryCode) {
         if (queryCode == Daily.DAILY_CODE){
             List<Daily> recs = (List<Daily>) parseObjects;
-            aMenuAdapters.clear();
             aMenuAdapters.addAll(recs);
+
+            swipeContainer.setRefreshing(false);
+            progressBar.setVisibility(View.INVISIBLE);
+
         }
     }
 }

@@ -9,6 +9,7 @@ import com.parse.ParseQuery;
 import java.util.Date;
 import java.util.List;
 
+import awsomethree.com.townkitchen.activities.MainActivity;
 import awsomethree.com.townkitchen.interfaces.ParseQueryCallback;
 
 /**
@@ -55,13 +56,17 @@ public class Daily extends ParseObject {
         put("description", description);
     }
 
-    public static void listAllAvailableDays(
+    public static void listAllAvailableDays(int skipSize,
             final ParseQueryCallback callback, final int queryCode){
 
         ParseQuery<Daily> query = ParseQuery.getQuery(Daily.class);
         query.whereEqualTo("active", true);
         query.include("Daily");
         query.orderByAscending("menuDate");
+
+        query.setLimit(MainActivity.PAGE_SIZE);
+        query.setSkip(skipSize);
+
         query.findInBackground(new FindCallback<Daily>() {
             @Override
             public void done(List<Daily> dailies, ParseException e) {

@@ -11,9 +11,9 @@ import com.parse.ParseUser;
 import android.content.Context;
 
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
+import awsomethree.com.townkitchen.activities.MainActivity;
 import awsomethree.com.townkitchen.interfaces.ParseQueryCallback;
 
 /**
@@ -83,13 +83,17 @@ public class Feedback extends ParseObject{
     }
 
     // Retrieve all menu by specific date
-    public static void listAllFeedsByDates(Date menuDate,
+    public static void listAllFeedsByDates(int skipSize,
                                           final ParseQueryCallback callback, final int queryCode){
 
         ParseQuery<Feedback> query = ParseQuery.getQuery(Feedback.class);
         query.orderByDescending("createdAt");
         query.include("FoodMenu");
         query.whereEqualTo("user", ParseUser.getCurrentUser());
+
+        query.setLimit(MainActivity.PAGE_SIZE);
+        query.setSkip(skipSize);
+
         query.findInBackground(new FindCallback<Feedback>() {
             @Override
             public void done(List<Feedback> feedbacks, ParseException e) {
