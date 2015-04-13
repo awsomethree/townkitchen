@@ -18,6 +18,18 @@
 
     <string name="hello_world">Town Kitchen scaffolding</string>
 
+    <!-- tutorial activity -->
+    <string name="tutorial_step1_title">Order Online</string>
+    <string name="tutorial_step1_description">Up to 48 hours in advanced</string>
+
+    <string name="tutorial_step2_title">We\'ll email you</string>
+    <string name="tutorial_step2_description">With your 30 minute delivery window</string>
+
+    <string name="tutorial_step3_title">We craft lunch</string>
+    <string name="tutorial_step3_description">You stay where you are</string>
+
+    <string name="tutorial_step4_title">We deliver!</string>
+    <string name="tutorial_step4_description">To your door for orders 6 or more \n To the curb otherwise</string>
     <!-- menu action -->
     <string name="action_shoppingcart">Shopping Cart</string>
     <string name="action_calendar">select day</string>
@@ -91,4 +103,6 @@
     <string name="feedback_to_twitter">Share feedback</string>
     <string name="change_order_text">Want to change order?</string>
     <string name="error_empty_address">Delivery address cannot be empty</string>
+    <string name="title_activity_tutorial">TutorialActivity</string>
+    <string name="action_settings">Settings</string>
 </resources>
