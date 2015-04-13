@@ -45,8 +45,7 @@ public class GeoCodingLocation {
                     message.setTarget(handler);
                     if (result != null) {
                         message.what = 1;
-                        result = "Address: " + locationAddress +
-                                "\n\nLatitude and Longitude :\n" + result;
+                        result = "Address: " + locationAddress ;
                         bundle.putString("address", result);
                         message.setData(bundle);
                     } else {

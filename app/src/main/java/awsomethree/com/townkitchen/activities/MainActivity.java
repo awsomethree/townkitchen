@@ -37,6 +37,8 @@ public class MainActivity extends
 
     public static final String APP = "TownKitchen";
 
+    public static final int PAGE_SIZE = 5;
+
     protected TKNavigationDrawer tkDrawer;
     protected Toolbar toolbar;
 

@@ -58,7 +58,7 @@
     <item name="shippingCostDesc" type="id">SHIPPING</item>
 
     <!-- feedback -->
-    <string name="FeedbackText">Your Comment:</string>
+    <string name="FeedbackText">Your Comment</string>
 
     <!-- dialog payment -->
     <string name="payment_ok">Pay</string>

@@ -184,7 +184,7 @@ public class TrackOrderFragment extends TKFragment {
         tvDeliveryLocation.setText(order.getDeliveryAddressStr());
         // calculate the delivery location
         driverLocation = order.getDeliveryCurrentLocation();
-        sourceMarker = putMarkerDown(driverLocation.getLatitude(), driverLocation.getLongitude(), "Our driver!");
+        sourceMarker = putMarkerDown(driverLocation.getLatitude(), driverLocation.getLongitude(), "Our driver!", R.mipmap.ic_townkitchen);
         // point to the maps delivery address
         GeoCodingLocation.getAddressFromLocation(
                 order.getDeliveryAddressStr(), getActivity().getApplicationContext(),
@@ -218,11 +218,21 @@ public class TrackOrderFragment extends TKFragment {
     }
 
     private Marker putMarkerDown(Double latitude, Double longitude, String title){
+        return putMarkerDown(latitude, longitude, title, -1);
+    }
+
+    private Marker putMarkerDown(Double latitude, Double longitude, String title, int iconResourceId){
         LatLng point = new LatLng(latitude, longitude);
-        // Define color of marker icon
-        BitmapDescriptor defaultMarker =
-                BitmapDescriptorFactory
-                        .defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
+        BitmapDescriptor defaultMarker;
+        if (iconResourceId == -1){
+            // Define color of marker icon
+            defaultMarker =
+                    BitmapDescriptorFactory
+                            .defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
+        } else {
+            defaultMarker = BitmapDescriptorFactory.fromResource(iconResourceId);
+        }
+
         Marker marker = map.addMarker(new MarkerOptions()
                 .position(point)
                 .title(title)

@@ -54,8 +54,10 @@ public class GiveFeedbackDialog extends DialogFragment implements ParseQueryCall
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.TKDialog);
         LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        View headerView = inflater.inflate(R.layout.standard_header_dialog, null);
 
         View bodyView = inflater.inflate(R.layout.dialog_rating, null);
 
@@ -65,7 +67,7 @@ public class GiveFeedbackDialog extends DialogFragment implements ParseQueryCall
 
         builder
 //                uncomment this for custom title
-//                .setCustomTitle(titleView)
+                .setCustomTitle(headerView)
                 .setView(bodyView)
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
@@ -94,6 +96,10 @@ public class GiveFeedbackDialog extends DialogFragment implements ParseQueryCall
         AlertDialog d = (AlertDialog) getDialog();
         if (d != null){
             Button positiveButton =  (Button) d.getButton(Dialog.BUTTON_POSITIVE);
+
+            positiveButton.setBackgroundResource(R.drawable.tk_dialog_button_states);
+            positiveButton.setTextColor(getResources().getColor(R.color.tk_white_color));
+
             positiveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

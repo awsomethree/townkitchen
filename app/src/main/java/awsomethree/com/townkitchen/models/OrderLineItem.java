@@ -7,9 +7,9 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.util.Date;
 import java.util.List;
 
+import awsomethree.com.townkitchen.activities.MainActivity;
 import awsomethree.com.townkitchen.interfaces.ParseQueryCallback;
 
 /**
@@ -67,7 +67,7 @@ public class OrderLineItem extends ParseObject{
     }
 
     // Retrieve all menu by specific date
-    public static void listAllOrderLineItemsByDates(Date menuDate,
+    public static void listAllOrderLineItemsByDates(int skip,
                                            final ParseQueryCallback callback, final int queryCode){
         ParseUser user = ParseUser.getCurrentUser();
 
@@ -82,6 +82,9 @@ public class OrderLineItem extends ParseObject{
         query.include("DailyMenu");
         query.include("DailyMenu.FoodMenu");
         query.include("Feedback");
+
+        query.setLimit(MainActivity.PAGE_SIZE);
+        query.setSkip(skip);
         query.findInBackground(new FindCallback<OrderLineItem>() {
             @Override
             public void done(List<OrderLineItem> orderLineItem, ParseException e) {

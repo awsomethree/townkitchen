@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import awsomethree.com.townkitchen.activities.MainActivity;
 import awsomethree.com.townkitchen.interfaces.ParseQueryCallback;
 
 /**
@@ -144,13 +145,16 @@ public class Order extends ParseObject implements Parcelable {
     }
 
 
-    public static void getOrderInDelivery(final ParseQueryCallback callback, final int queryCode){
+    public static void getOrderInDelivery(int skipSize, final ParseQueryCallback callback, final int queryCode){
         ParseQuery<Order> query = ParseQuery.getQuery(Order.class);
         String[] notIncludedStatus = {ShoppingCart.CART_STATUS, PENDING_STATUS};
         query.whereNotContainedIn("deliveryStatus", Arrays.asList(notIncludedStatus));
         query.whereEqualTo("user", ParseUser.getCurrentUser());
         query.addDescendingOrder("createdAt");
         query.addDescendingOrder("deliveryStatus");
+
+        query.setLimit(MainActivity.PAGE_SIZE);
+        query.setSkip(skipSize);
         query.findInBackground(new FindCallback<Order>() {
             @Override
             public void done(List<Order> orders, ParseException e) {

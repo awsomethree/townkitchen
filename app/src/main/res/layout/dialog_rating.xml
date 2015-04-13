@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/etComment"
-        android:layout_toRightOf="@+id/tvCommentLabel"
+        android:layout_below="@+id/tvCommentLabel"
         android:layout_marginLeft="10dp"
         />
 

@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,16 +16,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import awsomethree.com.townkitchen.R;
+import awsomethree.com.townkitchen.abstracts.EndlessScrollListener;
 import awsomethree.com.townkitchen.abstracts.TKFragment;
 import awsomethree.com.townkitchen.activities.MainActivity;
 import awsomethree.com.townkitchen.adapters.OrderLineArrayAdapter;
@@ -47,6 +49,11 @@ public class OrderHistoryFragment extends TKFragment implements dialogInterfaceL
     public static Map orderLineItemMap = new HashMap<String, Integer>();
     public static ArrayList colorArray = new ArrayList();
 
+    protected int pageScroll;
+    protected SwipeRefreshLayout swipeContainer;
+    protected ProgressBar progressBar;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
@@ -58,7 +65,8 @@ public class OrderHistoryFragment extends TKFragment implements dialogInterfaceL
     }
 
     private void setupView(View v, Bundle savedInstanceState){
-        //todo viewholder for footer
+        progressBar = (ProgressBar) v.findViewById(R.id.progressBar);
+        swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.swipeContainer);
         orderHistoryFooter = (TextView) v.findViewById(R.id.tvOrderHistoryFooter);
         lvMenu = (ListView) v.findViewById(R.id.lvOrderHistory);
 
@@ -72,8 +80,6 @@ public class OrderHistoryFragment extends TKFragment implements dialogInterfaceL
     }
 
     private void setupAdaptersAndListeners() {
-        // arbitrary menu
-        //String[] menus = {"Order 1 - Pending Review", "Order 2 - Pending Review", "Order 3 - Pending Review", "Order 4 - Pending Review"};
         orderLines = new ArrayList<>();
 
         // setup the adapters (Using basic)
@@ -98,10 +104,22 @@ public class OrderHistoryFragment extends TKFragment implements dialogInterfaceL
             }
         });
 
+        lvMenu.setOnScrollListener(new EndlessScrollListener() {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                int nextSkip = (page-1) * MainActivity.PAGE_SIZE;
+                Log.d(MainActivity.APP, "scrolling for " + nextSkip);
+                loadData(nextSkip);
+            }
+        });
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadData(0);
+            }
+        });
+
         orderHistoryFooter.setText(Html.fromHtml("Call: <a href='tel:18008696277'><b>1-800-town-app</b></a>"));
-        // get the menu for 2015-04-01, month starts from 0
-        OrderLineItem.listAllOrderLineItemsByDates(new GregorianCalendar(2015, 3, 1).getTime(),
-                this, OrderLineItem.ORDERLINEITEM_CODE);
 
         orderHistoryFooter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,6 +128,17 @@ public class OrderHistoryFragment extends TKFragment implements dialogInterfaceL
             }
         });
 
+        loadData(0);
+    }
+
+    private void loadData(int skipSize){
+        progressBar.setVisibility(View.VISIBLE);
+        pageScroll = skipSize;
+        if (skipSize == 0){
+            orderLineArrayAdapter.clear();
+        }
+        OrderLineItem.listAllOrderLineItemsByDates(pageScroll,
+                this, OrderLineItem.ORDERLINEITEM_CODE);
     }
 
     @Override
@@ -141,9 +170,10 @@ public class OrderHistoryFragment extends TKFragment implements dialogInterfaceL
             List<OrderLineItem> recs = (List<OrderLineItem>) parseObjects;
             Log.d(MainActivity.APP, recs.size() + " total menu");
 
-            orderLineArrayAdapter.clear();//clear existing list
             orderLineArrayAdapter.addAll(recs);
 
+            swipeContainer.setRefreshing(false);
+            progressBar.setVisibility(View.INVISIBLE);
         }
     }
 }

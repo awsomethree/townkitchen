@@ -21,8 +21,22 @@
 
             />
 
+    <ImageButton
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:id="@+id/ibShowMap"
+            android:src="@mipmap/ic_trackorder"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/tk_white_color"
+            />
+
     <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="10 N 1st St, San Jose"
             android:id="@+id/tvDeliveryLocation"
@@ -33,11 +47,12 @@
             android:paddingLeft="7dp"
             android:lines="2"
             android:transitionName="pivotTransition"
+            android:layout_toLeftOf="@id/ibShowMap"
             />
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Delivery status : "
+            android:text="Status : "
             android:id="@+id/labelEstDelivery"
             android:layout_below="@+id/tvDeliveryLocation"
             android:layout_alignParentLeft="true"
@@ -57,17 +72,4 @@
             android:layout_alignTop="@id/labelEstDelivery"
             />
 
-    <ImageButton
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:id="@+id/ibShowMap"
-            android:src="@mipmap/ic_trackorder"
-            android:adjustViewBounds="true"
-            android:scaleType="fitXY"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="10dp"
-            android:background="@color/tk_white_color"
-            />
 </RelativeLayout>
