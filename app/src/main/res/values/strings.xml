@@ -82,6 +82,7 @@
     </string-array>
     <string name="change_card_text">Change card</string>
     <string name="progress_payment_text">Processing payment....</string>
+    <string name="progress_payment_finalized_text">Finalizing order...</string>
 
 
     <!-- dialog ok/cancel button -->

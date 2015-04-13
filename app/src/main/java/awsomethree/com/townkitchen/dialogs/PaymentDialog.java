@@ -33,6 +33,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -75,7 +76,12 @@ public class PaymentDialog extends DialogFragment implements ParseQueryCallback 
     protected Spinner etCCYear;
     protected ProgressBar progressBar;
     protected TextView progressText;
+    protected ImageView ivProgressBG;
     protected Switch switchSaveCard;
+    protected TextView tvPaidLabel;
+
+    protected Button positiveButton;
+    protected Button negativeButton;
 
     private Map<String, Object> chargeParams;
 
@@ -117,6 +123,8 @@ public class PaymentDialog extends DialogFragment implements ParseQueryCallback 
         switchSaveCard = (Switch) bodyView.findViewById(R.id.switchSaveCard);
         progressBar = (ProgressBar) bodyView.findViewById(R.id.progressBar);
         progressText = (TextView) bodyView.findViewById(R.id.tvProgressText);
+        ivProgressBG = (ImageView) bodyView.findViewById(R.id.ivProgressBg);
+        tvPaidLabel = (TextView) bodyView.findViewById(R.id.tvPaidLabel);
 
         StringBuilder paymentTitle = new StringBuilder();
         paymentTitle.append(getString(R.string.payment_ok));
@@ -128,14 +136,15 @@ public class PaymentDialog extends DialogFragment implements ParseQueryCallback 
         // check if there is saved customer id
         String customerId = getSavedPaymentOptions();
         // hides the panels
-        newCardPanel.setVisibility(View.INVISIBLE);
+        newCardPanel.setVisibility(View.GONE);
         addNewCard.setVisibility(View.VISIBLE);
+        ivProgressBG.setVisibility(View.VISIBLE);
         addNewCardOpen = false;
         if (customerId.equals("-")){
             // nothing is stored in preferences yet, so we need to force user to either
             // input credit card and then store them (if they wanted to)
             newCardPanel.setVisibility(View.VISIBLE);
-            addNewCard.setVisibility(View.INVISIBLE);
+            addNewCard.setVisibility(View.GONE);
             addNewCardOpen = true;
         } else {
             String ccnumber = getSavedCCnumber();
@@ -162,8 +171,6 @@ public class PaymentDialog extends DialogFragment implements ParseQueryCallback 
                 })
         ;
 
-        hideProgress();
-
         // add new card button
         addNewCard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,35 +185,180 @@ public class PaymentDialog extends DialogFragment implements ParseQueryCallback 
         return builder.create();
     }
 
-    private void showNewCardPanelWithAnimation(){
-        newCardPanel.setVisibility(View.VISIBLE);
-        addNewCardOpen = true;
-        addNewCard.setText(R.string.cancel);
-        // simple animation
+    private void showPaidLabelAnimation(){
+        tvPaidLabel.setVisibility(View.VISIBLE);
+        tvPaidLabel.setAlpha(0.0f);
+        tvPaidLabel.setRotation(-45.0f);
+
         AnimatorSet animatorSet = new AnimatorSet();
+        AnimatorSet allAnimatorSet = new AnimatorSet();
+
         // alpha
-        ObjectAnimator alphaAnimation = ObjectAnimator.ofFloat(newCardPanel, "alpha", 0.2f, 1.0f);
-        // skew
-        ObjectAnimator skewAnimation = ObjectAnimator.ofFloat(newCardPanel, "scaleX", 0.2f, 1.0f);
+        ObjectAnimator alphaAnimation = ObjectAnimator.ofFloat(tvPaidLabel, "alpha", 0f, 1.0f);
+        alphaAnimation.setDuration(1000);
+
+        ObjectAnimator scaleAnimationX = ObjectAnimator.ofFloat(tvPaidLabel, "scaleX", 2.0f, 1.0f);
+        scaleAnimationX.setDuration(1000);
+
+        ObjectAnimator scaleAnimationY = ObjectAnimator.ofFloat(tvPaidLabel, "scaleY", 2.0f, 1.0f);
+        scaleAnimationY.setDuration(1000);
+
+        // hold
+        ObjectAnimator holdAnimation = ObjectAnimator.ofFloat(tvPaidLabel, "alpha", 1.0f, 1.0f);
+        holdAnimation.setDuration(2000);
 
         animatorSet.setDuration(1000);
-        animatorSet.playTogether(alphaAnimation, skewAnimation);
+        animatorSet
+                .playTogether(alphaAnimation, scaleAnimationX, scaleAnimationY);
+
+        animatorSet.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                progressText.setText(R.string.progress_payment_finalized_text);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+
+        allAnimatorSet.playSequentially(animatorSet, holdAnimation);
+        allAnimatorSet.start();
+
+        allAnimatorSet.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                // when it is ended, make payment to parse for finishing
+                flushShoppingCart();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+    }
+
+    private void showNewCardPanelWithAnimation(){
+        newCardPanel.setVisibility(View.VISIBLE);
+        newCardPanel.setAlpha(0);
+
+        addNewCardOpen = true;
+        addNewCard.setText(R.string.cancel);
+
+        // simple animation
+        AnimatorSet animatorSet = new AnimatorSet();
+
+        AnimatorSet flipPanelBG = new AnimatorSet();
+        AnimatorSet flipPanel= new AnimatorSet();
+
+        // skew progressBG
+        ObjectAnimator skewAnimationBG = ObjectAnimator.ofFloat(ivProgressBG, "rotationY", 0f, 180.0f);
+        skewAnimationBG.setDuration(1000);
+        // alpha
+        ObjectAnimator alphaAnimationBG = ObjectAnimator.ofFloat(ivProgressBG, "alpha", 1.0f, 0f);
+        alphaAnimationBG.setDuration(500);
+
+        flipPanelBG.setDuration(1000);
+        flipPanelBG.playTogether(skewAnimationBG, alphaAnimationBG);
+
+        // alpha
+        ObjectAnimator alphaAnimation = ObjectAnimator.ofFloat(newCardPanel, "alpha", -1.0f, 1.0f);
+        alphaAnimation.setDuration(1000);
+        // skew
+        ObjectAnimator skewAnimation = ObjectAnimator.ofFloat(newCardPanel, "rotationY", -180.0f, 0f);
+        skewAnimation.setDuration(1000);
+
+        flipPanel.setDuration(1000);
+        flipPanel
+                .playTogether(alphaAnimation, skewAnimation);
+
+        animatorSet.setDuration(1000);
+        animatorSet
+                .playTogether(flipPanelBG, flipPanel);
         animatorSet.start();
+        animatorSet.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                ivProgressBG.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
     }
 
     private void hideNewCardPanelWithAnimation(){
+        ivProgressBG.setVisibility(View.VISIBLE);
+        ivProgressBG.setAlpha(-1.0f);
         addNewCardOpen = false;
         addNewCard.setText(R.string.change_card_text);
-        AnimatorSet animatorSet = new AnimatorSet();
-        // alpha
-        ObjectAnimator alphaAnimation = ObjectAnimator.ofFloat(newCardPanel, "alpha", 1.0f, 0.2f);
 
+        // simple animation
+        AnimatorSet animatorSet = new AnimatorSet();
+
+        AnimatorSet flipPanelBG = new AnimatorSet();
+        AnimatorSet flipPanel= new AnimatorSet();
+
+        // skew progressBG
+        ObjectAnimator skewAnimationBG = ObjectAnimator.ofFloat(ivProgressBG, "rotationY", 180.0f, 0f);
+        skewAnimationBG.setDuration(1000);
+        // alpha
+        ObjectAnimator alphaAnimationBG = ObjectAnimator.ofFloat(ivProgressBG, "alpha", -1.0f, 1.0f);
+        alphaAnimationBG.setDuration(1000);
+
+        flipPanelBG.setDuration(1000);
+        flipPanelBG.playTogether(skewAnimationBG, alphaAnimationBG);
+
+        // alpha
+        ObjectAnimator alphaAnimation = ObjectAnimator.ofFloat(newCardPanel, "alpha", 1.0f, 0f);
+        alphaAnimation.setDuration(500);
         // skew
-        ObjectAnimator skewAnimation = ObjectAnimator.ofFloat(newCardPanel, "scaleX", 1.0f, 0.2f);
+        ObjectAnimator skewAnimation = ObjectAnimator.ofFloat(newCardPanel, "rotationY", 0f, -180.0f);
+        skewAnimation.setDuration(1000);
+
+        flipPanel.setDuration(1000);
+        flipPanel
+                .playTogether(alphaAnimation, skewAnimation);
 
         animatorSet.setDuration(1000);
-        animatorSet.playTogether(alphaAnimation,skewAnimation);
+        animatorSet
+                .playTogether(flipPanel, flipPanelBG);
         animatorSet.start();
+
         // animator callback
         animatorSet.addListener(new Animator.AnimatorListener() {
             @Override
@@ -216,7 +368,7 @@ public class PaymentDialog extends DialogFragment implements ParseQueryCallback 
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                newCardPanel.setVisibility(View.INVISIBLE);
+                newCardPanel.setVisibility(View.GONE);
             }
 
             @Override
@@ -255,7 +407,11 @@ public class PaymentDialog extends DialogFragment implements ParseQueryCallback 
         AlertDialog d = (AlertDialog) getDialog();
 
         if (d != null){
-            Button positiveButton =  (Button) d.getButton(Dialog.BUTTON_POSITIVE);
+            negativeButton = (Button) d.getButton(Dialog.BUTTON_NEGATIVE);
+            positiveButton =  (Button) d.getButton(Dialog.BUTTON_POSITIVE);
+
+            hideProgress();
+
             positiveButton.setBackgroundResource(R.drawable.tk_dialog_button_states);
             positiveButton.setTextColor(getResources().getColor(R.color.tk_white_color));
             positiveButton.setOnClickListener(new View.OnClickListener() {
@@ -412,7 +568,7 @@ public class PaymentDialog extends DialogFragment implements ParseQueryCallback 
 
     }
 
-    public void flushShoppingCart(Card card){
+    public void flushShoppingCart(){
         ShoppingCart.flushShoppingCart(this, ShoppingCart.SHOPPING_CART_CODE, mShoppingCart, getDialog().getContext());
     }
 
@@ -453,8 +609,8 @@ public class PaymentDialog extends DialogFragment implements ParseQueryCallback 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            // now shopping cart can be flushed
-            hideProgress();
+            // All payments will ended here
+            finishSuccessfullPayment();
         }
     }
 
@@ -495,15 +651,23 @@ public class PaymentDialog extends DialogFragment implements ParseQueryCallback 
         }
     }
 
+    private void finishSuccessfullPayment(){
+        // show the paid animation and then shopping cart can be flushed
+        showPaidLabelAnimation();
+    }
 
     private void showProgress(){
         progressBar.setVisibility(View.VISIBLE);
         progressText.setVisibility(View.VISIBLE);
+        positiveButton.setEnabled(false);
+        negativeButton.setEnabled(false);
     }
 
     private void hideProgress() {
         progressBar.setVisibility(View.INVISIBLE);
         progressText.setVisibility(View.INVISIBLE);
+        positiveButton.setEnabled(true);
+        negativeButton.setEnabled(true);
     }
 
     /**

@@ -4,7 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
         android:padding="20dp"
-        android:minHeight="200dp"
+        android:minHeight="100dp"
         >
     <!-- Total summary -->
     <TextView
@@ -90,12 +90,16 @@
             android:padding="5dp"
             />
 
+
     <RelativeLayout
             android:id="@+id/addNewPanel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/btnAddCard"
             android:layout_marginTop="20dp"
+            android:visibility="invisible"
+            android:background="@drawable/tk_red_border"
+            android:padding="5dp"
             >
         <!-- Credit Card -->
         <ImageView
@@ -204,4 +208,31 @@
             android:id="@+id/tvProgressText"
             android:layout_above="@id/progressBar"
             />
+
+    <ImageView android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:src="@mipmap/ic_townkitchen"
+               android:id="@+id/ivProgressBg"
+               android:gravity="center"
+               android:layout_below="@+id/btnAddCard"
+               android:background="@drawable/white_badge_shape"
+               android:layout_above="@id/tvProgressText"
+               android:alpha="0.5"
+            />
+
+    <!-- Paid -->
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="PAID"
+            android:textColor="@color/tk_red_color"
+            android:textSize="100sp"
+            android:background="@drawable/tk_red_border"
+            android:id="@+id/tvPaidLabel"
+            android:visibility="gone"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            />
+
+
 </RelativeLayout>

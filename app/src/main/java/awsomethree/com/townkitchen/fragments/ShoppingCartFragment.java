@@ -112,7 +112,7 @@ public class ShoppingCartFragment extends TKFragment implements dialogInterfaceL
             @Override
             public void onClick(View v) {
                 // check on the shipping address first
-                if (shippingAddress.getText().toString().isEmpty()) {
+                if (shippingAddress.getText().toString().isEmpty() ) {
                     shippingAddress.setError(getString(R.string.error_empty_address));
                 } else {
                     // populate the shipping address
@@ -202,6 +202,10 @@ public class ShoppingCartFragment extends TKFragment implements dialogInterfaceL
             updateShoppingCartFooter(shoppingCartModel);
             shoppingCartAdapter.clear();
             shoppingCartAdapter.addAll(shoppingCartLists);
+
+            if (shoppingCartLists.size() == 0){
+                btnCheckout.setEnabled(false);
+            }
         }
     }
 }

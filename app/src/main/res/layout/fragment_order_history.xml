@@ -15,19 +15,9 @@
         android:layout_alignParentStart="false"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="false"
-        android:layout_above="@+id/tvOrderHistoryFooter"
+        android:layout_above="@+id/tvOrderHistoryFooter2"
     />
 
-    <TextView
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/change_order_text"
-            android:id="@+id/tvOrderHistoryFooter2"
-            android:textAlignment="center"
-            android:gravity="center_horizontal"
-            android:layout_above="@id/tvOrderHistoryFooter"
-            />
     <TextView
             android:layout_width="match_parent"
             android:layout_height="30dp"
@@ -40,12 +30,22 @@
             android:linksClickable="true"
             android:clickable="true"
             />
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/change_order_text"
+            android:id="@+id/tvOrderHistoryFooter2"
+            android:textAlignment="center"
+            android:gravity="center_horizontal"
+            android:layout_above="@id/tvOrderHistoryFooter"
+            />
     <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_call"
             android:id="@+id/imageView3"
-            android:layout_below="@+id/lvOrderHistory"
+            android:layout_below="@+id/tvOrderHistoryFooter2"
             android:layout_alignParentLeft="true"
            />
 
