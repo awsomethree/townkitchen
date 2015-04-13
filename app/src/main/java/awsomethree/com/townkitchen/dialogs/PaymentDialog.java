@@ -145,6 +145,7 @@ public class PaymentDialog extends DialogFragment implements ParseQueryCallback 
             // input credit card and then store them (if they wanted to)
             newCardPanel.setVisibility(View.VISIBLE);
             addNewCard.setVisibility(View.GONE);
+            ivProgressBG.setVisibility(View.GONE);
             addNewCardOpen = true;
         } else {
             String ccnumber = getSavedCCnumber();
