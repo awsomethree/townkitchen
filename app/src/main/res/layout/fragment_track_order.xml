@@ -12,12 +12,14 @@
             android:layout_height="350dp"
             />
 
-    <RelativeLayout android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+    <RelativeLayout android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
                     android:layout_below="@+id/map"
                     android:background="@color/tk_white_color"
-                    android:alpha="0.9"
-                    android:paddingTop="20dp"
+                    android:alpha="0.95"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
             >
 
         <TextView
@@ -28,15 +30,15 @@
                 android:layout_alignParentLeft="true" android:layout_alignParentStart="true"
                 />
         <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="-"
                 android:id="@+id/tvEstDeliverTime"
                 android:layout_marginLeft="15dp"
                 android:textStyle="bold"
                 android:textSize="16sp"
-                android:layout_toRightOf="@id/tvLabelEstDeliverTime"
-                android:layout_alignTop="@id/tvLabelEstDeliverTime"
+                android:layout_below="@id/tvLabelEstDeliverTime"
+                android:gravity="right"
                 />
 
         <TextView
@@ -47,7 +49,7 @@
                 android:layout_below="@+id/tvEstDeliverTime"
                 android:layout_alignParentLeft="true" android:layout_alignParentStart="true"/>
         <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="10 N 1st St, San Jose"
                 android:id="@+id/tvDeliveryLocation"
@@ -55,7 +57,7 @@
                 android:textSize="16sp"
                 android:layout_marginLeft="15dp"
                 android:layout_below="@id/tvLabelDeliverLocation"
-                android:layout_toRightOf="@id/tvLabelDeliverLocation"
+                android:gravity="right"
                 />
         <Button
                 android:layout_width="200dp"
@@ -74,4 +76,5 @@
                 android:layout_alignParentBottom="true"
                 />
     </RelativeLayout>
+
 </RelativeLayout>

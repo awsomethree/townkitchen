@@ -288,7 +288,6 @@ public class TrackOrderFragment extends TKFragment {
     private class GeoDrivingDistance extends AsyncTask<LatLng, Void, String> {
 
         private String googleURL = "http://maps.googleapis.com/maps/api/directions/json?";
-
         @Override
         protected String doInBackground(LatLng... params) {
             // there will be 2 params
@@ -301,27 +300,21 @@ public class TrackOrderFragment extends TKFragment {
                     + "&units=metric";
             Log.d(MainActivity.APP, uri);
             String data = null;
+            String durationText = "";
             try {
                 data = downloadUrl(uri);
-            } catch (IOException e) {
+                JSONObject jobj = new JSONObject(data);
+                durationText = getDurationFromJSONResult(jobj);
+            } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
-            return data;
+            return durationText;
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            try {
-                JSONObject jobj = new JSONObject(s);
-                String durationText = getDurationFromJSONResult(jobj);
-                tvEstDeliveryTime.setText(durationText);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            // get the routes
-
-            Log.d(MainActivity.APP, "JSON OUTPUT : " + s);
+            tvEstDeliveryTime.setText(s);
         }
     }
 
