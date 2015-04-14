@@ -37,6 +37,7 @@
             android:id="@+id/tvOrderHistoryFooter"
             android:textAlignment="center"
             android:gravity="center_horizontal"
+            android:layout_marginLeft="25dp"
             android:layout_alignParentBottom="true"
             android:linksClickable="true"
             android:clickable="true"
@@ -56,9 +57,10 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_call"
             android:id="@+id/imageView3"
-            android:layout_below="@+id/tvOrderHistoryFooter2"
-            android:layout_alignParentLeft="true"
-           />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvOrderHistoryFooter2" />
 
 
 </RelativeLayout>
