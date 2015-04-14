@@ -1,66 +1,78 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-    android:padding="5dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="@mipmap/townkitchen_kitchen"
+    android:alpha="0.7"
     tools:context="awsomethree.com.townkitchen.activities.DailyMenuActivity">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/swipeContainer"
-            android:layout_above="@+id/tvOrderHistoryFooter2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        <ListView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/lvOrderHistory"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="false"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="false"
-        />
-        <ProgressBar
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+        android:padding="5dp"
+        android:background="@color/tk_white_color"
+        android:alpha="0.8"
+        tools:context="awsomethree.com.townkitchen.activities.DailyMenuActivity">
+
+        <android.support.v4.widget.SwipeRefreshLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/swipeContainer"
+                android:layout_above="@+id/tvOrderHistoryFooter2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <ListView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/progressBar"
-                android:visibility="invisible"
-                android:layout_gravity="center_horizontal" />
-    </android.support.v4.widget.SwipeRefreshLayout>
+                android:id="@+id/lvOrderHistory"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="false"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="false"
+            />
+            <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/progressBar"
+                    android:visibility="invisible"
+                    android:layout_gravity="center_horizontal" />
+        </android.support.v4.widget.SwipeRefreshLayout>
 
-    <TextView
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Text "
-            android:id="@+id/tvOrderHistoryFooter"
-            android:textAlignment="center"
-            android:gravity="center_horizontal"
-            android:layout_marginLeft="25dp"
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Text "
+                android:id="@+id/tvOrderHistoryFooter"
+                android:textAlignment="center"
+                android:gravity="center_horizontal"
+                android:layout_marginLeft="25dp"
+                android:layout_alignParentBottom="true"
+                android:linksClickable="true"
+                android:clickable="true"
+                />
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/change_order_text"
+                android:id="@+id/tvOrderHistoryFooter2"
+                android:textAlignment="center"
+                android:gravity="center_horizontal"
+                android:layout_above="@id/tvOrderHistoryFooter"
+                />
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_call"
+                android:id="@+id/imageView3"
             android:layout_alignParentBottom="true"
-            android:linksClickable="true"
-            android:clickable="true"
-            />
-    <TextView
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/change_order_text"
-            android:id="@+id/tvOrderHistoryFooter2"
-            android:textAlignment="center"
-            android:gravity="center_horizontal"
-            android:layout_above="@id/tvOrderHistoryFooter"
-            />
-    <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_call"
-            android:id="@+id/imageView3"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/tvOrderHistoryFooter2" />
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/tvOrderHistoryFooter2" />
 
 
+    </RelativeLayout>
 </RelativeLayout>

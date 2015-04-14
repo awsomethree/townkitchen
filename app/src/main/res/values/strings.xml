@@ -105,4 +105,7 @@
     <string name="error_empty_address">Delivery address cannot be empty</string>
     <string name="title_activity_tutorial">TutorialActivity</string>
     <string name="action_settings">Settings</string>
+
+    <string name="demo_header_exampletitle1">Show more...</string>
+
 </resources>

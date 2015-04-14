@@ -13,12 +13,12 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import awsomethree.com.townkitchen.R;
+import awsomethree.com.townkitchen.helpers.CustomHeaderInnerCard;
 import awsomethree.com.townkitchen.interfaces.fragmentNavigationInterface;
 import awsomethree.com.townkitchen.models.DailyMenu;
 import awsomethree.com.townkitchen.models.ShoppingCart;
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardExpand;
-import it.gmariotti.cardslib.library.internal.CardHeader;
 import it.gmariotti.cardslib.library.view.CardViewNative;
 
 /**
@@ -97,10 +97,13 @@ public class TKMenuListAdapter extends ArrayAdapter<DailyMenu> {
         //Create a Card
         Card card = new Card(convertView.getContext());
 
+
         //Create a CardHeader
-        CardHeader header = new CardHeader(convertView.getContext());
+        CustomHeaderInnerCard header = new CustomHeaderInnerCard(convertView.getContext());
+        //Create a CardHeader
+       // CardHeader header = new CardHeader(convertView.getContext());
         //Set the header title
-        header.setTitle("");
+        //header.setTitle("                More Info...");
         //Set visible the expand/collapse button
         header.setButtonExpandVisible(true);
         //Add Header to card
