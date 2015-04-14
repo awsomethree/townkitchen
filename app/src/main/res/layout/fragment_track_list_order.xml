@@ -4,6 +4,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="2dp"
                 android:layout_marginRight="2dp"
+                android:background="@mipmap/townkitchen_kitchen2"
                 tools:context="awsomethree.com.townkitchen.activities.DailyMenuActivity">
 
     <android.support.v4.widget.SwipeRefreshLayout
@@ -21,6 +22,8 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:background="@color/tk_white_color"
+            android:alpha="0.9"
             android:layout_alignParentEnd="true"/>
 
         <ProgressBar

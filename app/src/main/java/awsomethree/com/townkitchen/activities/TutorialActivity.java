@@ -43,7 +43,7 @@ public class TutorialActivity extends ActionBarActivity {
         @Override
         public Fragment getItem(int position) {
             switch (position) {
-                case 0 :
+                case 0:
                     return mOrder;
                 case 1:
                     return mEmail;
@@ -68,6 +68,7 @@ public class TutorialActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_tutorial);
 
         // setting viewpager
