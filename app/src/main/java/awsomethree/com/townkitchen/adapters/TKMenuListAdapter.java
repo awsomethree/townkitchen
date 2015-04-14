@@ -97,7 +97,6 @@ public class TKMenuListAdapter extends ArrayAdapter<DailyMenu> {
         //Create a Card
         Card card = new Card(convertView.getContext());
 
-
         //Create a CardHeader
         CustomHeaderInnerCard header = new CustomHeaderInnerCard(convertView.getContext());
         //Create a CardHeader

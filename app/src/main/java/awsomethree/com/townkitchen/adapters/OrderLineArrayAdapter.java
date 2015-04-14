@@ -103,6 +103,9 @@ public class OrderLineArrayAdapter extends ArrayAdapter<OrderLineItem> {
             convertView.setBackgroundColor( Integer.parseInt(OrderHistoryFragment.orderLineItemMap.get(orderLineItem.getOrder().getObjectId()).toString()) );
 
         }
+
+
+
         return convertView;
     }
 }

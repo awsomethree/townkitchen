@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:padding="5dp"
@@ -34,6 +36,8 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="@string/optionNameDesc"
+        android:textColor="#ff0000ff"
+        android:textSize="16dp"
         android:id="@+id/tvOptionName"
         android:layout_toRightOf="@+id/ivFoodImageUrl"
         android:layout_below="@+id/tvShippingDay" />
@@ -43,6 +47,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:id="@+id/tvOptionDesc"
+        android:textColor="#000000"
         android:layout_below="@+id/tvOptionName"
         android:layout_toRightOf="@+id/ivFoodImageUrl"
         android:layout_marginTop="10dp"
@@ -54,6 +59,8 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="price"
+        android:textColor="#ff0000ff"
+        android:textSize="16dp"
         android:id="@+id/tvPrice"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
@@ -73,6 +80,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Rate Me:"
+        android:textColor="#000000"
         android:id="@+id/textView2"
         android:textSize="10dp"
         android:layout_below="@+id/tvOptionDesc"

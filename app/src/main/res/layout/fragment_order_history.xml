@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:background="@mipmap/townkitchen_kitchen"
-    android:alpha="0.7"
+    android:alpha="0.9"
     tools:context="awsomethree.com.townkitchen.activities.DailyMenuActivity">
 
 
@@ -13,7 +13,7 @@
                     android:layout_height="match_parent"
         android:padding="5dp"
         android:background="@color/tk_white_color"
-        android:alpha="0.8"
+        android:alpha="0.9"
         tools:context="awsomethree.com.townkitchen.activities.DailyMenuActivity">
 
         <android.support.v4.widget.SwipeRefreshLayout
