@@ -52,10 +52,10 @@
     <string name="foodPrice">$$</string>
     <string name="subtotalDesc">SUBTOTAL</string>
     <string name="taxDesc">TAX</string>
-    <string name="shippingCostDesc">SHIPPING</string>
+    <string name="shippingCostDesc">DELIVERY</string>
     <string name="totalDesc">TOTAL</string>
     <string name="CreditCard">CC Number</string>
-    <item name="shippingCostDesc" type="id">SHIPPING</item>
+    <item name="shippingCostDesc" type="id">DELIVERY</item>
 
     <!-- feedback -->
     <string name="FeedbackText">Your Comment</string>

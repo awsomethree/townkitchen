@@ -1,5 +1,10 @@
 package awsomethree.com.townkitchen.models;
 
+import android.os.AsyncTask;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.parse.ParseTwitterUtils;
 import com.squareup.picasso.Picasso;
@@ -16,11 +21,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import android.os.AsyncTask;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -79,7 +79,7 @@ public class User {
             }
 
             TextView tv = (TextView) mainView.findViewById(R.id.tvProfileName);
-            tv.setText(name);
+            tv.setText("Welcome "+name);
 
             if (!profileImageUrl.isEmpty()) {
                 ImageView iv = (ImageView) mainView.findViewById(R.id.ivProfileImg);
@@ -93,7 +93,7 @@ public class User {
                 iv.setImageResource(R.mipmap.ic_nopic);
                 Picasso.with(mainView.getContext())
                         .load(profileImageUrl)
-                        .resize(40, 40)
+                        .resize(60, 60)
                         .transform(transformation)
                         .into(iv);
             }

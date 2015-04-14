@@ -1,7 +1,5 @@
 package awsomethree.com.townkitchen.adapters;
 
-import com.squareup.picasso.Picasso;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -112,7 +112,7 @@ public class TKMenuListAdapter extends ArrayAdapter<DailyMenu> {
         //This provides a simple (and useless) expand area
         CardExpand expand = new CardExpand(convertView.getContext());
         //Set inner title in Expand Area
-        expand.setTitle("Delivery included! Comes with Drink + Dessert.");
+        expand.setTitle("Comes with Drink + Dessert.");
         card.addCardExpand(expand);
 
         //Set card in the cardView

@@ -1,8 +1,5 @@
 package awsomethree.com.townkitchen.fragments;
 
-import com.parse.ParseException;
-import com.parse.ParseObject;
-
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +14,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.parse.ParseException;
+import com.parse.ParseObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,7 +80,7 @@ public class ShoppingCartFragment extends TKFragment implements dialogInterfaceL
                     counter++;
                     if (counter == NUM_MAGIC_COUNTER){
                         discount = 5.0;
-                        Toast.makeText(v.getContext(), "Discount applied", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(v.getContext(), "Discount applied!", Toast.LENGTH_LONG).show();
                         getShoppingCart();
                     }
                 }
