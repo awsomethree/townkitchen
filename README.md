@@ -31,28 +31,28 @@ individuals
 
 _Required user stories_ : 
 
-- [ ] User can login with Twitter to access the application
-- [ ] __(Menu View)__ User can see the `current day` menu options in grid 
+- [x] User can login with Twitter to access the application
+- [x] __(Menu View)__ User can see the `current day` menu options in grid 
     - The menu options include the image of the menu, small description, 
         price and order quantity.
-- [ ] User can see the menu options of a `particular day`.
+- [x] User can see the menu options of a `particular day`.
     - By clicking on calendar icon to choose specific dates 
-- [ ] __(Detail Menu View)__ User can see in detail specific menu options of the day
+- [x] __(Detail Menu View)__ User can see in detail specific menu options of the day
     - User can see the image of the menu, description of the menu, price, 
         additional serving information (e.g served with)
-- [ ] User can choose and add particular menu options into the shopping cart
+- [x ] User can choose and add particular menu options into the shopping cart
     - The shopping cart icon will also shows number of orders. 
-- [ ] __(Shopping Cart View)__ User can see the details of their shopping cart contents by clicking on the
+- [x] __(Shopping Cart View)__ User can see the details of their shopping cart contents by clicking on the
         shopping cart icon
     - User can edit (either adding or removing their order), total order, 
         total price
-- [ ] __(Checkout View)__ User can see the shipping and billing info by clicking on the checkout icon from the shopping cart
+- [x] __(Checkout View)__ User can see the shipping and billing info by clicking on the checkout icon from the shopping cart
     - By default billing address should be the same as shipping. User can have an option to change the billing address if it different from the shipping address
     - User should able to select the delivery location
     - User must be able to enter their credit cart info like CC, expiration date. This should also perform basic validation like date not expired. And the normal credit card number validation
     - When user click 'Order', the app should display a progress of the submission and display order confirmation page on success
-- [ ] __(Confirmation View)__ user should see the created order number with summary of the order. User should have an option to 'Share/Review' and this will link to TownKitchen facebook or Twitter account
-- [ ] __(My Order View)__ From home page, user should be able to click on the 'My Order' and see the current order status 
+- [x] __(Confirmation View)__ user should see the created order number with summary of the order. User should have an option to 'Share/Review' and this will link to TownKitchen facebook or Twitter account
+- [x] __(My Order View)__ From home page, user should be able to click on the 'My Order' and see the current order status 
     - User can also see the current location of the Driver on the map
 
 
@@ -68,3 +68,5 @@ _Optional user stories_ :
         default location
 
 First Draft Mockup can be found [Mockup](docs/TownKitchenApp.pdf)
+
+![Application-demo](TheTownKitchenApp_demo1.gif)
